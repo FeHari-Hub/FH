@@ -1,6 +1,6 @@
 
 
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/FeHari/HaridadeScript/main/legendsofspeed.lua"))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/FeHari/HaridadeScript/main/LegendsOfSpeed"))()
 
 -- Window
 local Window, MainGUI = Library:CreateWindow("TissueSense | Universal")
