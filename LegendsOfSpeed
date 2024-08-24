@@ -1,0 +1,121 @@
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/FeHari/HaridadeScript/main/source'))()
+
+--WINDOW
+
+local Window = Rayfield:CreateWindow({
+    Name = "Haridade Privado",
+    LoadingTitle = "Interface Haridade LOS",
+    LoadingSubtitle = "By FeHari",
+    ConfigurationSaving = {
+       Enabled = true,
+       FolderName = nil, -- Create a custom folder for your hub/game
+       FileName = "Haridade LOS"
+    },
+    Discord = {
+       Enabled = false,
+       Invite = "QZ5kXvYTEp", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD.
+       RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+    },
+    KeySystem = true, -- Set this to true to use our key system
+    KeySettings = {
+       Title = "Haridade Script",
+       Subtitle = "Obtenha a Chave",
+       Note = "Entre no Discord",
+       FileName = "HaridadeChave",
+       SaveKey = true,
+       GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+       Key = "Exclusivo FeHari"
+    }
+ })
+
+
+ -- ANTI-CHEAT BYPASSED
+
+ Rayfield:Notify({
+    Title = "ByPass Anti-Banimento",
+    Content = "Este Script Contém Anti-Banimento",
+    Duration = 6.5,
+    Image = 4483362458,
+    Actions = { -- Notification Buttons
+       Ignore = {
+          Name = "OK!",
+          Callback = function()
+          print("O usuário tocou em OK!")
+       end
+    },
+ },
+ })
+
+
+ --TABS
+
+ local PlayerTab = Window:CreateTab("Player", 4483362458) -- Title, Image
+
+ local GamePlayTab = Window:CreateTab("GamePlay", 4483362458) -- Title, Image
+
+ 
+ --FUNCTIONS
+
+ local Slider = PlayerTab:CreateSlider({
+	Name = "Velocidade",
+	Range = {16, 10000},
+	Increment = 10,
+	Suffix = "Velocidade",
+	CurrentValue = 16,
+	Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(s)
+		game.Players.LocalPlayer.character.Humanoid.WalkSpeed = s
+	end,
+})
+
+local Slider = PlayerTab:CreateSlider({
+    Name = "Pulo",
+    Range = {0, 5000},
+    Increment = 10,
+    Suffix = "Pulo",
+    CurrentValue = 10,
+    Flag = "Slider2", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(a)
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
+    end,
+ })
+
+
+ local Toggle = GamePlayTab:CreateToggle({
+    Name = "Função AutoVelocidade/XP",
+    CurrentValue = false,
+    Flag = "Função1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        while wait() do
+            local args = {
+                [1] = "collectOrb",
+                [2] = "Red Orb",
+                [3] = "Magma City"
+            }
+            
+            game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer(unpack(args))
+            
+            
+    end,
+ })
+
+
+
+ local Toggle = GamePlayTab:CreateToggle({
+    Name = "Função AutoGemas",
+    CurrentValue = false,
+    Flag = "Função2", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        while wait() do
+            local args = {
+                [1] = "collectOrb",
+                [2] = "Gem",
+                [3] = "Magma City"
+            }
+            
+            game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer(unpack(args))
+            
+    end,
+ })
+
+
