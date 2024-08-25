@@ -1,4 +1,4 @@
-local library = loadstring(game:HttpGet("https://pastebin.com/raw/egMXJcwB", true))()
+local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 library.options.underlinecolor = "rainbow"
 
 local w = library:CreateWindow('Main')
