@@ -143,7 +143,7 @@ end
 
 --// Ui Library \\--
 local HaridadeLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/FeHari/HaridadeScript/main/LegendsOfSpeed.lua')))()
-local Window = HaridadeLib:MakeWindow({Name = "Haridade LOS", HidePremium = false, SaveConfig = true, ConfigFolder = "HaridadeTest"})
+local Window = HaridadeLib:MakeWindow({Name = "Haridade | Legends Of Speed ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "HaridadeTest"})
 
 local FarmTab = Window:MakeTab({
 	Name = "Auto Farm",
@@ -152,12 +152,12 @@ local FarmTab = Window:MakeTab({
 })
 
 local Section = FarmTab:AddSection({
-	Name = "Auto Farm Seção"
+	Name = "Auto Farm"
 })
 
 
 FarmTab:AddDropdown({
-	Name = "Area To Farm",
+	Name = "Areas Para Farmar",
 	Default = nil,
 	Options = {"Main City", "Snow City", "Magma City", "Legends Highway"},
 	Callback = function(Value)
@@ -276,7 +276,7 @@ FarmTab:AddToggle({
 })
 
 HaridadeLib:MakeNotification({
-	Name = "HaridadeCommunity",
+	Name = "Haridade Community",
 	Content = "discord.gg/uydz6pZWMk",
 	Image = "rbxassetid://4483345998",
 	Time = 20
