@@ -146,7 +146,7 @@ local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shl
 local Window = OrionLib:MakeWindow({Name = "Haridade Script", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
 
 local FarmTab = Window:MakeTab({
-	Name = "Autofarm",
+	Name = "Auto-Farm",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
