@@ -142,7 +142,7 @@ local function SelectCity(City)
 end
 
 --// Ui Library \\--
-local HaridadeLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Haridade/main/source')))()
+local HaridadeLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/FeHari/HaridadeScript/main/LegendsOfSpeed.lua')))()
 local Window = HaridadeLib:MakeWindow({Name = "Haridade LOS", HidePremium = false, SaveConfig = true, ConfigFolder = "HaridadeTest"})
 
 local FarmTab = Window:MakeTab({
