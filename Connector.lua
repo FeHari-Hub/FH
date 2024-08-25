@@ -143,7 +143,7 @@ end
 
 --// Ui Library \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Speed Legends", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
+local Window = OrionLib:MakeWindow({Name = "Haridade Script", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
 
 local FarmTab = Window:MakeTab({
 	Name = "Autofarm",
