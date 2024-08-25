@@ -1,4 +1,4 @@
-local Rayfield = loadstring(game:HttpGet("https://raw.githubusercontent.com/FeHari/HaridadeScript/main/LegendsOfSpeed"))()
+local Rayfield = loadstring(game:HttpGet("https://raw.githubusercontent.com/FeHari/HaridadeScript/main/Connector.lua"))()
 
 --WINDOW
 
