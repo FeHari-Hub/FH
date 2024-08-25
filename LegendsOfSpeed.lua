@@ -146,6 +146,12 @@ local HaridadeLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/
 local Window = HaridadeLib:MakeWindow({Name = "Haridade | Legends Of Speed ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "HaridadeTest"})
 
 local FarmTab = Window:MakeTab({
+	Name = "Início",
+	Icon = "rbxassetid://112625488111718",
+	PremiumOnly = false
+})
+
+local FarmTab = Window:MakeTab({
 	Name = "Auto Farm",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
