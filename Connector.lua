@@ -142,7 +142,7 @@ local function SelectCity(City)
 end
 
 --// Ui Library \\--
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Rayfield/main/source')))()
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Window = OrionLib:MakeWindow({Name = "Legends Of Speed", HidePremium = false, SaveConfig = true, ConfigFolder = "HaridadeScript"})
 
 local FarmTab = Window:MakeTab({
