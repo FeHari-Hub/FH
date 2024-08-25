@@ -143,7 +143,7 @@ end
 
 --// Ui Library \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Legends Of Speed", HidePremium = false, SaveConfig = true, ConfigFolder = "HaridadeScript"})
+local Window = OrionLib:MakeWindow({Name = "Speed Legends", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
 
 local FarmTab = Window:MakeTab({
 	Name = "Autofarm",
@@ -276,8 +276,8 @@ FarmTab:AddToggle({
 })
 
 OrionLib:MakeNotification({
-	Name = "Haridade Community",
-	Content = "discord.gg/uydz6pZWMk",
+	Name = "zine#0001",
+	Content = "discord.gg/zinemm",
 	Image = "rbxassetid://4483345998",
 	Time = 10
 })
