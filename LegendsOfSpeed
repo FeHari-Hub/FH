@@ -1,3 +1,5 @@
+local Rayfield = loadstring(game:HttpGet("https://raw.githubusercontent.com/FeHari/HaridadeScript/main/LegendsOfSpeed"))()
+
 --WINDOW
 
 local Window = Rayfield:CreateWindow({
@@ -115,3 +117,5 @@ local Slider = PlayerTab:CreateSlider({
             
     end,
  })
+
+
