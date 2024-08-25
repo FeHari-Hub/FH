@@ -279,7 +279,7 @@ OrionLib:MakeNotification({
 	Name = "zine#0001",
 	Content = "discord.gg/zinemm",
 	Image = "rbxassetid://4483345998",
-	Time = 10
+	Time = 1000000
 })
 
 OrionLib:Init()
