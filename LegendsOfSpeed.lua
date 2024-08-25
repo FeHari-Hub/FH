@@ -1,4 +1,4 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/x1KAITO/Legends-Of-Speed-/main/Connector.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/FeHari/HaridadeScript/main/Connector.lua"))()
 
 local KAITO = Instance.new("ScreenGui")
 local K = Instance.new("TextButton")
