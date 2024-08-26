@@ -305,7 +305,7 @@ HaridadeLib:MakeNotification({
 	Time = 20
 })
 
-HaridadeLib:Notify({
+HaridadeLib:MakeNotification({
     Title = "Anti-Detectação ByPass",
     Content = "ByPass Ativado...",
     Duration = 6.5,
