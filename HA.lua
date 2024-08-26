@@ -259,34 +259,6 @@ FarmTab:AddToggle({
 })
 
 
-local Section = FarmTab:AddSection({
-	Name = "Crystal Section"
-})
-
-local Crystal1
-
-FarmTab:AddDropdown({
-	Name = "Choose Crystals",
-	Default = nil,
-	Options = Crystals,
-	Callback = function(Value)
-        Crystal1 = Value
-	end    
-})
-
-FarmTab:AddToggle({
-	Name = "Toggle Open",
-	Default = false,
-	Callback = function(Value)
-    getgenv().OpenEgg = Value
-    while getgenv().OpenEgg do
-        if Crystal1 then
-        Egg(Crystal1)  
-        end
-    end
-	end    
-})
-
 local FarmTab = Window:MakeTab({
 	Name = "Renascimento",
 	Icon = "rbxassetid://121663556703347",
@@ -310,6 +282,40 @@ FarmTab:AddToggle({
 	end    
 })
 
+local FarmTab = Window:MakeTab({
+	Name = "Comprar Pets",
+	Icon = "rbxassetid://95145057413711",
+	PremiumOnly = false
+})
+
+local Section = FarmTab:AddSection({
+	Name = "Comprar Pets Automáticamente"
+})
+
+local Crystal1
+
+FarmTab:AddDropdown({
+	Name = "Escolha O Cristal",
+	Default = nil,
+	Options = Crystals,
+	Callback = function(Value)
+        Crystal1 = Value
+	end    
+})
+
+FarmTab:AddToggle({
+	Name = "Comprar Pets Automáticamente (necessita de gemas)",
+	Default = false,
+	Callback = function(Value)
+    getgenv().OpenEgg = Value
+    while getgenv().OpenEgg do
+        if Crystal1 then
+        Egg(Crystal1)  
+        end
+    end
+	end    
+})
+
 HaridadeLib:MakeNotification({
 	Name = "Haridade Community",
 	Content = "discord.gg/uydz6pZWMk",
@@ -319,7 +325,7 @@ HaridadeLib:MakeNotification({
 
 HaridadeLib:MakeNotification({
 	Name = "BYPASS ANTI-DETECTAÇÃO",
-	Content = "ByPass Ativo... 💹",
+	Content = "ByPass Ativo... ✅",
 	Image = "rbxassetid://71506531582407",
 	Time = 20
 })
