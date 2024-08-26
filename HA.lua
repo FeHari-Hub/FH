@@ -196,21 +196,6 @@ local function optimizeFpsPing()
     end
 end
 
-local player = game.Players.LocalPlayer
-
-local function setInfiniteJump(value)
-    getgenv().InfiniteJump = value
-    if value then
-        game.UserInputService.JumpRequest:Connect(function()
-            if getgenv().InfiniteJump then
-                if player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
-                    player.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Physics)
-                end
-            end
-        end)
-    else
-    end
-end
 
 
 local function SelectCity(City)
@@ -239,14 +224,6 @@ local FarmTab = FarmTab:AddSection({
 	Name = "Opções De Jogador"
 })
 
-FarmTab:AddToggle({
-    Name = "Pulo Infinito",
-    Default = false,
-    Callback = function(value)
-        setInfiniteJump(value)
-    end
-})
-	
 local FarmTab = FarmTab:AddSection({
 	Name = "Otimizações"
 })
@@ -265,18 +242,6 @@ FarmTab:AddToggle({
                 optimizeFpsPing()
                 task.wait()
             end
-        end
-    end    
-})
-
-FarmTab:AddToggle({
-    Name = "CPU-10",
-    Default = false,
-    Callback = function(Value)
-        getgenv().Hoop = Value
-        while Hoop do
-            optimizeCPU()
-            task.wait()
         end
     end    
 })
