@@ -156,29 +156,17 @@ local FarmTab = FarmTab:AddSection({
 })
 
 
-local FarmTab = PlayerTab:CreateSlider({
-	Name = "Velocidade Do Personagem",
-	Range = {16, 10000},
-	Increment = 10,
-	Suffix = "WalkSpeed",
-	CurrentValue = 16,
-	Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-	Callback = function(s)
-		game.Players.LocalPlayer.character.Humanoid.WalkSpeed = s
-	end,
+FarmTab:AddToggle({
+	Name = "Hoop Farm",
+	Default = false,
+	Callback = function(Value)
+		getgenv().Hoop = Value
+        while Hoop do
+            HoopFarm()
+            task.wait()
+        end
+	end    
 })
-
-local FarmTab = PlayerTab:CreateSlider({
-    Name = "Pulo Do Jogador",
-    Range = {0, 5000},
-    Increment = 10,
-    Suffix = "JumpPower",
-    CurrentValue = 10,
-    Flag = "Slider2", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-    Callback = function(a)
-        game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
-    end,
- })
 
 local FarmTab = Window:MakeTab({
 	Name = "Farmar",
