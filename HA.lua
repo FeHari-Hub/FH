@@ -187,8 +187,8 @@ end
 
 local function NoclipFunction()
     while getgenv().Noclip do
-        game.RunService.Stepped:wait()
-        for i, v in pairs(player.Character:GetDescendants()) do
+        game:GetService("RunService").Stepped:wait()
+        for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
             if v:IsA('BasePart') then
                 v.CanCollide = false
             end
@@ -230,7 +230,7 @@ FarmTab:AddToggle({
     Callback = function(Value)
         getgenv().Noclip = Value
         if Value then
-            NoclipFunction()
+            spawn(NoclipFunction)
         end
     end    
 })
