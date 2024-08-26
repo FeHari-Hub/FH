@@ -304,6 +304,86 @@ FarmTab:AddDropdown({
 end    
 })
 
+FarmTab:AddDropdown({
+	Name = "Selecione a Orb",
+	Default = nil,
+	Options = {"Yellow Orb", "Orange Orb", "Blue Orb", "Red Orb", "Gemas"},
+	Callback = function(Value)
+		AreaToFarm = Value
+    if AreaToFarm == "Main City" then 
+        getgenv().MainCity = true
+        getgenv().Snow = false
+        getgenv().Magma = false
+        getgenv().LegendsHighway = false
+        CityFarm()
+    elseif AreaToFarm == "Snow City" then
+        getgenv().MainCity = false
+        getgenv().Snow = true
+        getgenv().Magma = false
+        getgenv().LegendsHighway = false
+        SnowFarm()
+    elseif AreaToFarm == "Magma City" then
+        getgenv().MainCity = false
+        getgenv().Snow = false
+        getgenv().Magma = true
+        getgenv().LegendsHighway = false
+        MagmaFarm()
+    elseif AreaToFarm == "Legends Highway" then
+        getgenv().MainCity = false
+        getgenv().Snow = false
+        getgenv().Magma = false
+        getgenv().LegendsHighway = true
+        LegendsHighwayFarm()
+    end
+end    
+})
+
+FarmTab:AddDropdown({
+	Name = "Selecine a Velocidade",
+	Default = nil,
+	Options = {"x50", "x75", "x100", "x125", "x150", "x175", "x200", "x250", "x300"},
+	Callback = function(Value)
+		AreaToFarm = Value
+    if AreaToFarm == "Main City" then 
+        getgenv().MainCity = true
+        getgenv().Snow = false
+        getgenv().Magma = false
+        getgenv().LegendsHighway = false
+        CityFarm()
+    elseif AreaToFarm == "Snow City" then
+        getgenv().MainCity = false
+        getgenv().Snow = true
+        getgenv().Magma = false
+        getgenv().LegendsHighway = false
+        SnowFarm()
+    elseif AreaToFarm == "Magma City" then
+        getgenv().MainCity = false
+        getgenv().Snow = false
+        getgenv().Magma = true
+        getgenv().LegendsHighway = false
+        MagmaFarm()
+    elseif AreaToFarm == "Legends Highway" then
+        getgenv().MainCity = false
+        getgenv().Snow = false
+        getgenv().Magma = false
+        getgenv().LegendsHighway = true
+        LegendsHighwayFarm()
+    end
+end    
+})
+
+FarmTab:AddToggle({
+	Name = "Diminuir o Ping (não faz milagre)",
+	Default = false,
+	Callback = function(Value)
+		getgenv().Hoop = Value
+        while Hoop do
+            HoopFarm()
+            task.wait()
+        end
+	end    
+})
+
 FarmTab:AddToggle({
 	Name = "Farmar Orbs (BETA)",
 	Default = false,
