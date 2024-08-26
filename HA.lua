@@ -151,29 +151,10 @@ local FarmTab = Window:MakeTab({
 	PremiumOnly = false
 })
 
-local Slider = w:Slider("Velocidade Do Personagem",
-    {
-        precise = true, --"false" will give you whole integers, "true" gives you 0.05's 
-        default = 50, --What you want the default value when the script is ran!
-        min = 1, -- The lowest number that you can select as the user
-        max = 99999, --The highest number you can select as the user
-        flag = "Speed" --Again, it's just a variable. In this case: Window.flags.Speed
-    },
-function() --Makes whatever is below happen each time the slider changes it's value
-      game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = tonumber(w.flags.Speed)
-end)
+local Section = FarmTab:AddSection({
+	Name = "Funções Do Personagem"
+})
 
-local Slider = w:Slider("Pulo Do Personagem",
-    {
-        precise = true, --"false" will give you whole integers, "true" gives you 0.05's 
-        default = 50, --What you want the default value when the script is ran!
-        min = 1, -- The lowest number that you can select as the user
-        max = 1000, --The highest number you can select as the user
-        flag = "Speed" --Again, it's just a variable. In this case: Window.flags.Speed
-    },
-function() --Makes whatever is below happen each time the slider changes it's value
-      game.Players.LocalPlayer.Character.Humanoid.JumpPower = tonumber(w.flags.Speed)
-end)
 
 
 local Section = FarmTab:AddSection({
