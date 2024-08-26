@@ -151,12 +151,12 @@ local FarmTab = Window:MakeTab({
 	PremiumOnly = false
 })
 
-local Section = FarmTab:AddSection({
+local FarmTab = FarmTab:AddSection({
 	Name = "Opções Do Jogador"
 })
 
 
-local Slider = PlayerTab:CreateSlider({
+local FarmTab = PlayerTab:CreateSlider({
 	Name = "Velocidade Do Personagem",
 	Range = {16, 10000},
 	Increment = 10,
@@ -168,7 +168,7 @@ local Slider = PlayerTab:CreateSlider({
 	end,
 })
 
-local Slider = PlayerTab:CreateSlider({
+local FarmTab = PlayerTab:CreateSlider({
     Name = "Pulo Do Jogador",
     Range = {0, 5000},
     Increment = 10,
