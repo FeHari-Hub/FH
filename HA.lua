@@ -196,14 +196,25 @@ local function optimizeFpsPing()
     end
 end
 
-local function ("Infinits-Jump", InfiniteJump, function(v)
-    getgenv().InfiniteJump = v
-    game.UserInputService.JumpRequest:connect(function()
-        if not getgenv().InfiniteJump then return end
-        player.Character.Humanoid:ChangeState('Jumping')
-    end)
-end)
+local player = game.Players.LocalPlayer
 
+-- Função para ativar e desativar o pulo infinito
+local function setInfiniteJump(value)
+    getgenv().InfiniteJump = value
+    if value then
+        game.UserInputService.JumpRequest:Connect(function()
+            if getgenv().InfiniteJump then
+                if player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
+                    player.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Physics)
+                end
+            end
+        end)
+    else
+        -- Caso o toggle seja desativado, você pode querer remover o evento de pular infinito
+        -- Para simplicidade, não há necessidade de remover o evento se você estiver configurando o estado corretamente.
+        -- Apenas certifique-se de que o `InfiniteJump` esteja desativado.
+    end
+end
 
 
 local function SelectCity(City)
@@ -229,17 +240,35 @@ local FarmTab = Window:MakeTab({
 })
 
 local FarmTab = FarmTab:AddSection({
+	Name = "Opções De Jogador"
+})
+
+FarmTab:AddToggle({
+    Name = "Pulo Infinito",
+    Default = false,
+    Callback = function(value)
+        setInfiniteJump(value)
+    end
+})
+	
+local FarmTab = FarmTab:AddSection({
 	Name = "Otimizações"
 })
 
 FarmTab:AddToggle({
     Name = "Reduzir Gráficos Ao Máximo",
     Default = false,
-    Callback = function(Value)
-        getgenv().Hoop = Value
-        while Hoop do
+    Callback = function(value)
+        isReducingGraphics = value
+        if isReducingGraphics then
+            -- Executa a função imediatamente
             optimizeFpsPing()
-            task.wait()
+
+            -- Continuar executando a função em intervalos enquanto o toggle estiver ativado
+            while isReducingGraphics do
+                optimizeFpsPing()
+                task.wait()
+            end
         end
     end    
 })
