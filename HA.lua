@@ -156,6 +156,8 @@ local Section = FarmTab:AddSection({
 })
 
 
+
+
 local FarmTab = Window:MakeTab({
 	Name = "Farmar",
 	Icon = "rbxassetid://4483345998",
@@ -292,5 +294,20 @@ HaridadeLib:MakeNotification({
 	Image = "rbxassetid://101951842185056",
 	Time = 20
 })
+
+HaridadeLib:Notify({
+    Title = "Anti-Detectação ByPass",
+    Content = "ByPass Ativado...",
+    Duration = 6.5,
+    Image = 4483362458,
+    Actions = { -- Notification Buttons
+       Ignore = {
+          Name = "Obrigado, HA_FeHari!",
+          Callback = function()
+          print("O Usuário Tocou em Ok!")
+       end
+    },
+ },
+ })
 
 HaridadeLib:Init()
