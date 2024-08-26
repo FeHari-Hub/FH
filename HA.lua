@@ -152,9 +152,21 @@ local FarmTab = Window:MakeTab({
 })
 
 local FarmTab = FarmTab:AddSection({
-	Name = "Opções Do Jogado"
+	Name = "Opções Do Jogador"
 })
 
+
+local FarmTab = PlayerTab:CreateSlider({
+	Name = "WalkSpeed",
+	Range = {16, 10000},
+	Increment = 10,
+	Suffix = "WalkSpeed",
+	CurrentValue = 16,
+	Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(s)
+		game.Players.LocalPlayer.character.Humanoid.WalkSpeed = s
+	end,
+})
 
 FarmTab:AddToggle({
 	Name = "Hoop Farm",
