@@ -245,6 +245,21 @@ local Section = FarmTab:AddSection({
 	Name = "Farmar Aros"
 })
 
+local t = w:Toggle('Hoops V2', {flag = "HoopsV2"})
+spawn( 
+    function()
+        while wait() do
+            if w.flags.HoopsV2 then
+                local children = workspace.Hoops:GetChildren()
+                    for i, child in ipairs(children) do
+                        if child.Name == "Aros V2" then
+                        child.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                    end    
+                end
+            end
+        end
+    end
+)
 
 FarmTab:AddToggle({
 	Name = "Aros V1",
