@@ -99,6 +99,17 @@ local function LegendsHighwayFarm()
     end)
 end
 
+local function HoopFarmV2()
+    local Chr = game.Players.LocalPlayer.Character
+    if Chr and Chr.Parent and Chr:FindFirstChild("HumanoidRootPart") then
+        local children = workspace.Hoops:GetChildren()
+        for i, child in ipairs(children) do
+            if child.Name == "Hoop" then
+                child.CFrame = Chr.HumanoidRootPart.CFrame
+            end    
+        end
+    end
+end
 local function HoopFarm()
     if Chr and Chr.Parent and Chr:FindFirstChild("Head") then
         for i, v in next, game:GetService("Workspace").Hoops:GetDescendants() do
@@ -245,22 +256,6 @@ local Section = FarmTab:AddSection({
 	Name = "Farmar Aros"
 })
 
-local t = w:Toggle('Hoops V2', {flag = "HoopsV2"})
-spawn( 
-    function()
-        while wait() do
-            if w.flags.HoopsV2 then
-                local children = workspace.Hoops:GetChildren()
-                    for i, child in ipairs(children) do
-                        if child.Name == "Aros V2" then
-                        child.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-                    end    
-                end
-            end
-        end
-    end
-)
-
 FarmTab:AddToggle({
 	Name = "Aros V1",
 	Default = false,
@@ -268,6 +263,18 @@ FarmTab:AddToggle({
 		getgenv().Hoop = Value
         while Hoop do
             HoopFarm()
+            task.wait()
+        end
+	end    
+})
+
+FarmTab:AddToggle({
+	Name = "Aros V2",
+	Default = false,
+	Callback = function(Value)
+		getgenv().HoopV2 = Value
+        while HoopV2 do
+            HoopFarmV2()
             task.wait()
         end
 	end    
