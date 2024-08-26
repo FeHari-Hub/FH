@@ -165,6 +165,26 @@ function ToggleAutoRaces(Value)
     end
 end 
 
+local AutoRaces = false
+
+-- Função para alternar o estado de AutoRaces
+function ToggleAutoRaces(Value)
+    AutoRaces = Value
+    if AutoRaces then
+        spawn(function()
+            while AutoRaces do
+                pcall(function()
+                    local playerHead = game:GetService("Players").LocalPlayer.Character.Head
+                    local city = game:GetService("Workspace")
+                    game:GetService("ReplicatedStorage"):WaitForChild("rEvents"):WaitForChild("raceEvent"):FireServer("joinRace")
+                    wait(0.01)
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+
 
 
 local function SelectCity(City)
@@ -343,6 +363,14 @@ local Section = FarmTab:AddSection({
 
 FarmTab:AddToggle({
     Name = "Auto Corridas",
+    Default = false,
+    Callback = function(Value)
+        ToggleAutoRaces(Value)
+    end    
+})
+
+FarmTab:AddToggle({
+    Name = "Bloquear Corridas (apenas você entra)",
     Default = false,
     Callback = function(Value)
         ToggleAutoRaces(Value)
