@@ -138,20 +138,21 @@ for i, v in next, game:GetService("Workspace").mapCrystalsFolder:GetChildren() d
     table.insert(Crystals, v.Name)
 end
 
-local AutoRaces = false
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
 
 -- Função para alternar o estado de AutoRaces
-function ToggleAutoRaces(Value)
+local function ToggleAutoRaces(Value)
     AutoRaces = Value
     if AutoRaces then
         spawn(function()
             while AutoRaces do
                 pcall(function()
-                    game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace")
+                    ReplicatedStorage.rEvents.raceEvent:FireServer("joinRace")
                     task.wait()
-                    local Workspace = game:GetService("Workspace")
-                    local part = game.Players.LocalPlayer.Character.HumanoidRootPart
-                    for k, v in pairs(Workspace.raceMaps:GetDescendants()) do 
+                    local part = Players.LocalPlayer.Character.HumanoidRootPart
+                    for _, v in pairs(Workspace.raceMaps:GetDescendants()) do 
                         if v.Name == "Decal" and v.Parent then
                             firetouchinterest(part, v.Parent, 0)
                             wait()
@@ -165,18 +166,14 @@ function ToggleAutoRaces(Value)
     end
 end 
 
-local AutoRaces = false
-
--- Função para alternar o estado de AutoRaces
-function ToggleAutoRaces(Value)
-    AutoRaces = Value
-    if AutoRaces then
+local function ToggleAutoRacesSolo(Value)
+    AutoRacesSolo = Value
+    if AutoRacesSolo then
         spawn(function()
-            while AutoRaces do
+            while AutoRacesSolo do
                 pcall(function()
-                    local playerHead = game:GetService("Players").LocalPlayer.Character.Head
-                    local city = game:GetService("Workspace")
-                    game:GetService("ReplicatedStorage"):WaitForChild("rEvents"):WaitForChild("raceEvent"):FireServer("joinRace")
+                    local playerHead = Players.LocalPlayer.Character.Head
+                    ReplicatedStorage.rEvents.raceEvent:FireServer("joinRace")
                     wait(0.00)
                 end)
                 task.wait()
@@ -184,6 +181,9 @@ function ToggleAutoRaces(Value)
         end)
     end
 end
+
+local AutoRaces = false
+local AutoRacesSolo = false
 
 local function optimizeFpsPing()
     for _, v in pairs(game:GetService("Workspace"):GetDescendants()) do
@@ -397,7 +397,7 @@ FarmTab:AddToggle({
     Name = "Bloquear Corridas (apenas você entra)",
     Default = false,
     Callback = function(Value)
-        ToggleAutoRaces(Value)
+        ToggleAutoRacesSolo(Value)
     end    
 })
 
