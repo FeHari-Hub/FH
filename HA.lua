@@ -151,21 +151,6 @@ local FarmTab = Window:MakeTab({
 	PremiumOnly = false
 })
 
-local Section = FarmTab:AddSection({
-	Name = "Funções Do Personagem"
-})
-
-
-
-local Section = FarmTab:AddSection({
-	Name = "Opções De Jogo"
-})
-
-
-local b = w:Button("Relogar O Jogo", function()
-game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
-end)
-
 local FarmTab = Window:MakeTab({
 	Name = "Farmar Automático",
 	Icon = "rbxassetid://4483345998",
