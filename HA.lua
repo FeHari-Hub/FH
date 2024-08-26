@@ -156,17 +156,26 @@ local FarmTab = FarmTab:AddSection({
 })
 
 
-FarmTab:AddToggle({
-	Name = "Hoop Farm",
-	Default = false,
+local FarmTab = Window:MakeTab({
+	Name = "Teleportar",
+	Icon = "rbxassetid://109334924659404",
+	PremiumOnly = false
+})
+
+local Section = FarmTab:AddSection({
+	Name = "Áreas Para Teleportar"
+})
+
+
+FarmTab:AddDropdown({
+	Name = "Selecionar Cidade Para Teleportar",
+	Default = nil,
+	Options = {"Main City", "Snow City", "Magma City", "Legends Highway"},
 	Callback = function(Value)
-		getgenv().Hoop = Value
-        while Hoop do
-            HoopFarm()
-            task.wait()
-        end
+		SelectCity(Value)
 	end    
 })
+
 
 local FarmTab = Window:MakeTab({
 	Name = "Farmar",
@@ -214,7 +223,7 @@ end
 })
 
 FarmTab:AddToggle({
-	Name = "Orb Farm",
+	Name = "Farmar Orbs (BETA)",
 	Default = false,
 	Callback = function(Value)
     Autofarm = Value
@@ -232,8 +241,13 @@ FarmTab:AddToggle({
 end
 })
 
+local Section = FarmTab:AddSection({
+	Name = "Farmar Aros"
+})
+
+
 FarmTab:AddToggle({
-	Name = "Hoop Farm",
+	Name = "Aros V1",
 	Default = false,
 	Callback = function(Value)
 		getgenv().Hoop = Value
@@ -241,31 +255,6 @@ FarmTab:AddToggle({
             HoopFarm()
             task.wait()
         end
-	end    
-})
-
-FarmTab:AddToggle({
-	Name = "Auto Rebirth",
-	Default = false,
-	Callback = function(Value)
-		getgenv().AutoRebirth = Value
-        while AutoRebirth do
-            Rebirth()
-            task.wait()
-        end
-	end    
-})
-
-local Section = FarmTab:AddSection({
-	Name = "Teleport Section"
-})
-
-FarmTab:AddDropdown({
-	Name = "Select City To Teleport",
-	Default = nil,
-	Options = {"Main City", "Snow City", "Magma City", "Legends Highway"},
-	Callback = function(Value)
-		SelectCity(Value)
 	end    
 })
 
@@ -300,7 +289,7 @@ FarmTab:AddToggle({
 
 local FarmTab = Window:MakeTab({
 	Name = "Renascimento",
-	Icon = "rbxassetid://92431260805763",
+	Icon = "rbxassetid://121663556703347",
 	PremiumOnly = false
 })
 
@@ -310,7 +299,7 @@ local Section = FarmTab:AddSection({
 
 
 FarmTab:AddToggle({
-	Name = "Auto Renascimento",
+	Name = "Auto Renascimento (ative apenas se for renascer AFK)",
 	Default = false,
 	Callback = function(Value)
 		getgenv().AutoRebirth = Value
@@ -328,10 +317,11 @@ HaridadeLib:MakeNotification({
 	Time = 20
 })
 
-game.StarterGui:SetCore("SendNotification", {
-    Title = "BYPASS ANTI-DETECTAÇÃO";
-    Text = "ByPass Ativado 💹";
-    Button1 = "Obrigado, HA_FeHari!";
+HaridadeLib:MakeNotification({
+	Name = "BYPASS ANTI-DETECTAÇÃO",
+	Content = "ByPass Ativo... 💹",
+	Image = "rbxassetid://71506531582407",
+	Time = 20
 })
 
 HaridadeLib:Init()
