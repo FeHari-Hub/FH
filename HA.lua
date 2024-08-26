@@ -151,134 +151,99 @@ local FarmTab = Window:MakeTab({
 	PremiumOnly = false
 })
 
-local FarmTab = Window:MakeTab({
-	Name = "Farmar Automático",
+local AutoFarm = Window:MakeTab({
+	Name = "Farming",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
 
-local Section = FarmTab:AddSection({
-	Name = "Farmar Automático"
-})
-
-
-FarmTab:AddDropdown({
-	Name = "Áreas Para Farmar (Selecione A Área Que Você Estiver)",
-	Default = nil,
-	Options = {"Main City", "Snow City", "Magma City", "Legends Highway"},
-	Callback = function(Value)
-		AreaToFarm = Value
-    if AreaToFarm == "Main City" then 
-        getgenv().MainCity = true
-        getgenv().Snow = false
-        getgenv().Magma = false
-        getgenv().LegendsHighway = false
-        CityFarm()
-    elseif AreaToFarm == "Snow City" then
-        getgenv().MainCity = false
-        getgenv().Snow = true
-        getgenv().Magma = false
-        getgenv().LegendsHighway = false
-        SnowFarm()
-    elseif AreaToFarm == "Magma City" then
-        getgenv().MainCity = false
-        getgenv().Snow = false
-        getgenv().Magma = true
-        getgenv().LegendsHighway = false
-        MagmaFarm()
-    elseif AreaToFarm == "Legends Highway" then
-        getgenv().MainCity = false
-        getgenv().Snow = false
-        getgenv().Magma = false
-        getgenv().LegendsHighway = true
-        LegendsHighwayFarm()
-    end
-end    
-})
-
-FarmTab:AddToggle({
-	Name = "Orb Farm",
+AutoFarm:AddToggle({
+	Name = "Orb Collecter *may cause issues*",
 	Default = false,
 	Callback = function(Value)
-    Autofarm = Value
-    if Value then
-        if AreaToFarm == "Main City" then
-            CityFarm()
-        elseif AreaToFarm == "Snow City" then
-            SnowFarm()
-        elseif AreaToFarm == "Magma City" then
-            MagmaFarm()
-        elseif AreaToFarm == "Legends Highway" then
-            LegendsHighwayFarm()
-        end
-    end 
-end
-})
-
-FarmTab:AddToggle({
-	Name = "Hoop Farm",
-	Default = false,
-	Callback = function(Value)
-		getgenv().Hoop = Value
-        while Hoop do
-            HoopFarm()
-            task.wait()
-        end
+		orbCollect = Value
+        orbCollecter()
 	end    
 })
 
-FarmTab:AddToggle({
+AutoFarm:AddToggle({
 	Name = "Auto Rebirth",
 	Default = false,
 	Callback = function(Value)
-		getgenv().AutoRebirth = Value
-        while AutoRebirth do
-            Rebirth()
-            task.wait()
-        end
+		autoRebirth = Value
+        autoRebirther()
 	end    
 })
 
-local Section = FarmTab:AddSection({
-	Name = "Teleport Section"
-})
-
-FarmTab:AddDropdown({
-	Name = "Select City To Teleport",
-	Default = nil,
-	Options = {"Main City", "Snow City", "Magma City", "Legends Highway"},
-	Callback = function(Value)
-		SelectCity(Value)
-	end    
-})
-
-
-local Section = FarmTab:AddSection({
-	Name = "Crystal Section"
-})
-
-local Crystal1
-
-FarmTab:AddDropdown({
-	Name = "Choose Crystals",
-	Default = nil,
-	Options = Crystals,
-	Callback = function(Value)
-        Crystal1 = Value
-	end    
-})
-
-FarmTab:AddToggle({
-	Name = "Toggle Open",
+AutoFarm:AddToggle({
+	Name = "Hoop Bring",
 	Default = false,
 	Callback = function(Value)
-    getgenv().OpenEgg = Value
-    while getgenv().OpenEgg do
-        if Crystal1 then
-        Egg(Crystal1)  
-        end
-    end
+		hoopTP = Value
+        hoopTPer()
 	end    
+})
+
+AutoFarm:AddToggle({
+	Name = "Auto Best Pet *drains gems*",
+	Default = false,
+	Callback = function(Value)
+		eggOpen = Value
+        eggOpener()
+	end    
+})
+
+
+local Teleports = Window:MakeTab({
+	Name = "Teleports",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Misc = Window:MakeTab({
+	Name = "Misc",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+Misc:AddSlider({
+	Name = "Speed",
+	Min = 150,
+	Max = 10000,
+	Default = 1000,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "ws",
+	Callback = function(Value)
+		setSpeed(Value)
+	end         
+})
+
+Misc:AddSlider({
+	Name = "Jump Height",
+	Min = 50,
+	Max = 1500,
+	Default = 200,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "jp",
+	Callback = function(Value)
+		setJump(Value)
+	end    
+})
+
+Misc:AddButton({
+	Name = "Remove Race Start Barriers",
+	Callback = function()
+      	deleteBarrier()
+  	end    
+})
+
+Misc:AddButton({
+	Name = "Re-join",
+	Callback = function()
+        game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
+  	end    
 })
 
 HaridadeLib:MakeNotification({
