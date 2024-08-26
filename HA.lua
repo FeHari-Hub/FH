@@ -152,7 +152,7 @@ local FarmTab = Window:MakeTab({
 })
 
 local Section = FarmTab:AddSection({
-	Name = "Opções De Jogador"
+	Name = "Opções Do Jogador"
 })
 
 
