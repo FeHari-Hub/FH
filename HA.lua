@@ -147,6 +147,7 @@ function ToggleAutoRaces(Value)
         spawn(function()
             while AutoRaces do
                 pcall(function()
+                    -- Primeiro script
                     game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace")
                     task.wait()
                     local Workspace = game:GetService("Workspace")
@@ -158,22 +159,8 @@ function ToggleAutoRaces(Value)
                             firetouchinterest(part, v.Parent, 1)
                         end
                     end
-                end)
-                task.wait()
-            end
-        end)
-    end
-end 
 
-local AutoRaces = false
-
--- Função para alternar o estado de AutoRaces
-function ToggleAutoRaces(Value)
-    AutoRaces = Value
-    if AutoRaces then
-        spawn(function()
-            while AutoRaces do
-                pcall(function()
+                    -- Segundo script
                     local playerHead = game:GetService("Players").LocalPlayer.Character.Head
                     local city = game:GetService("Workspace")
                     game:GetService("ReplicatedStorage"):WaitForChild("rEvents"):WaitForChild("raceEvent"):FireServer("joinRace")
