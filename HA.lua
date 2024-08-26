@@ -3,7 +3,7 @@ getgenv().Autofarm = false
 getgenv().OpenEgg = false
 getgenv().AutoRebirth = false
 getgenv().HoopFarm = false
-getgenv().HoopV2 = false
+getgenv().FarmActive = false -- Novo toggle para ativar o farm
 
 getgenv().MainCity = false
 getgenv().Snow = false
@@ -24,14 +24,16 @@ local Humanoid = Chr.Humanoid
 local Root = Chr.HumanoidRootPart
 
 --// Tables \\--
-local AreaToFarm = {}
+local AreaToFarm = "Main City" -- Default to Main City
+local OrbToFarm = "Yellow Orb" -- Default to Yellow Orb
+local FarmSpeed = "x100" -- Default to x100
 local Crystals = {}
 
 --// Functions \\--
 local function CityFarm()
     spawn(function()
         while task.wait() do
-            if not Autofarm or not MainCity then break end
+            if not Autofarm or not FarmActive or not MainCity then break end
             if Chr and Chr.Parent and Chr:FindFirstChild("Head") then
                 for i, v in next, game:GetService("Workspace").orbFolder["City"]:GetDescendants() do
                     if v.Name == "TouchInterest" then
@@ -48,7 +50,7 @@ end
 local function SnowFarm()
     spawn(function()
         while task.wait() do
-            if not Autofarm or not Snow then break end
+            if not Autofarm or not FarmActive or not Snow then break end
             if Chr and Chr.Parent and Chr:FindFirstChild("Head") then
                 for i, v in next, game:GetService("Workspace").orbFolder["Snow City"]:GetDescendants() do
                     if v.Name == "TouchInterest" then
@@ -65,7 +67,7 @@ end
 local function MagmaFarm()
     spawn(function()
         while task.wait() do
-            if not Autofarm or not Magma then break end
+            if not Autofarm or not FarmActive or not Magma then break end
             if Chr and Chr.Parent and Chr:FindFirstChild("Head") then
                 for i, v in next, game:GetService("Workspace").orbFolder["Magma City"]:GetDescendants() do
                     if v.Name == "TouchInterest" then
@@ -82,7 +84,7 @@ end
 local function LegendsHighwayFarm()
     spawn(function()
         while task.wait() do
-            if not Autofarm or not LegendsHighway then break end
+            if not Autofarm or not FarmActive or not LegendsHighway then break end
             if Chr and Chr.Parent and Chr:FindFirstChild("Head") then
                 for i, v in next, game:GetService("Workspace").orbFolder["Legends Highway"]:GetDescendants() do
                     if v.Name == "TouchInterest" then
@@ -94,30 +96,6 @@ local function LegendsHighwayFarm()
             end
         end
     end)
-end
-
-local function HoopFarmV2()
-    local Chr = game.Players.LocalPlayer.Character
-    if Chr and Chr.Parent and Chr:FindFirstChild("HumanoidRootPart") then
-        local children = workspace.Hoops:GetChildren()
-        for i, child in ipairs(children) do
-            if child.Name == "Hoop" then
-                child.CFrame = Chr.HumanoidRootPart.CFrame
-            end    
-        end
-    end
-end
-
-local function HoopFarm()
-    if Chr and Chr.Parent and Chr:FindFirstChild("Head") then
-        for i, v in next, game:GetService("Workspace").Hoops:GetDescendants() do
-            if v.Name == "TouchInterest" and v.Parent then
-                firetouchinterest(Chr:WaitForChild("Head", 5), v.Parent, 0)
-                task.wait()
-                firetouchinterest(Chr:WaitForChild("Head", 5), v.Parent, 1)
-            end
-        end
-    end
 end
 
 local function Egg(EggName)
@@ -137,56 +115,25 @@ for i, v in next, game:GetService("Workspace").mapCrystalsFolder:GetChildren() d
     table.insert(Crystals, v.Name)
 end
 
-local function ToggleAutoRaces(Value)
-    AutoRaces = Value
-    if AutoRaces then
+local function ToggleFarm(Value)
+    FarmActive = Value
+    if FarmActive then
         spawn(function()
-            while AutoRaces do
+            while FarmActive do
                 pcall(function()
-                    game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace")
-                    task.wait()
-                    local part = Players.LocalPlayer.Character.HumanoidRootPart
-                    for _, v in pairs(game:GetService("Workspace").raceMaps:GetDescendants()) do 
-                        if v.Name == "Decal" and v.Parent then
-                            firetouchinterest(part, v.Parent, 0)
-                            wait()
-                            firetouchinterest(part, v.Parent, 1)
-                        end
+                    if AreaToFarm == "Main City" then
+                        CityFarm()
+                    elseif AreaToFarm == "Snow City" then
+                        SnowFarm()
+                    elseif AreaToFarm == "Magma City" then
+                        MagmaFarm()
+                    elseif AreaToFarm == "Legends Highway" then
+                        LegendsHighwayFarm()
                     end
                 end)
                 task.wait()
             end
         end)
-    end
-end 
-
-local function ToggleAutoRacesSolo(Value)
-    AutoRacesSolo = Value
-    if AutoRacesSolo then
-        spawn(function()
-            while AutoRacesSolo do
-                pcall(function()
-                    local playerHead = Players.LocalPlayer.Character.Head
-                    game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace")
-                    wait(0.00)
-                end)
-                task.wait()
-            end
-        end)
-    end
-end
-
-local AutoRaces = false
-local AutoRacesSolo = false
-
-local function optimizeFpsPing()
-    for _, v in pairs(game:GetService("Workspace"):GetDescendants()) do
-        if v:IsA("BasePart") and not v.Parent:FindFirstChild("Humanoid") then
-            v.Material = Enum.Material.SmoothPlastic
-            if v:IsA("Texture") then
-                v:Destroy()
-            end
-        end
     end
 end
 
@@ -212,7 +159,7 @@ local FarmTab = Window:MakeTab({
     PremiumOnly = false
 })
 
-FarmTab:AddSection({
+local FarmTab = FarmTab:AddSection({
     Name = "Otimizações"
 })
 
@@ -236,7 +183,7 @@ local FarmTab = Window:MakeTab({
     PremiumOnly = false
 })
 
-FarmTab:AddSection({
+local Section = FarmTab:AddSection({
     Name = "Áreas Para Teleportar"
 })
 
@@ -255,7 +202,7 @@ local FarmTab = Window:MakeTab({
     PremiumOnly = false
 })
 
-FarmTab:AddSection({
+local Section = FarmTab:AddSection({
     Name = "Farmar Automático"
 })
 
@@ -265,31 +212,10 @@ FarmTab:AddDropdown({
     Options = {"Main City", "Snow City", "Magma City", "Legends Highway"},
     Callback = function(Value)
         AreaToFarm = Value
-        if AreaToFarm == "Main City" then 
-            getgenv().MainCity = true
-            getgenv().Snow = false
-            getgenv().Magma = false
-            getgenv().LegendsHighway = false
-            CityFarm()
-        elseif AreaToFarm == "Snow City" then
-            getgenv().MainCity = false
-            getgenv().Snow = true
-            getgenv().Magma = false
-            getgenv().LegendsHighway = false
-            SnowFarm()
-        elseif AreaToFarm == "Magma City" then
-            getgenv().MainCity = false
-            getgenv().Snow = false
-            getgenv().Magma = true
-            getgenv().LegendsHighway = false
-            MagmaFarm()
-        elseif AreaToFarm == "Legends Highway" then
-            getgenv().MainCity = false
-            getgenv().Snow = false
-            getgenv().Magma = false
-            getgenv().LegendsHighway = true
-            LegendsHighwayFarm()
-        end
+        getgenv().MainCity = (AreaToFarm == "Main City")
+        getgenv().Snow = (AreaToFarm == "Snow City")
+        getgenv().Magma = (AreaToFarm == "Magma City")
+        getgenv().LegendsHighway = (AreaToFarm == "Legends Highway")
     end    
 })
 
@@ -298,21 +224,7 @@ FarmTab:AddDropdown({
     Default = nil,
     Options = {"Yellow Orb", "Orange Orb", "Blue Orb", "Red Orb", "Gemas"},
     Callback = function(Value)
-        AreaToFarm = Value
-        if AreaToFarm == "Yellow Orb" or AreaToFarm == "Orange Orb" or AreaToFarm == "Blue Orb" or AreaToFarm == "Red Orb" then
-            Autofarm = true
-            if AreaToFarm == "Yellow Orb" then
-                -- Implement Yellow Orb specific functionality here
-            elseif AreaToFarm == "Orange Orb" then
-                -- Implement Orange Orb specific functionality here
-            elseif AreaToFarm == "Blue Orb" then
-                -- Implement Blue Orb specific functionality here
-            elseif AreaToFarm == "Red Orb" then
-                -- Implement Red Orb specific functionality here
-            end
-        elseif AreaToFarm == "Gemas" then
-            -- Implement Gems specific functionality here
-        end
+        OrbToFarm = Value
     end    
 })
 
@@ -321,7 +233,15 @@ FarmTab:AddDropdown({
     Default = nil,
     Options = {"x50", "x75", "x100", "x125", "x150", "x175", "x200", "x250", "x300"},
     Callback = function(Value)
-        -- Implement Speed functionality here based on Value
+        FarmSpeed = Value
+    end    
+})
+
+FarmTab:AddToggle({
+    Name = "Ativar Farm",
+    Default = false,
+    Callback = function(Value)
+        ToggleFarm(Value)
     end    
 })
 
