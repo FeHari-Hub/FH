@@ -177,7 +177,7 @@ function ToggleAutoRaces(Value)
                     local playerHead = game:GetService("Players").LocalPlayer.Character.Head
                     local city = game:GetService("Workspace")
                     game:GetService("ReplicatedStorage"):WaitForChild("rEvents"):WaitForChild("raceEvent"):FireServer("joinRace")
-                    wait(0.01)
+                    wait(0.00)
                 end)
                 task.wait()
             end
