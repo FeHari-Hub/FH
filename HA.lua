@@ -138,12 +138,14 @@ for i, v in next, game:GetService("Workspace").mapCrystalsFolder:GetChildren() d
     table.insert(Crystals, v.Name)
 end
 
--- Função para alternar o estado de AutoRaces1
-function ToggleAutoRaces1(Value)
-    AutoRaces1 = Value
-    if AutoRaces1 then
+local AutoRaces = false
+
+-- Função para alternar o estado de AutoRaces
+function ToggleAutoRaces(Value)
+    AutoRaces = Value
+    if AutoRaces then
         spawn(function()
-            while AutoRaces1 do
+            while AutoRaces do
                 pcall(function()
                     game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace")
                     task.wait()
@@ -163,14 +165,14 @@ function ToggleAutoRaces1(Value)
     end
 end 
 
-local AutoRaces1 = false
+local AutoRaces = false
 
--- Função para alternar o estado de AutoRaces2
-function ToggleAutoRaces2(Value)
-    AutoRaces2 = Value
-    if AutoRaces2 then
+-- Função para alternar o estado de AutoRaces
+function ToggleAutoRaces(Value)
+    AutoRaces = Value
+    if AutoRaces then
         spawn(function()
-            while AutoRaces2 do
+            while AutoRaces do
                 pcall(function()
                     local playerHead = game:GetService("Players").LocalPlayer.Character.Head
                     local city = game:GetService("Workspace")
@@ -363,15 +365,15 @@ FarmTab:AddToggle({
     Name = "Auto Corridas",
     Default = false,
     Callback = function(Value)
-        ToggleAutoRaces1(Value)
+        ToggleAutoRaces(Value)
     end    
 })
 
 FarmTab:AddToggle({
-    Name = "Bloquear Corridas (permanente)",
+    Name = "Bloquear Corridas (apenas você entra)",
     Default = false,
     Callback = function(Value)
-        ToggleAutoRaces2(Value)
+        ToggleAutoRaces(Value)
     end    
 })
 
