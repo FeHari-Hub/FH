@@ -198,7 +198,6 @@ end
 
 local player = game.Players.LocalPlayer
 
--- Função para ativar e desativar o pulo infinito
 local function setInfiniteJump(value)
     getgenv().InfiniteJump = value
     if value then
@@ -210,9 +209,6 @@ local function setInfiniteJump(value)
             end
         end)
     else
-        -- Caso o toggle seja desativado, você pode querer remover o evento de pular infinito
-        -- Para simplicidade, não há necessidade de remover o evento se você estiver configurando o estado corretamente.
-        -- Apenas certifique-se de que o `InfiniteJump` esteja desativado.
     end
 end
 
