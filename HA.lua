@@ -125,7 +125,7 @@ local function Egg(EggName)
     task.wait()
     local Open = "openCrystal"
     local Name = EggName
-game:GetService("ReplicatedStorage").rEvents.openCrystalRemote:InvokeServer(Open, Name)
+    game:GetService("ReplicatedStorage").rEvents.openCrystalRemote:InvokeServer(Open, Name)
 end
 
 local function Rebirth()
@@ -329,12 +329,13 @@ FarmTab:AddToggle({
 	Name = "Comprar Pets Automáticamente (necessita de gemas)",
 	Default = false,
 	Callback = function(Value)
-    getgenv().OpenEgg = Value
-    while getgenv().OpenEgg do
-        if Crystal1 then
-        Egg(Crystal1)  
+        getgenv().OpenEgg = Value
+        while getgenv().OpenEgg do
+            if Crystal1 then
+                Egg(Crystal1)  
+            end
+            task.wait()
         end
-    end
 	end    
 })
 
