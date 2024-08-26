@@ -221,10 +221,6 @@ local FarmTab = Window:MakeTab({
 })
 
 local FarmTab = FarmTab:AddSection({
-	Name = "Opções De Jogador"
-})
-
-local FarmTab = FarmTab:AddSection({
 	Name = "Otimizações"
 })
 
@@ -234,10 +230,6 @@ FarmTab:AddToggle({
     Callback = function(value)
         isReducingGraphics = value
         if isReducingGraphics then
-            -- Executa a função imediatamente
-            optimizeFpsPing()
-
-            -- Continuar executando a função em intervalos enquanto o toggle estiver ativado
             while isReducingGraphics do
                 optimizeFpsPing()
                 task.wait()
