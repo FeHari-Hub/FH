@@ -156,7 +156,29 @@ local Section = FarmTab:AddSection({
 })
 
 
+local Slider = PlayerTab:CreateSlider({
+	Name = "Velocidade Do Personagem",
+	Range = {16, 10000},
+	Increment = 10,
+	Suffix = "WalkSpeed",
+	CurrentValue = 16,
+	Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(s)
+		game.Players.LocalPlayer.character.Humanoid.WalkSpeed = s
+	end,
+})
 
+local Slider = PlayerTab:CreateSlider({
+    Name = "Pulo Do Jogador",
+    Range = {0, 5000},
+    Increment = 10,
+    Suffix = "JumpPower",
+    CurrentValue = 10,
+    Flag = "Slider2", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(a)
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
+    end,
+ })
 
 local FarmTab = Window:MakeTab({
 	Name = "Farmar",
