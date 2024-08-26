@@ -185,12 +185,12 @@ function ToggleAutoRaces(Value)
     end
 end
 
-local function NoclipFunction()
-    while getgenv().Noclip do
-        game:GetService("RunService").Stepped:wait()
-        for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-            if v:IsA('BasePart') then
-                v.CanCollide = false
+local function optimizeFpsPing()
+    for _, v in pairs(game:GetService("Workspace"):GetDescendants()) do
+        if v:IsA("BasePart") and not v.Parent:FindFirstChild("Humanoid") then
+            v.Material = Enum.Material.SmoothPlastic
+            if v:IsA("Texture") then
+                v:Destroy()
             end
         end
     end
@@ -225,12 +225,13 @@ local FarmTab = FarmTab:AddSection({
 })
 
 FarmTab:AddToggle({
-    Name = "NoClip (atravessar tudo)",
+    Name = "FPS/Ping Toggle",
     Default = false,
     Callback = function(Value)
-        getgenv().Noclip = Value
-        if Value then
-            spawn(NoclipFunction)
+        getgenv().Hoop = Value
+        while Hoop do
+            optimizeFpsPing()
+            task.wait()
         end
     end    
 })
