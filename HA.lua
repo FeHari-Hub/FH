@@ -138,6 +138,33 @@ for i, v in next, game:GetService("Workspace").mapCrystalsFolder:GetChildren() d
     table.insert(Crystals, v.Name)
 end
 
+local AutoRaces = false
+
+-- Função para alternar o estado de AutoRaces
+function ToggleAutoRaces(Value)
+    AutoRaces = Value
+    if AutoRaces then
+        spawn(function()
+            while AutoRaces do
+                pcall(function()
+                    game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace")
+                    task.wait()
+                    local Workspace = game:GetService("Workspace")
+                    local part = game.Players.LocalPlayer.Character.HumanoidRootPart
+                    for k, v in pairs(Workspace.raceMaps:GetDescendants()) do 
+                        if v.Name == "Decal" and v.Parent then
+                            firetouchinterest(part, v.Parent, 0)
+                            wait()
+                            firetouchinterest(part, v.Parent, 1)
+                        end
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end 
+
 
 
 local function SelectCity(City)
@@ -278,6 +305,14 @@ FarmTab:AddToggle({
             task.wait()
         end
 	end    
+})
+
+FarmTab:AddToggle({
+    Name = "Auto Races",
+    Default = false,
+    Callback = function(Value)
+        ToggleAutoRaces(Value)
+    end    
 })
 
 
