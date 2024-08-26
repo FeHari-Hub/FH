@@ -1,9 +1,9 @@
---// Configurações Globais \\--
-getgenv().AntiAFK = false -- Anti-AFK Toggle
+--// Variables \\--
 getgenv().Autofarm = false
 getgenv().OpenEgg = false
 getgenv().AutoRebirth = false
 getgenv().HoopFarm = false
+
 getgenv().MainCity = false
 getgenv().Snow = false
 getgenv().Magma = false
@@ -18,21 +18,22 @@ Player.CharacterAdded:Connect(function()
     Chr = Player.Character
 end)
 
-local ChrHead = Chr and Chr:FindFirstChild("Head")
-local Humanoid = Chr and Chr:FindFirstChild("Humanoid")
-local Root = Chr and Chr:FindFirstChild("HumanoidRootPart")
+local ChrHead = Chr.Head
+local Humanoid = Chr.Humanoid
+local Root = Chr.HumanoidRootPart
 
 --// Tables \\--
 local AreaToFarm = {}
 local Crystals = {}
 
---// Funções de Farm \\--
+--// Functions \\--
 local function CityFarm()
     spawn(function()
         while task.wait() do
-            if not getgenv().Autofarm or not getgenv().MainCity then break end
+            if not Autofarm then break end
+            if not MainCity then break end
             if Chr and Chr.Parent and Chr:FindFirstChild("Head") then
-                for _, v in pairs(game:GetService("Workspace").orbFolder["City"]:GetDescendants()) do
+                for i, v in next, game:GetService("Workspace").orbFolder["City"]:GetDescendants() do
                     if v.Name == "TouchInterest" then
                         firetouchinterest(Chr:WaitForChild("Head", 5), v.Parent, 0)
                     end
@@ -47,9 +48,10 @@ end
 local function SnowFarm()
     spawn(function()
         while task.wait() do
-            if not getgenv().Autofarm or not getgenv().Snow then break end
+            if not Autofarm then break end
+            if not SnowFarm then break end
             if Chr and Chr.Parent and Chr:FindFirstChild("Head") then
-                for _, v in pairs(game:GetService("Workspace").orbFolder["Snow City"]:GetDescendants()) do
+                for i, v in next, game:GetService("Workspace").orbFolder["Snow City"]:GetDescendants() do
                     if v.Name == "TouchInterest" then
                         firetouchinterest(Chr:WaitForChild("Head", 5), v.Parent, 0)
                     end
@@ -64,9 +66,10 @@ end
 local function MagmaFarm()
     spawn(function()
         while task.wait() do
-            if not getgenv().Autofarm or not getgenv().Magma then break end
+            if not Autofarm then break end
+            if not MagmaFarm then break end
             if Chr and Chr.Parent and Chr:FindFirstChild("Head") then
-                for _, v in pairs(game:GetService("Workspace").orbFolder["Magma City"]:GetDescendants()) do
+                for i, v in next, game:GetService("Workspace").orbFolder["Magma City"]:GetDescendants() do
                     if v.Name == "TouchInterest" then
                         firetouchinterest(Chr:WaitForChild("Head", 5), v.Parent, 0)
                     end
@@ -81,9 +84,10 @@ end
 local function LegendsHighwayFarm()
     spawn(function()
         while task.wait() do
-            if not getgenv().Autofarm or not getgenv().LegendsHighway then break end
+            if not Autofarm then break end
+            if not LegendsHighway then break end
             if Chr and Chr.Parent and Chr:FindFirstChild("Head") then
-                for _, v in pairs(game:GetService("Workspace").orbFolder["Legends Highway"]:GetDescendants()) do
+                for i, v in next, game:GetService("Workspace").orbFolder["Legends Highway"]:GetDescendants() do
                     if v.Name == "TouchInterest" then
                         firetouchinterest(Chr:WaitForChild("Head", 5), v.Parent, 0)
                     end
@@ -99,26 +103,24 @@ local function HoopFarmV2()
     local Chr = game.Players.LocalPlayer.Character
     if Chr and Chr.Parent and Chr:FindFirstChild("HumanoidRootPart") then
         local children = workspace.Hoops:GetChildren()
-        for _, child in ipairs(children) do
+        for i, child in ipairs(children) do
             if child.Name == "Hoop" then
                 child.CFrame = Chr.HumanoidRootPart.CFrame
             end    
         end
     end
 end
-
 local function HoopFarm()
     if Chr and Chr.Parent and Chr:FindFirstChild("Head") then
-        for _, v in pairs(game:GetService("Workspace").Hoops:GetDescendants()) do
+        for i, v in next, game:GetService("Workspace").Hoops:GetDescendants() do
             if v.Name == "TouchInterest" and v.Parent then
-                firetouchinterest(Chr:WaitForChild("Head", 5), v.Parent, 0)
-                task.wait()
-                firetouchinterest(Chr:WaitForChild("Head", 5), v.Parent, 1)
+            firetouchinterest(Chr:WaitForChild("Head", 5), v.Parent, 0)
+            task.wait()
+            firetouchinterest(Chr:WaitForChild("Head", 5), v.Parent, 1)
             end
         end
     end
 end
-
 local function Egg(EggName)
     task.wait()
     local Open = "openCrystal"
@@ -132,21 +134,25 @@ local function Rebirth()
     game:GetService("ReplicatedStorage").rEvents.rebirthEvent:FireServer(ohString1)
 end
 
-for _, v in pairs(game:GetService("Workspace").mapCrystalsFolder:GetChildren()) do
+for i, v in next, game:GetService("Workspace").mapCrystalsFolder:GetChildren() do
     table.insert(Crystals, v.Name)
 end
 
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
+
 -- Função para alternar o estado de AutoRaces
 local function ToggleAutoRaces(Value)
-    getgenv().AutoRaces = Value
-    if getgenv().AutoRaces then
+    AutoRaces = Value
+    if AutoRaces then
         spawn(function()
-            while getgenv().AutoRaces do
+            while AutoRaces do
                 pcall(function()
-                    game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace")
+                    ReplicatedStorage.rEvents.raceEvent:FireServer("joinRace")
                     task.wait()
                     local part = Players.LocalPlayer.Character.HumanoidRootPart
-                    for _, v in pairs(game:GetService("Workspace").raceMaps:GetDescendants()) do 
+                    for _, v in pairs(Workspace.raceMaps:GetDescendants()) do 
                         if v.Name == "Decal" and v.Parent then
                             firetouchinterest(part, v.Parent, 0)
                             wait()
@@ -161,13 +167,13 @@ local function ToggleAutoRaces(Value)
 end 
 
 local function ToggleAutoRacesSolo(Value)
-    getgenv().AutoRacesSolo = Value
-    if getgenv().AutoRacesSolo then
+    AutoRacesSolo = Value
+    if AutoRacesSolo then
         spawn(function()
-            while getgenv().AutoRacesSolo do
+            while AutoRacesSolo do
                 pcall(function()
                     local playerHead = Players.LocalPlayer.Character.Head
-                    game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace")
+                    ReplicatedStorage.rEvents.raceEvent:FireServer("joinRace")
                     wait(0.00)
                 end)
                 task.wait()
@@ -176,7 +182,9 @@ local function ToggleAutoRacesSolo(Value)
     end
 end
 
--- Função para otimizar FPS e Ping
+local AutoRaces = false
+local AutoRacesSolo = false
+
 local function optimizeFpsPing()
     for _, v in pairs(game:GetService("Workspace"):GetDescendants()) do
         if v:IsA("BasePart") and not v.Parent:FindFirstChild("Humanoid") then
@@ -188,7 +196,8 @@ local function optimizeFpsPing()
     end
 end
 
--- Função para selecionar a cidade
+
+
 local function SelectCity(City)
     if City == "Main City" then
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9682.98828, 74.8522873, 3099.03394, 0.087131381, 0, 0.996196866, 0, 1, 0, -0.996196866, 0, 0.087131381)
@@ -201,110 +210,324 @@ local function SelectCity(City)
     end
 end
 
---// Início do Script de Interface \\--
+--// Haridade Script \\--
 local HaridadeLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/FeHari/HaridadeScript/main/LegendsOfSpeed.lua')))()
-local Window = HaridadeLib:CreateWindow("Legends Of Speed")
-local Tabs = {
-    Main = Window:CreateTab("Main"),
-    Farm = Window:CreateTab("Farm"),
-    Settings = Window:CreateTab("Settings")
-}
+local Window = HaridadeLib:MakeWindow({Name = "Haridade | Legends Of Speed ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "HaridadeTest"})
 
---// Main Tab \\--
-local MainTab = Tabs.Main
-MainTab:CreateToggle("Anti-AFK", getgenv().AntiAFK, function(value)
-    getgenv().AntiAFK = value
-    if value then
-        spawn(function()
-            while getgenv().AntiAFK do
-                task.wait(60)
-                local virtualUser = game:GetService("VirtualUser")
-                virtualUser:ClickButton2(Vector2.new())
+local FarmTab = Window:MakeTab({
+	Name = "Início",
+	Icon = "rbxassetid://112625488111718",
+	PremiumOnly = false
+})
+
+local FarmTab = FarmTab:AddSection({
+	Name = "Otimizações"
+})
+
+FarmTab:AddToggle({
+    Name = "Reduzir Gráficos Ao Máximo",
+    Default = false,
+    Callback = function(value)
+        isReducingGraphics = value
+        if isReducingGraphics then
+            while isReducingGraphics do
+                optimizeFpsPing()
+                task.wait()
             end
-        end)
-    end
-end)
+        end
+    end    
+})
 
-MainTab:CreateButton("Optimize FPS/Ping", function()
-    optimizeFpsPing()
-end)
+local FarmTab = Window:MakeTab({
+	Name = "Teleportar",
+	Icon = "rbxassetid://109334924659404",
+	PremiumOnly = false
+})
 
---// Farm Tab \\--
-local FarmTab = Tabs.Farm
-FarmTab:CreateToggle("Farm Main City", getgenv().MainCity, function(value)
-    getgenv().MainCity = value
-    if value then
+local Section = FarmTab:AddSection({
+	Name = "Áreas Para Teleportar"
+})
+
+
+FarmTab:AddDropdown({
+	Name = "Selecionar Cidade Para Teleportar",
+	Default = nil,
+	Options = {"Main City", "Snow City", "Magma City", "Legends Highway"},
+	Callback = function(Value)
+		SelectCity(Value)
+	end    
+})
+
+
+local FarmTab = Window:MakeTab({
+	Name = "Farmar",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = FarmTab:AddSection({
+	Name = "Farmar Automático"
+})
+
+
+FarmTab:AddDropdown({
+	Name = "Áreas Para Farmar",
+	Default = nil,
+	Options = {"Main City", "Snow City", "Magma City", "Legends Highway"},
+	Callback = function(Value)
+		AreaToFarm = Value
+    if AreaToFarm == "Main City" then 
+        getgenv().MainCity = true
+        getgenv().Snow = false
+        getgenv().Magma = false
+        getgenv().LegendsHighway = false
         CityFarm()
-    end
-end)
-
-FarmTab:CreateToggle("Farm Snow City", getgenv().Snow, function(value)
-    getgenv().Snow = value
-    if value then
+    elseif AreaToFarm == "Snow City" then
+        getgenv().MainCity = false
+        getgenv().Snow = true
+        getgenv().Magma = false
+        getgenv().LegendsHighway = false
         SnowFarm()
-    end
-end)
-
-FarmTab:CreateToggle("Farm Magma City", getgenv().Magma, function(value)
-    getgenv().Magma = value
-    if value then
+    elseif AreaToFarm == "Magma City" then
+        getgenv().MainCity = false
+        getgenv().Snow = false
+        getgenv().Magma = true
+        getgenv().LegendsHighway = false
         MagmaFarm()
-    end
-end)
-
-FarmTab:CreateToggle("Farm Legends Highway", getgenv().LegendsHighway, function(value)
-    getgenv().LegendsHighway = value
-    if value then
+    elseif AreaToFarm == "Legends Highway" then
+        getgenv().MainCity = false
+        getgenv().Snow = false
+        getgenv().Magma = false
+        getgenv().LegendsHighway = true
         LegendsHighwayFarm()
     end
-end)
+end    
+})
 
-FarmTab:CreateToggle("Hoop Farm", getgenv().HoopFarm, function(value)
-    getgenv().HoopFarm = value
-    if value then
-        HoopFarm()
+FarmTab:AddDropdown({
+	Name = "Selecione a Orb",
+	Default = nil,
+	Options = {"Yellow Orb", "Orange Orb", "Blue Orb", "Red Orb", "Gemas"},
+	Callback = function(Value)
+		AreaToFarm = Value
+    if AreaToFarm == "Main City" then 
+        getgenv().MainCity = true
+        getgenv().Snow = false
+        getgenv().Magma = false
+        getgenv().LegendsHighway = false
+        CityFarm()
+    elseif AreaToFarm == "Snow City" then
+        getgenv().MainCity = false
+        getgenv().Snow = true
+        getgenv().Magma = false
+        getgenv().LegendsHighway = false
+        SnowFarm()
+    elseif AreaToFarm == "Magma City" then
+        getgenv().MainCity = false
+        getgenv().Snow = false
+        getgenv().Magma = true
+        getgenv().LegendsHighway = false
+        MagmaFarm()
+    elseif AreaToFarm == "Legends Highway" then
+        getgenv().MainCity = false
+        getgenv().Snow = false
+        getgenv().Magma = false
+        getgenv().LegendsHighway = true
+        LegendsHighwayFarm()
     end
-end)
+end    
+})
 
-FarmTab:CreateToggle("Hoop Farm V2", getgenv().HoopFarmV2, function(value)
-    getgenv().HoopFarmV2 = value
-    if value then
-        HoopFarmV2()
+FarmTab:AddDropdown({
+	Name = "Selecine a Velocidade",
+	Default = nil,
+	Options = {"x50", "x75", "x100", "x125", "x150", "x175", "x200", "x250", "x300"},
+	Callback = function(Value)
+		AreaToFarm = Value
+    if AreaToFarm == "Main City" then 
+        getgenv().MainCity = true
+        getgenv().Snow = false
+        getgenv().Magma = false
+        getgenv().LegendsHighway = false
+        CityFarm()
+    elseif AreaToFarm == "Snow City" then
+        getgenv().MainCity = false
+        getgenv().Snow = true
+        getgenv().Magma = false
+        getgenv().LegendsHighway = false
+        SnowFarm()
+    elseif AreaToFarm == "Magma City" then
+        getgenv().MainCity = false
+        getgenv().Snow = false
+        getgenv().Magma = true
+        getgenv().LegendsHighway = false
+        MagmaFarm()
+    elseif AreaToFarm == "Legends Highway" then
+        getgenv().MainCity = false
+        getgenv().Snow = false
+        getgenv().Magma = false
+        getgenv().LegendsHighway = true
+        LegendsHighwayFarm()
     end
-end)
+end    
+})
 
-FarmTab:CreateDropdown("Select Egg", Crystals, function(selected)
-    if getgenv().OpenEgg then
-        Egg(selected)
-    end
-end)
+FarmTab:AddToggle({
+	Name = "Diminuir o Ping (não faz milagre)",
+	Default = false,
+	Callback = function(Value)
+		getgenv().Hoop = Value
+        while Hoop do
+            HoopFarm()
+            task.wait()
+        end
+	end    
+})
 
-FarmTab:CreateToggle("Open Egg", getgenv().OpenEgg, function(value)
-    getgenv().OpenEgg = value
-end)
+FarmTab:AddToggle({
+	Name = "Farmar Orbs (BETA)",
+	Default = false,
+	Callback = function(Value)
+    Autofarm = Value
+    if Value then
+        if AreaToFarm == "Main City" then
+            CityFarm()
+        elseif AreaToFarm == "Snow City" then
+            SnowFarm()
+        elseif AreaToFarm == "Magma City" then
+            MagmaFarm()
+        elseif AreaToFarm == "Legends Highway" then
+            LegendsHighwayFarm()
+        end
+    end 
+end
+})
 
-FarmTab:CreateToggle("Auto Rebirth", getgenv().AutoRebirth, function(value)
-    getgenv().AutoRebirth = value
-    if value then
-        spawn(function()
-            while getgenv().AutoRebirth do
-                Rebirth()
-                task.wait(300) -- Intervalo para evitar execução contínua sem necessidade
+local Section = FarmTab:AddSection({
+	Name = "Farmar Aros"
+})
+
+FarmTab:AddToggle({
+	Name = "Aros V1",
+	Default = false,
+	Callback = function(Value)
+		getgenv().Hoop = Value
+        while Hoop do
+            HoopFarm()
+            task.wait()
+        end
+	end    
+})
+
+FarmTab:AddToggle({
+	Name = "Aros V2",
+	Default = false,
+	Callback = function(Value)
+		getgenv().HoopV2 = Value
+        while HoopV2 do
+            HoopFarmV2()
+            task.wait()
+        end
+	end    
+})
+
+
+local FarmTab = Window:MakeTab({
+	Name = "Renascimento",
+	Icon = "rbxassetid://121663556703347",
+	PremiumOnly = false
+})
+
+local Section = FarmTab:AddSection({
+	Name = "Auto Renascimento"
+})
+
+
+FarmTab:AddToggle({
+	Name = "Auto Renascimento (ative apenas se for renascer AFK)",
+	Default = false,
+	Callback = function(Value)
+		getgenv().AutoRebirth = Value
+        while AutoRebirth do
+            Rebirth()
+            task.wait()
+        end
+	end    
+})
+
+local FarmTab = Window:MakeTab({
+	Name = "Auto Corridas",
+	Icon = "rbxassetid://72430981170529",
+	PremiumOnly = false
+})
+
+local Section = FarmTab:AddSection({
+	Name = "Corridas Automáticas"
+})
+
+FarmTab:AddToggle({
+    Name = "Auto Corridas",
+    Default = false,
+    Callback = function(Value)
+        ToggleAutoRaces(Value)
+    end    
+})
+
+FarmTab:AddToggle({
+    Name = "Bloquear Corridas (apenas você entra)",
+    Default = false,
+    Callback = function(Value)
+        ToggleAutoRacesSolo(Value)
+    end    
+})
+
+local FarmTab = Window:MakeTab({
+	Name = "Comprar Pets",
+	Icon = "rbxassetid://95145057413711",
+	PremiumOnly = false
+})
+
+local Section = FarmTab:AddSection({
+	Name = "Comprar Pets Automáticamente"
+})
+
+local Crystal1
+
+FarmTab:AddDropdown({
+	Name = "Escolha O Cristal",
+	Default = nil,
+	Options = Crystals,
+	Callback = function(Value)
+        Crystal1 = Value
+	end    
+})
+
+FarmTab:AddToggle({
+	Name = "Comprar Pets Automáticamente (necessita de gemas)",
+	Default = false,
+	Callback = function(Value)
+        getgenv().OpenEgg = Value
+        while getgenv().OpenEgg do
+            if Crystal1 then
+                Egg(Crystal1)  
             end
-        end)
-    end
-end)
+            task.wait()
+        end
+	end    
+})
 
---// Settings Tab \\--
-local SettingsTab = Tabs.Settings
-SettingsTab:CreateToggle("Auto Races", getgenv().AutoRaces, function(value)
-    ToggleAutoRaces(value)
-end)
+HaridadeLib:MakeNotification({
+	Name = "Haridade Community",
+	Content = "discord.gg/uydz6pZWMk",
+	Image = "rbxassetid://101951842185056",
+	Time = 20
+})
 
-SettingsTab:CreateToggle("Auto Races Solo", getgenv().AutoRacesSolo, function(value)
-    ToggleAutoRacesSolo(value)
-end)
+HaridadeLib:MakeNotification({
+	Name = "BYPASS ANTI-DETECTAÇÃO",
+	Content = "ByPass Ativo... ✅",
+	Image = "rbxassetid://71506531582407",
+	Time = 20
+})
 
-SettingsTab:CreateDropdown("Select City", {"Main City", "Snow City", "Magma City", "Legends Highway"}, function(selected)
-    SelectCity(selected)
-end)
+HaridadeLib:Init()
