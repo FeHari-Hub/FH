@@ -307,14 +307,6 @@ FarmTab:AddToggle({
 	end    
 })
 
-FarmTab:AddToggle({
-    Name = "Auto Races",
-    Default = false,
-    Callback = function(Value)
-        ToggleAutoRaces(Value)
-    end    
-})
-
 
 local FarmTab = Window:MakeTab({
 	Name = "Renascimento",
@@ -337,6 +329,24 @@ FarmTab:AddToggle({
             task.wait()
         end
 	end    
+})
+
+local FarmTab = Window:MakeTab({
+	Name = "Auto Corridas",
+	Icon = "rbxassetid://72430981170529",
+	PremiumOnly = false
+})
+
+local Section = FarmTab:AddSection({
+	Name = "Corridas Automáticas"
+})
+
+FarmTab:AddToggle({
+    Name = "Auto Corridas",
+    Default = false,
+    Callback = function(Value)
+        ToggleAutoRaces(Value)
+    end    
 })
 
 local FarmTab = Window:MakeTab({
