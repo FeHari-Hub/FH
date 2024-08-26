@@ -281,12 +281,6 @@ FarmTab:AddToggle({
     end    
 })
 
-Settings:Line()
-
-Settings:Button("Entre no Discord: Haridade Community, function()
-    setclipboard("https://discord.gg/uydz6pZWMk")
-end)
-
 local FarmTab = Window:MakeTab({
 	Name = "Teleportar",
 	Icon = "rbxassetid://109334924659404",
