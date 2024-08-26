@@ -196,48 +196,13 @@ local function optimizeFpsPing()
     end
 end
 
-local function optimizeCPU()
-    local a = game
-    local b = a.Workspace
-    local c = a.Lighting
-    local d = b.Terrain
-    d.WaterWaveSize = 0
-    d.WaterWaveSpeed = 0
-    d.WaterReflectance = 0
-    d.WaterTransparency = 0
-    c.GlobalShadows = false
-    c.FogEnd = 9e9
-    settings().Rendering.QualityLevel = "Level01"
-    for e, f in pairs(a:GetDescendants()) do
-        if f:IsA("Part") or f:IsA("Union") or f:IsA("CornerWedgePart") or f:IsA("TrussPart") then
-            f.Reflectance = 0
-        elseif f:IsA("Decal") or f:IsA("Texture") then
-            f.Transparency = 0
-        elseif f:IsA("ParticleEmitter") or f:IsA("Trail") then
-            f.Lifetime = NumberRange.new(0)
-        elseif f:IsA("Explosion") then
-            f.BlastPressure = 0
-            f.BlastRadius = 0
-        elseif f:IsA("Fire") or f:IsA("SpotLight") or f:IsA("Smoke") or f:IsA("Sparkles") then
-            f.Enabled = false
-        elseif f:IsA("MeshPart") then
-            f.Reflectance = 0
-        end
-        if f:IsA("Fire") then
-            f:Destroy()
-            wait()
-        end
-        if string.find(f.Name:lower(), "door") then
-            f:Destroy()
-        end
-        if string.find(f.Name:lower(), "tree") then
-            f:Destroy()
-        end
-        if f:IsA("ParticleEmitter") then
-            f:Destroy()
-        end
-    end
-end
+local function ("Infinits-Jump", InfiniteJump, function(v)
+    getgenv().InfiniteJump = v
+    game.UserInputService.JumpRequest:connect(function()
+        if not getgenv().InfiniteJump then return end
+        player.Character.Humanoid:ChangeState('Jumping')
+    end)
+end)
 
 
 
