@@ -185,6 +185,17 @@ function ToggleAutoRaces(Value)
     end
 end
 
+local function NoclipFunction()
+    while getgenv().Noclip do
+        game.RunService.Stepped:wait()
+        for i, v in pairs(player.Character:GetDescendants()) do
+            if v:IsA('BasePart') then
+                v.CanCollide = false
+            end
+        end
+    end
+end
+
 
 
 local function SelectCity(City)
@@ -213,6 +224,16 @@ local FarmTab = FarmTab:AddSection({
 	Name = "Opções Do Jogador"
 })
 
+FarmTab:AddToggle({
+    Name = "NoClip (atravessar tudo)",
+    Default = false,
+    Callback = function(Value)
+        getgenv().Noclip = Value
+        if Value then
+            NoclipFunction()
+        end
+    end    
+})
 
 local FarmTab = Window:MakeTab({
 	Name = "Teleportar",
