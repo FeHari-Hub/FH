@@ -230,13 +230,8 @@ FarmTab:AddToggle({
 end
 })
 
-local Section = FarmTab:AddSection({
-	Name = "Farmar Aros"
-})
-
-
 FarmTab:AddToggle({
-	Name = "Farmar Aros",
+	Name = "Hoop Farm",
 	Default = false,
 	Callback = function(Value)
 		getgenv().Hoop = Value
