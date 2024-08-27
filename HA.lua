@@ -225,7 +225,7 @@ local FarmTab = FarmTab:AddSection({
 })
 
 FarmTab:AddButton({
-    Name = "Reduzir Gráficos Ao Máximo",
+    Name = "Diminuir Os Gráficos Do Jogo",
     Default = false,
     Callback = function(value)
 	    print("button pressed")	  
