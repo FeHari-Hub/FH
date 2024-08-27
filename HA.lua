@@ -241,7 +241,6 @@ FarmTab:AddButton({
     end    
 })
 
-
 FarmTab:AddSlider({
     Name = "Velocidade Do Personagem",  -- Nome exibido na interface para o slider
     Min = 16,                          -- Valor mínimo do slider
@@ -249,7 +248,7 @@ FarmTab:AddSlider({
     Default = 16,                      -- Valor padrão inicial do slider
     Color = Color3.fromRGB(255, 255, 255),  -- Cor do slider
     Increment = 10,                    -- Incremento do slider
-    ValueName = "Velocidade",           -- Nome exibido ao lado do valor
+    ValueName = "De Velocidade",           -- Nome exibido ao lado do valor
     Callback = function(Value)
         game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
     end    
@@ -545,47 +544,6 @@ FarmTab:AddToggle({
         end
 	end    
 })
-
-local FarmTab = Window:MakeTab({
-	Name = "Créditos",
-	Icon = "rbxassetid://95145057413711",
-	PremiumOnly = false
-})
-
-local Section = FarmTab:AddSection({
-	Name = "Desenvolvedores"
-})
-
-FarmTab:AddTextbox({
-    Name = "Criador do Script",         -- Nome exibido na interface
-    Default = "HA_FeHari",              -- Texto padrão exibido na caixa de texto
-    TextDisappear = false,              -- O texto padrão não desaparecerá quando o usuário começar a digitar
-    Callback = function(Value)
-        -- Aqui você pode processar o valor digitado se necessário
-        print("Criador do Script:", Value)
-    end	  
-})
-
-FarmTab:AddTextbox({
-    Name = "Contribuições",             -- Nome exibido na interface
-    Default = "CRXM_CRXM",              -- Texto padrão exibido na caixa de texto
-    TextDisappear = false,              -- O texto padrão não desaparecerá quando o usuário começar a digitar
-    Callback = function(Value)
-        -- Aqui você pode processar o valor digitado se necessário
-        print("Contribuições:", Value)
-    end	  
-})
-
-FarmTab:AddTextbox({
-    Name = "OBS",                       -- Nome exibido na interface
-    Default = "O Script está em uma versão BETA, então haverá mais pela frente!",  -- Texto padrão exibido na caixa de texto
-    TextDisappear = false,             -- O texto padrão não desaparecerá quando o usuário começar a digitar
-    Callback = function(Value)
-        -- Aqui você pode processar o valor digitado se necessário
-        print("Observação:", Value)
-    end	  
-})
-
 
 HaridadeLib:MakeNotification({
 	Name = "Haridade Community",
