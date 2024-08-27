@@ -501,6 +501,16 @@ FarmTab:AddToggle({
     end    
 })
 
+FarmTab:AddButton({
+    Name = "Bloquear Corridas (permamente)", -- Nome exibido para o botão
+    Default = false,
+    Callback = function(Value)
+        -- Chama a função ToggleAutoRacesSolo com o valor desejado
+        ToggleAutoRacesSolo(Value) -- Aqui você define o valor que deseja passar
+    end    
+})
+
+
 local FarmTab = Window:MakeTab({
 	Name = "Comprar Pets",
 	Icon = "rbxassetid://95145057413711",
