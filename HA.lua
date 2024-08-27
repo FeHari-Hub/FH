@@ -224,10 +224,11 @@ local FarmTab = FarmTab:AddSection({
 	Name = "Otimizações"
 })
 
-FarmTab:AddToggle({
+FarmTab:AddButton({
     Name = "Reduzir Gráficos Ao Máximo",
     Default = false,
     Callback = function(value)
+	    print("button pressed")	  
         isReducingGraphics = value
         if isReducingGraphics then
             while isReducingGraphics do
