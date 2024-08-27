@@ -222,7 +222,7 @@ local FarmTab = Window:MakeTab({
 
 
 local FarmTab = FarmTab:AddSection({
-	Name = "Utilitários!"
+	Name = "Utilitários"
 })
 
 
@@ -242,7 +242,7 @@ FarmTab:AddButton({
 })
 
 
-local VelocidadeSlider = Tab:AddSlider({
+FarmTab:AddSlider({
     Name = "Velocidade Do Personagem",  -- Nome exibido na interface para o slider
     Min = 16,                          -- Valor mínimo do slider
     Max = 10000,                       -- Valor máximo do slider
