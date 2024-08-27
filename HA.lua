@@ -248,13 +248,11 @@ FarmTab:AddSlider({
     Default = 16,                      -- Valor padrão inicial do slider
     Color = Color3.fromRGB(255, 255, 255),  -- Cor do slider
     Increment = 10,                    -- Incremento do slider
-    ValueName = "De Velocidade",           -- Nome exibido ao lado do valor
+    ValueName = "Velocidade",           -- Nome exibido ao lado do valor
     Callback = function(Value)
         game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
     end    
 })
-
-VelocidadeSlider:Set(2)
 
 
 local FarmTab = Window:MakeTab({
