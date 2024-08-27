@@ -491,10 +491,10 @@ FarmTab:AddToggle({
 })
 
 FarmTab:AddButton({
-    Name = "Bloquear Corridas (permamente)", -- Nome exibido para o botão
+    Name = "Bloquear Corridas (permanente)", -- Nome exibido para o botão
     Default = false,
     Callback = function(Value)
-        -- Chama a função ToggleAutoRacesSolo com o valor desejado
+        -- ToggleAutoRacesSolo block race (CRXM_CRXM)
         ToggleAutoRacesSolo(Value) -- Aqui você define o valor que deseja passar
     end    
 })
