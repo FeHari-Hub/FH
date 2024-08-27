@@ -220,23 +220,6 @@ local FarmTab = Window:MakeTab({
 	PremiumOnly = false
 })
 
-local FarmTab = FarmTab:AddSection({
-	Name = "Funções Do Personagem"
-})
-
-Tab:AddSlider({
-    Name = "Velocidade Do Personagem",
-    Min = 16,               -- Valor mínimo do slider
-    Max = 10000,            -- Valor máximo do slider
-    Default = 16,           -- Valor padrão inicial do slider
-    Color = Color3.fromRGB(255, 255, 255), -- Cor do slider
-    Increment = 10,         -- Incremento do slider
-    ValueName = "WalkSpeed", -- Nome exibido ao lado do valor
-    Callback = function(Value)
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
-    end
-})
-
 
 local FarmTab = FarmTab:AddSection({
 	Name = "Otimizações"
@@ -255,6 +238,19 @@ FarmTab:AddButton({
             end
         end
     end    
+})
+
+Tab:AddSlider({
+    Name = "Velocidade Do Personagem",
+    Min = 16,               -- Valor mínimo do slider
+    Max = 10000,            -- Valor máximo do slider
+    Default = 16,           -- Valor padrão inicial do slider
+    Color = Color3.fromRGB(255, 255, 255), -- Cor do slider
+    Increment = 10,         -- Incremento do slider
+    ValueName = "WalkSpeed", -- Nome exibido ao lado do valor
+    Callback = function(Value)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+    end
 })
 
 local FarmTab = Window:MakeTab({
