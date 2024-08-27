@@ -243,12 +243,12 @@ FarmTab:AddButton({
 
 FarmTab:AddSlider({
     Name = "Velocidade Do Personagem",  -- Nome exibido na interface para o slider
-    Min = 1000,                          -- Valor mínimo do slider
+    Min = 10000,                          -- Valor mínimo do slider
     Max = 10000,                       -- Valor máximo do slider
     Default = 16,                      -- Valor padrão inicial do slider
     Color = Color3.fromRGB(255, 255, 255),  -- Cor do slider
     Increment = 10,                    -- Incremento do slider
-    ValueName = "Velocidade",           -- Nome exibido ao lado do valor
+    ValueName = "Velocidade (fixo)",           -- Nome exibido ao lado do valor
     Callback = function(Value)
         game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
     end    
@@ -538,7 +538,7 @@ FarmTab:AddToggle({
 
 local FarmTab = Window:MakeTab({
 	Name = "Créditos",
-	Icon = "rbxassetid://121663556703347",
+	Icon = "rbxassetid://96062201354965",
 	PremiumOnly = false
 })
 
