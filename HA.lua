@@ -226,7 +226,7 @@ local FarmTab = FarmTab:AddSection({
 })
 
 FarmTab:AddButton({
-    Name = "Diminuir Os Gráficos Do Jogo",
+    Name = "Diminuir Os Gráficos Do JogoR",
     Default = false,
     Callback = function(value)
 	    print("button pressed")	  
@@ -240,7 +240,7 @@ FarmTab:AddButton({
     end    
 })
 
-Tab:AddSlider({
+FarmTab:AddSlider({
     Name = "Velocidade Do Personagem",
     Min = 16,               -- Valor mínimo do slider
     Max = 10000,            -- Valor máximo do slider
