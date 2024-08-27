@@ -490,14 +490,6 @@ FarmTab:AddToggle({
     end    
 })
 
-FarmTab:AddToggle({
-    Name = "Bloquear Corridas (apenas você entra)",
-    Default = false,
-    Callback = function(Value)
-        ToggleAutoRacesSolo(Value)
-    end    
-})
-
 FarmTab:AddButton({
     Name = "Bloquear Corridas (permamente)", -- Nome exibido para o botão
     Default = false,
