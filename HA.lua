@@ -243,7 +243,7 @@ FarmTab:AddButton({
 
 FarmTab:AddSlider({
     Name = "Velocidade Do Personagem",  -- Nome exibido na interface para o slider
-    Min = 16,                          -- Valor mínimo do slider
+    Min = 1000,                          -- Valor mínimo do slider
     Max = 10000,                       -- Valor máximo do slider
     Default = 16,                      -- Valor padrão inicial do slider
     Color = Color3.fromRGB(255, 255, 255),  -- Cor do slider
@@ -533,6 +533,13 @@ FarmTab:AddToggle({
             task.wait()
         end
 	end    
+})
+
+
+local FarmTab = Window:MakeTab({
+	Name = "Créditos",
+	Icon = "rbxassetid://121663556703347",
+	PremiumOnly = false
 })
 
 HaridadeLib:MakeNotification({
