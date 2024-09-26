@@ -376,13 +376,6 @@ FarmTab:AddDropdown({
 end    
 })
 
-FarmTab:AddToggle({
-	Name = "Ativar Farm",
-	Callback = function()
-        game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
-  	end    
-})
-
 local Section = FarmTab:AddSection({
 	Name = "Farmar Aros"
 })
@@ -497,12 +490,6 @@ FarmTab:AddToggle({
 	end    
 })
 
-
-local FarmTab = Window:MakeTab({
-	Name = "Créditos",
-	Icon = "rbxassetid://96062201354965",
-	PremiumOnly = false
-})
 
 local FarmTab = Window:MakeTab({
 	Name = "Créditos",
