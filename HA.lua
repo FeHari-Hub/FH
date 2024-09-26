@@ -241,19 +241,6 @@ FarmTab:AddButton({
     end    
 })
 
-FarmTab:AddSlider({
-    Name = "Velocidade Do Personagem",  -- Nome exibido na interface para o slider
-    Min = 10000,                          -- Valor mínimo do slider
-    Max = 10000,                       -- Valor máximo do slider
-    Default = 16,                      -- Valor padrão inicial do slider
-    Color = Color3.fromRGB(255, 255, 255),  -- Cor do slider
-    Increment = 10,                    -- Incremento do slider
-    ValueName = "Velocidade (fixo)",           -- Nome exibido ao lado do valor
-    Callback = function(Value)
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
-    end    
-})
-
 
 local FarmTab = Window:MakeTab({
 	Name = "Teleportar",
@@ -390,34 +377,10 @@ end
 })
 
 FarmTab:AddToggle({
-	Name = "Diminuir o Ping (não faz milagre)",
-	Default = false,
-	Callback = function(Value)
-		getgenv().Hoop = Value
-        while Hoop do
-            HoopFarm()
-            task.wait()
-        end
-	end    
-})
-
-FarmTab:AddToggle({
-	Name = "Farmar Orbs (BETA)",
-	Default = false,
-	Callback = function(Value)
-    Autofarm = Value
-    if Value then
-        if AreaToFarm == "Main City" then
-            CityFarm()
-        elseif AreaToFarm == "Snow City" then
-            SnowFarm()
-        elseif AreaToFarm == "Magma City" then
-            MagmaFarm()
-        elseif AreaToFarm == "Legends Highway" then
-            LegendsHighwayFarm()
-        end
-    end 
-end
+	Name = "Ativar Farm",
+	Callback = function()
+        game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
+  	end    
 })
 
 local Section = FarmTab:AddSection({
@@ -490,12 +453,11 @@ FarmTab:AddToggle({
     end    
 })
 
-FarmTab:AddButton({
-    Name = "Bloquear Corridas (permanente)", -- Nome exibido para o botão
+FarmTab:AddToggle({
+    Name = "Bloquear Corridas (permanente)",
     Default = false,
     Callback = function(Value)
-        -- ToggleAutoRacesSolo block race (CRXM_CRXM)
-        ToggleAutoRacesSolo(Value) -- Aqui você define o valor que deseja passar
+        ToggleAutoRacesSolo(Value)
     end    
 })
 
@@ -542,6 +504,12 @@ local FarmTab = Window:MakeTab({
 	PremiumOnly = false
 })
 
+local FarmTab = Window:MakeTab({
+	Name = "Créditos",
+	Icon = "rbxassetid://96062201354965",
+	PremiumOnly = false
+})
+
 HaridadeLib:MakeNotification({
 	Name = "Haridade Community",
 	Content = "discord.gg/uydz6pZWMk",
@@ -549,6 +517,13 @@ HaridadeLib:MakeNotification({
 	Time = 20
 })
 
+HaridadeLib:MakeNotification({
+	Name = "VERSÃO TESTE",
+	Content = "Está é uma versão teste do script!",
+	Image = "rbxassetid://114376238948933",
+	Time = 20
+})
+  
 HaridadeLib:MakeNotification({
 	Name = "BYPASS ANTI-DETECTAÇÃO",
 	Content = "ByPass Ativo... ✅",
