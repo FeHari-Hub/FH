@@ -42,7 +42,7 @@ end
 local MainFrame = Library:CreateWindow({
 	Name = "Haridade - LOS ⚡",
 	Themeable = {
-		Image = "97581810621748",
+		Image = "7059346386",
 		Info = "Made by Exunys\nPowered by Pepsi's UI Library",
 		Credit = false
 	},
