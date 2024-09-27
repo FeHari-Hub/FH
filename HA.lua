@@ -1,9 +1,9 @@
 
 --[[
 
-	AirHub by Exunys © CC0 1.0 Universal (2023)
+	⚡ Haridade - Legends Of Speed ⚡
 
-	https://github.com/Exunys
+	   https://github.com/Exunys
 
 ]]
 
@@ -28,7 +28,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/AirHub/main/Mo
 
 --// Variables
 
-local Library = loadstring(game:GetObjects("rbxassetid://7657867786")[1].Source)() -- Pepsi's UI Library
+local Library = loadstring(game:GetObjects("rbxassetid://7657867786")[1].Source)() -- Haridade UI
 local Aimbot, WallHack = getgenv().AirHub.Aimbot, getgenv().AirHub.WallHack
 local Parts, Fonts, TracersType = {"Head", "HumanoidRootPart", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg", "LeftHand", "RightHand", "LeftLowerArm", "RightLowerArm", "LeftUpperArm", "RightUpperArm", "LeftFoot", "LeftLowerLeg", "UpperTorso", "LeftUpperLeg", "RightFoot", "RightLowerLeg", "LowerTorso", "RightUpperLeg"}, {"UI", "System", "Plex", "Monospace"}, {"Bottom", "Center", "Mouse"}
 
@@ -41,32 +41,32 @@ Library.UnloadCallback = function()
 end
 
 local MainFrame = Library:CreateWindow({
-	Name = "AirHub",
+	Name = "Haridade - LOS ⚡",
 	Themeable = {
 		Image = "7059346386",
-		Info = "Made by Exunys\nPowered by Pepsi's UI Library",
+		Info = "Feito Por HA_FeHari\nParcerias CRXM_CRXM ©",
 		Credit = false
 	},
 	Background = "",
-	Theme = [[{"__Designer.Colors.topGradient":"3F0C64","__Designer.Colors.section":"C259FB","__Designer.Colors.hoveredOptionBottom":"4819B4","__Designer.Background.ImageAssetID":"rbxassetid://4427304036","__Designer.Colors.selectedOption":"4E149C","__Designer.Colors.unselectedOption":"482271","__Designer.Files.WorkspaceFile":"AirHub","__Designer.Colors.unhoveredOptionTop":"310269","__Designer.Colors.outerBorder":"391D57","__Designer.Background.ImageColor":"69009C","__Designer.Colors.tabText":"B9B9B9","__Designer.Colors.elementBorder":"160B24","__Designer.Background.ImageTransparency":100,"__Designer.Colors.background":"1E1237","__Designer.Colors.innerBorder":"531E79","__Designer.Colors.bottomGradient":"361A60","__Designer.Colors.sectionBackground":"21002C","__Designer.Colors.hoveredOptionTop":"6B10F9","__Designer.Colors.otherElementText":"7B44A8","__Designer.Colors.main":"AB26FF","__Designer.Colors.elementText":"9F7DB5","__Designer.Colors.unhoveredOptionBottom":"3E0088","__Designer.Background.UseBackgroundImage":false}]]
+	Theme = [[{"__Designer.Colors.topGradient":"#B90000","__Designer.Colors.section":"C259FB","__Designer.Colors.hoveredOptionBottom":"4819B4","__Designer.Background.ImageAssetID":"rbxassetid://4427304036","__Designer.Colors.selectedOption":"4E149C","__Designer.Colors.unselectedOption":"482271","__Designer.Files.WorkspaceFile":"AirHub","__Designer.Colors.unhoveredOptionTop":"310269","__Designer.Colors.outerBorder":"391D57","__Designer.Background.ImageColor":"69009C","__Designer.Colors.tabText":"B9B9B9","__Designer.Colors.elementBorder":"160B24","__Designer.Background.ImageTransparency":100,"__Designer.Colors.background":"1E1237","__Designer.Colors.innerBorder":"531E79","__Designer.Colors.bottomGradient":"361A60","__Designer.Colors.sectionBackground":"21002C","__Designer.Colors.hoveredOptionTop":"6B10F9","__Designer.Colors.otherElementText":"7B44A8","__Designer.Colors.main":"AB26FF","__Designer.Colors.elementText":"9F7DB5","__Designer.Colors.unhoveredOptionBottom":"3E0088","__Designer.Background.UseBackgroundImage":false}]]
 })
 
 --// Tabs
 
 local AimbotTab = MainFrame:CreateTab({
-	Name = "Aimbot"
+	Name = "Farmar"
 })
 
 local VisualsTab = MainFrame:CreateTab({
-	Name = "Visuals"
+	Name = "Renascimentos"
 })
 
 local CrosshairTab = MainFrame:CreateTab({
-	Name = "Crosshair"
+	Name = "Corridas"
 })
 
 local FunctionsTab = MainFrame:CreateTab({
-	Name = "Functions"
+	Name = "Funções"
 })
 
 --// Aimbot Sections
@@ -126,21 +126,21 @@ local HealthBarSettings = VisualsTab:CreateSection({
 	Side = "Right"
 })
 
---// Crosshair Sections
+--// Auto Races
 
 local CrosshairSettings = CrosshairTab:CreateSection({
-	Name = "Settings"
+	Name = "Corridas Automáticas"
 })
 
 local CrosshairSettings_CenterDot = CrosshairTab:CreateSection({
-	Name = "Center Dot Settings",
+	Name = "Funções Extras",
 	Side = "Right"
 })
 
 --// Functions Sections
 
 local FunctionsSection = FunctionsTab:CreateSection({
-	Name = "Functions"
+	Name = "Funções"
 })
 
 --// Aimbot Values
@@ -744,24 +744,23 @@ HealthBarSettings:AddColorpicker({
 	end
 }).Default = WallHack.Visuals.HealthBarSettings.OutlineColor
 
---// Crosshair Settings
+--// Auto Races
 
 CrosshairSettings:AddToggle({
-	Name = "Mouse Cursor",
-	Value = UserInputService.MouseIconEnabled,
-	Callback = function(New, Old)
-		UserInputService.MouseIconEnabled = New
-	end
-}).Default = UserInputService.MouseIconEnabled
-
+	Name = "Corridas Automáticas",
+    Default = false,
+    Callback = function(Value)
+        ToggleAutoRaces(Value)
+    end    
+})
 CrosshairSettings:AddToggle({
-	Name = "Enabled",
-	Value = WallHack.Crosshair.Settings.Enabled,
-	Callback = function(New, Old)
-		WallHack.Crosshair.Settings.Enabled = New
-	end
-}).Default = WallHack.Crosshair.Settings.Enabled
-
+	Name = "Bloquear Corridas (BETA)", -- Nome exibido para o botão
+    Default = false,
+    Callback = function(Value)
+        -- ToggleAutoRacesSolo block race (CRXM_CRXM)
+        ToggleAutoRacesSolo(Value) -- Aqui você define o valor que deseja passar
+    end    
+})
 CrosshairSettings:AddColorpicker({
 	Name = "Color",
 	Value = WallHack.Crosshair.Settings.Color,
@@ -876,10 +875,10 @@ CrosshairSettings_CenterDot:AddToggle({
 	end
 }).Default = WallHack.Crosshair.Settings.CenterDotFilled
 
---// Functions / Functions
+--// Funções / Funções
 
 FunctionsSection:AddButton({
-	Name = "Reset Settings",
+	Name = "Resetar Configurações",
 	Callback = function()
 		Aimbot.Functions:ResetSettings()
 		WallHack.Functions:ResetSettings()
@@ -888,7 +887,7 @@ FunctionsSection:AddButton({
 })
 
 FunctionsSection:AddButton({
-	Name = "Restart",
+	Name = "Resetar",
 	Callback = function()
 		Aimbot.Functions:Restart()
 		WallHack.Functions:Restart()
@@ -896,12 +895,12 @@ FunctionsSection:AddButton({
 })
 
 FunctionsSection:AddButton({
-	Name = "Exit",
+	Name = "Fechar Script",
 	Callback = Library.Unload,
 })
 
 FunctionsSection:AddButton({
-	Name = "Copy Script Page",
+	Name = "Copiar URL | GitHub Haridade",
 	Callback = function()
 		setclipboard("https://github.com/Exunys/AirHub")
 	end
@@ -913,7 +912,7 @@ do
 	local Aux = Instance.new("BindableFunction")
     
 	Aux.OnInvoke = function(Answer)
-		if Answer == "No" then
+		if Answer == "Não" then
 			return
 		end
 
@@ -922,10 +921,10 @@ do
 	end
 
 	game.StarterGui:SetCore("SendNotification", {
-		Title = "🎆  AirHub V2  🎆",
-		Text = "Would you like to use the new AirHub V2 script?",
-		Button1 = "Yes",
-		Button2 = "No",
+		Title = "⚡  Haridade - LOS ⚡",
+		Text = "Gostaria De Fechar Este Script?",
+		Button1 = "Sim",
+		Button2 = "Não",
 		Duration = 1 / 0,
 		Icon = "rbxassetid://6238537240",
 		Callback = Aux
