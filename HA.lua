@@ -40,7 +40,7 @@ Library.UnloadCallback = function()
 end
 
 local MainFrame = Library:CreateWindow({
-	Name = "Haridade - LOS ⚡",
+	Name = "AirHub",
 	Themeable = {
 		Image = "7059346386",
 		Info = "Made by Exunys\nPowered by Pepsi's UI Library",
@@ -908,11 +908,25 @@ FunctionsSection:AddButton({
 
 --// AirHub V2 Prompt
 
+do
+	local Aux = Instance.new("BindableFunction")
+    
+	Aux.OnInvoke = function(Answer)
+		if Answer == "No" then
+			return
+		end
+
+		Library.Unload()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/AirHub-V2/main/src/Main.lua"))()
+	end
+
 	game.StarterGui:SetCore("SendNotification", {
-		Title = "Haridade Community",
-		Text = "discord.gg/uydz6pZWMk",
+		Title = "🎆  AirHub V2  🎆",
+		Text = "Would you like to use the new AirHub V2 script?",
+		Button1 = "Yes",
+		Button2 = "No",
 		Duration = 1 / 0,
-		Icon = "rbxassetid://101951842185056",
+		Icon = "rbxassetid://6238537240",
 		Callback = Aux
 	})
 end
