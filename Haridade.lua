@@ -14,7 +14,7 @@ ______      _                  _ _
 v1.0.3
 
 ]]--
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/FeHari/HaridadeScript/refs/heads/main/LegendsOfSpeed.lua"))()
 local Window = Library.CreateLib("ExternityHub", "GrapeTheme")
 
 -- Scripts
