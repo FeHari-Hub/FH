@@ -905,14 +905,3 @@ FunctionsSection:AddButton({
 		setclipboard("https://github.com/Exunys/AirHub")
 	end
 })
-
---// AirHub V2 Prompt
-
-	game.StarterGui:SetCore("SendNotification", {
-		Title = "Haridade Community",
-		Text = "discord.gg/uydz6pZWMk",
-		Duration = 1 / 0,
-		Icon = "rbxassetid://6238537240",
-		Callback = Aux
-	})
-end
