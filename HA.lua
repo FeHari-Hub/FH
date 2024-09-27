@@ -761,16 +761,9 @@ CrosshairSettings:AddToggle({
         ToggleAutoRacesSolo(Value) -- Aqui você define o valor que deseja passar
     end    
 })
-CrosshairSettings:AddColorpicker({
-	Name = "Color",
-	Value = WallHack.Crosshair.Settings.Color,
-	Callback = function(New, Old)
-		WallHack.Crosshair.Settings.Color = New
-	end
-}).Default = WallHack.Crosshair.Settings.Color
 
 CrosshairSettings:AddSlider({
-	Name = "Transparency",
+	Name = "Velocidade Das Vitórias",
 	Value = WallHack.Crosshair.Settings.Transparency,
 	Callback = function(New, Old)
 		WallHack.Crosshair.Settings.Transparency = New
@@ -790,85 +783,26 @@ CrosshairSettings:AddSlider({
 	Max = 24
 }).Default = WallHack.Crosshair.Settings.Size
 
-CrosshairSettings:AddSlider({
-	Name = "Thickness",
-	Value = WallHack.Crosshair.Settings.Thickness,
-	Callback = function(New, Old)
-		WallHack.Crosshair.Settings.Thickness = New
-	end,
-	Min = 1,
-	Max = 5
-}).Default = WallHack.Crosshair.Settings.Thickness
-
-CrosshairSettings:AddSlider({
-	Name = "Gap Size",
-	Value = WallHack.Crosshair.Settings.GapSize,
-	Callback = function(New, Old)
-		WallHack.Crosshair.Settings.GapSize = New
-	end,
-	Min = 0,
-	Max = 20
-}).Default = WallHack.Crosshair.Settings.GapSize
-
-CrosshairSettings:AddSlider({
-	Name = "Rotation (Degrees)",
-	Value = WallHack.Crosshair.Settings.Rotation,
-	Callback = function(New, Old)
-		WallHack.Crosshair.Settings.Rotation = New
-	end,
-	Min = -180,
-	Max = 180
-}).Default = WallHack.Crosshair.Settings.Rotation
-
 CrosshairSettings:AddDropdown({
-	Name = "Position",
-	Value = WallHack.Crosshair.Settings.Type == 1 and "Mouse" or "Center",
+	Name = "Teleportar Para Mapa",
+	Value = WallHack.Crosshair.Settings.Type == 1 and "Deserto" or "Deserto",
 	Callback = function(New, Old)
 		WallHack.Crosshair.Settings.Type = New == "Mouse" and 1 or 2
 	end,
-	List = {"Mouse", "Center"},
-	Nothing = "Mouse"
-}).Default = WallHack.Crosshair.Settings.Type == 1 and "Mouse" or "Center"
+	List = {"Deserto", "Center"},
+	Nothing = "Deserto"
+}).Default = WallHack.Crosshair.Settings.Type == 1 and "Deserto" or "Deserto"
 
 CrosshairSettings_CenterDot:AddToggle({
-	Name = "Center Dot",
+	Name = "Remover Barreiras Da Corrida",
 	Value = WallHack.Crosshair.Settings.CenterDot,
 	Callback = function(New, Old)
 		WallHack.Crosshair.Settings.CenterDot = New
 	end
 }).Default = WallHack.Crosshair.Settings.CenterDot
 
-CrosshairSettings_CenterDot:AddColorpicker({
-	Name = "Center Dot Color",
-	Value = WallHack.Crosshair.Settings.CenterDotColor,
-	Callback = function(New, Old)
-		WallHack.Crosshair.Settings.CenterDotColor = New
-	end
-}).Default = WallHack.Crosshair.Settings.CenterDotColor
-
-CrosshairSettings_CenterDot:AddSlider({
-	Name = "Center Dot Size",
-	Value = WallHack.Crosshair.Settings.CenterDotSize,
-	Callback = function(New, Old)
-		WallHack.Crosshair.Settings.CenterDotSize = New
-	end,
-	Min = 1,
-	Max = 6
-}).Default = WallHack.Crosshair.Settings.CenterDotSize
-
-CrosshairSettings_CenterDot:AddSlider({
-	Name = "Center Dot Transparency",
-	Value = WallHack.Crosshair.Settings.CenterDotTransparency,
-	Callback = function(New, Old)
-		WallHack.Crosshair.Settings.CenterDotTransparency = New
-	end,
-	Min = 0,
-	Max = 1,
-	Decimals = 2
-}).Default = WallHack.Crosshair.Settings.CenterDotTransparency
-
 CrosshairSettings_CenterDot:AddToggle({
-	Name = "Center Dot Filled",
+	Name = "Retirar O Tempo ( Em Breve )",
 	Value = WallHack.Crosshair.Settings.CenterDotFilled,
 	Callback = function(New, Old)
 		WallHack.Crosshair.Settings.CenterDotFilled = New
