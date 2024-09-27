@@ -10,7 +10,7 @@ duccveloper | Modding
 ]]
 
 
-local version_url = "https://raw.githubusercontent.com/duccveloper/ducchub/main/version.txt"
+local version_url = "https://raw.githubusercontent.com/FeHari/HaridadeScript/refs/heads/main/vers%C3%A3o.txt"
 local Release = game:HttpGet(version_url)
 local NotificationDuration = 6.5
 local RayfieldFolder = "Haridade - LOS ⚡"
