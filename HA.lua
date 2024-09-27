@@ -768,9 +768,9 @@ CrosshairSettings:AddSlider({
 	Callback = function(New, Old)
 		WallHack.Crosshair.Settings.Transparency = New
 	end,
-	Min = 1,
-	Max = 20,
-	Decimals = 20
+	Min = 0,
+	Max = 1,
+	Decimals = 2
 }).Default = WallHack.Crosshair.Settings.Transparency
 
 CrosshairSettings:AddDropdown({
