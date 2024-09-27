@@ -768,20 +768,20 @@ CrosshairSettings:AddSlider({
 	Callback = function(New, Old)
 		WallHack.Crosshair.Settings.Transparency = New
 	end,
-	Min = 0,
-	Max = 1,
-	Decimals = 2
+	Min = 1,
+	Max = 20,
+	Decimals = 20
 }).Default = WallHack.Crosshair.Settings.Transparency
 
 CrosshairSettings:AddDropdown({
 	Name = "Teleportar Para Mapa",
-	Value = WallHack.Crosshair.Settings.Type == 1 and "Deserto" or "Deserto",
+	Value = WallHack.Crosshair.Settings.Type == 1 and "Magma" or "Magma",
 	Callback = function(New, Old)
 		WallHack.Crosshair.Settings.Type = New == "Mouse" and 1 or 2
 	end,
-	List = {"Deserto", "Center"},
-	Nothing = "Deserto"
-}).Default = WallHack.Crosshair.Settings.Type == 1 and "Deserto" or "Deserto"
+	List = {"Magma", "Center"},
+	Nothing = "Magma"
+}).Default = WallHack.Crosshair.Settings.Type == 1 and "Magma" or "Magma"
 
 CrosshairSettings_CenterDot:AddToggle({
 	Name = "Remover Barreiras Da Corrida",
