@@ -258,9 +258,8 @@ Aimbot.Settings.LockPart = Parts[1]; Values:AddDropdown({
 		Aimbot.Settings.LockPart = New
 	end,
 	List = Parts,
-	Nothing = "Main City"
-	Nothing = "Snow City"	
-}).Default = Parts[2]
+	Nothing = "Main City"	
+}).Default = Parts[1]
 
 FOV_Values:AddToggle({
 	Name = "Enabled",
