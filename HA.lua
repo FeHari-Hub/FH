@@ -1,303 +1,559 @@
-getgenv().orbCollect = false
-getgenv().Speedster = false
-getgenv().Jump = false
-getgenv().autoRebirth = false
-getgenv().eggOpen = false
-getgenv().hoopTP = false
+--// Variables \\--
+getgenv().Autofarm = false
+getgenv().OpenEgg = false
+getgenv().AutoRebirth = false
+getgenv().HoopFarm = false
 
+getgenv().MainCity = false
+getgenv().Snow = false
+getgenv().Magma = false
+getgenv().LegendsHighway = false
 
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+local Chr = Player.Character
 
---Anti AFK
-local vu = game:GetService("VirtualUser")
-game:GetService("Players").LocalPlayer.Idled:connect(function()
-   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-   wait(1)
-   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+Player.CharacterAdded:Connect(function()
+    Chr = Player.Character
 end)
 
---Anti Slip
-spawn(function()
+local ChrHead = Chr.Head
+local Humanoid = Chr.Humanoid
+local Root = Chr.HumanoidRootPart
+
+--// Tables \\--
+local AreaToFarm = {}
+local Crystals = {}
+
+--// Functions \\--
+local function CityFarm()
     spawn(function()
-        while wait() do
-            game.Players.LocalPlayer.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.FallingDown, false)
-            game.Players.LocalPlayer.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Ragdoll, false)
+        while task.wait() do
+            if not Autofarm then break end
+            if not MainCity then break end
+            if Chr and Chr.Parent and Chr:FindFirstChild("Head") then
+                for i, v in next, game:GetService("Workspace").orbFolder["City"]:GetDescendants() do
+                    if v.Name == "TouchInterest" then
+                        firetouchinterest(Chr:WaitForChild("Head", 5), v.Parent, 0)
+                    end
+                end
+            else
+                repeat task.wait() until Chr:FindFirstChild("Head")
+            end
         end
     end)
-    while task.wait(1) do
-        if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyGyro") then
-                Instance.new("BodyGyro", game.Players.LocalPlayer.Character.HumanoidRootPart)
+end
+
+local function SnowFarm()
+    spawn(function()
+        while task.wait() do
+            if not Autofarm then break end
+            if not SnowFarm then break end
+            if Chr and Chr.Parent and Chr:FindFirstChild("Head") then
+                for i, v in next, game:GetService("Workspace").orbFolder["Snow City"]:GetDescendants() do
+                    if v.Name == "TouchInterest" then
+                        firetouchinterest(Chr:WaitForChild("Head", 5), v.Parent, 0)
+                    end
+                end
+            else
+                repeat task.wait() until Chr:FindFirstChild("Head")
+            end
+        end
+    end)
+end
+
+local function MagmaFarm()
+    spawn(function()
+        while task.wait() do
+            if not Autofarm then break end
+            if not MagmaFarm then break end
+            if Chr and Chr.Parent and Chr:FindFirstChild("Head") then
+                for i, v in next, game:GetService("Workspace").orbFolder["Magma City"]:GetDescendants() do
+                    if v.Name == "TouchInterest" then
+                        firetouchinterest(Chr:WaitForChild("Head", 5), v.Parent, 0)
+                    end
+                end
+            else
+                repeat task.wait() until Chr:FindFirstChild("Head")
+            end
+        end
+    end)
+end
+
+local function LegendsHighwayFarm()
+    spawn(function()
+        while task.wait() do
+            if not Autofarm then break end
+            if not LegendsHighway then break end
+            if Chr and Chr.Parent and Chr:FindFirstChild("Head") then
+                for i, v in next, game:GetService("Workspace").orbFolder["Legends Highway"]:GetDescendants() do
+                    if v.Name == "TouchInterest" then
+                        firetouchinterest(Chr:WaitForChild("Head", 5), v.Parent, 0)
+                    end
+                end
+            else
+                repeat task.wait() until Chr:FindFirstChild("Head")
+            end
+        end
+    end)
+end
+
+local function HoopFarmV2()
+    local Chr = game.Players.LocalPlayer.Character
+    if Chr and Chr.Parent and Chr:FindFirstChild("HumanoidRootPart") then
+        local children = workspace.Hoops:GetChildren()
+        for i, child in ipairs(children) do
+            if child.Name == "Hoop" then
+                child.CFrame = Chr.HumanoidRootPart.CFrame
+            end    
+        end
+    end
+end
+local function HoopFarm()
+    if Chr and Chr.Parent and Chr:FindFirstChild("Head") then
+        for i, v in next, game:GetService("Workspace").Hoops:GetDescendants() do
+            if v.Name == "TouchInterest" and v.Parent then
+            firetouchinterest(Chr:WaitForChild("Head", 5), v.Parent, 0)
+            task.wait()
+            firetouchinterest(Chr:WaitForChild("Head", 5), v.Parent, 1)
             end
         end
     end
-end)
+end
+local function Egg(EggName)
+    task.wait()
+    local Open = "openCrystal"
+    local Name = EggName
+    game:GetService("ReplicatedStorage").rEvents.openCrystalRemote:InvokeServer(Open, Name)
+end
 
+local function Rebirth()
+    task.wait()
+    local ohString1 = "rebirthRequest"
+    game:GetService("ReplicatedStorage").rEvents.rebirthEvent:FireServer(ohString1)
+end
 
+for i, v in next, game:GetService("Workspace").mapCrystalsFolder:GetChildren() do
+    table.insert(Crystals, v.Name)
+end
 
---Death Freeze Fix
-spawn(function()
-    while task.wait() do
-        if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid").Health == 0 then
-            repeat
-                game.Players.LocalPlayer.Character.HumanoidRootPart.Orientation = Vector3.new(0, 0, 0)
-            until (game.Players.LocalPlayer.Character:FindFirstChild("Humanoid").Health <= 0)
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
+
+-- Função para alternar o estado de AutoRaces
+local function ToggleAutoRaces(Value)
+    AutoRaces = Value
+    if AutoRaces then
+        spawn(function()
+            while AutoRaces do
+                pcall(function()
+                    ReplicatedStorage.rEvents.raceEvent:FireServer("joinRace")
+                    task.wait()
+                    local part = Players.LocalPlayer.Character.HumanoidRootPart
+                    for _, v in pairs(Workspace.raceMaps:GetDescendants()) do 
+                        if v.Name == "Decal" and v.Parent then
+                            firetouchinterest(part, v.Parent, 0)
+                            wait()
+                            firetouchinterest(part, v.Parent, 1)
+                        end
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end 
+
+local function ToggleAutoRacesSolo(Value)
+    AutoRacesSolo = Value
+    if AutoRacesSolo then
+        spawn(function()
+            while AutoRacesSolo do
+                pcall(function()
+                    local playerHead = Players.LocalPlayer.Character.Head
+                    ReplicatedStorage.rEvents.raceEvent:FireServer("joinRace")
+                    wait(0.00)
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+
+local AutoRaces = false
+local AutoRacesSolo = false
+
+local function optimizeFpsPing()
+    for _, v in pairs(game:GetService("Workspace"):GetDescendants()) do
+        if v:IsA("BasePart") and not v.Parent:FindFirstChild("Humanoid") then
+            v.Material = Enum.Material.SmoothPlastic
+            if v:IsA("Texture") then
+                v:Destroy()
+            end
         end
     end
-end)
-
-
-
---Delete Barriers
-
-function deleteBarrier()
-    spawn(function()
-        for i, v in pairs(game:GetService("Workspace").raceMaps.Grassland.boundaryParts:GetChildren()) do
-            v:Destroy()
-        end
-
-        for i, v in pairs(game:GetService("Workspace").raceMaps.Desert.boundaryParts:GetChildren()) do
-            v:Destroy()
-        end
-
-        for i, v in pairs(game:GetService("Workspace").raceMaps.Magma.boundaryParts:GetChildren()) do
-            v:Destroy()
-        end
-    end)
-end
-
---Orb Remote Spam
-function orbCollecter()
-    spawn(function()
-        while task.wait() do
-            if not orbCollect then break end
-
-            game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Legends Highway")
-            game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "Legends Highway")
-            game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Legends Highway")
-
-            game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Snow City")
-            game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "Snow City")
-            game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Snow City")
-
-            game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "City")
-            game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "City")
-            game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "City")
-
-            game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
-            game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "Magma City")
-            game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Magma City")
-        end
-    end)
 end
 
 
 
---Change Speed and Jump Height
-function setSpeed(ws)
-    spawn(function()    
-        while task.wait() do
-            if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = ws
-            end
-        end
-    end)
+local function SelectCity(City)
+    if City == "Main City" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9682.98828, 74.8522873, 3099.03394, 0.087131381, 0, 0.996196866, 0, 1, 0, -0.996196866, 0, 0.087131381)
+    elseif City == "Snow City" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9676.13867, 74.8522873, 3782.69385, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+    elseif City == "Magma City" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-11054.9688, 232.791656, 4898.62842, -0.0872479677, 0.000158954252, -0.996186614, -0.00054083002, 0.999999821, 0.00020692969, 0.996186495, 0.000556821818, -0.0872478485)
+    elseif City == "Legends Highway" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-13098.8711, 232.791656, 5907.62793, -0.0872479677, 0.000158954252, -0.996186614, -0.00054083002, 0.999999821, 0.00020692969, 0.996186495, 0.000556821818, -0.0872478485)
+    end
 end
 
-function setJump(jp)
-    spawn(function()
-        while task.wait() do
-            if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                game.Players.LocalPlayer.Character.Humanoid.JumpPower = jp
-            end
-        end
-    end)
-end
+--// Haridade Script \\--
+local HaridadeLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/FeHari/HaridadeScript/main/LegendsOfSpeed.lua')))()
+local Window = HaridadeLib:MakeWindow({Name = "Haridade | Legends Of Speed ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "HaridadeTest"})
 
-
---Auto Rebirth
-function autoRebirther()
-    spawn(function()
-        while task.wait() do
-            if not autoRebirth then
-                break
-            end
-            game:GetService("ReplicatedStorage").rEvents.rebirthEvent:FireServer("rebirthRequest")
-        end
-    end)
-end
-
-
-
---Makes as many Evolved Ultimate Overdrive Bunnies as possible *costs gems*
-function eggOpener()
-    spawn(function()
-        while task.wait() do
-            if not eggOpen then
-                break
-            end
-            --Egg Open
-            game:GetService("ReplicatedStorage").rEvents.openCrystalRemote:InvokeServer("openCrystal",
-                "Electro Legends Crystal")
-
-            --Deletes if not Ultimate Overdrive Bunny
-            spawn(function()
-                game:GetService("ReplicatedStorage").rEvents.sellPetEvent:FireServer("sellPet",
-                    game:GetService("Players").LocalPlayer.petsFolder.Omega["Hypersonic Pegasus"])
-            end)
-
-            spawn(function()
-                game:GetService("ReplicatedStorage").rEvents.sellPetEvent:FireServer("sellPet",
-                    game:GetService("Players").LocalPlayer.petsFolder.Omega["Dark Soul Birdie"])
-            end)
-
-            spawn(function()
-                game:GetService("ReplicatedStorage").rEvents.sellPetEvent:FireServer("sellPet",
-                    game:GetService("Players").LocalPlayer.petsFolder.Omega["Eternal Nebula Dragon"])
-            end)
-
-            spawn(function()
-                game:GetService("ReplicatedStorage").rEvents.sellPetEvent:FireServer("sellPet",
-                    game:GetService("Players").LocalPlayer.petsFolder.Omega["Shadows Edge Kitty"])
-            end)
-
-            spawn(function()
-                game:GetService("ReplicatedStorage").rEvents.sellPetEvent:FireServer("sellPet",
-                    game:GetService("Players").LocalPlayer.petsFolder.Omega["Soul Fusion Dog"])
-            end)
-
-            --Combines Bunnies
-
-            spawn(function()
-                game:GetService("ReplicatedStorage").rEvents.petEvolveEvent:FireServer("evolvePet",
-                    "Ultimate Overdrive Bunny")
-            end)
-        end
-    end)
-end
-
-
-
---Locally teleports every hoop in the game to your player to get rewards multiple times a second
-function hoopTPer()
-    spawn(function()
-        while task.wait() do
-            if not hoopTP then break end
-            for i, v in pairs(game:GetService("Workspace").Hoops:GetChildren()) do
-                v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-            end
-        end
-    end)
-end
-
-
-
-
-
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Legends Of Speed Hub", HidePremium = false, IntroEnabled = false, SaveConfig = true, ConfigFolder = "LoSH"})
-
-
-OrionLib:MakeNotification({
-	Name = "Credits",
-	Content = "Script made by: 312ing#2389",
-	Image = "rbxassetid://4483345998",
-	Time = 30
+local FarmTab = Window:MakeTab({
+	Name = "Início",
+	Icon = "rbxassetid://112625488111718",
+	PremiumOnly = false
 })
 
 
-local AutoFarm = Window:MakeTab({
-	Name = "Farming",
+local FarmTab = FarmTab:AddSection({
+	Name = "Utilitários"
+})
+
+
+FarmTab:AddButton({
+    Name = "Diminuir Os Gráficos Do Jogo",
+    Default = false,
+    Callback = function(value)
+	    print("button pressed")	  
+        isReducingGraphics = value
+        if isReducingGraphics then
+            while isReducingGraphics do
+                optimizeFpsPing()
+                task.wait()
+            end
+        end
+    end    
+})
+
+FarmTab:AddSlider({
+    Name = "Velocidade Do Personagem",  -- Nome exibido na interface para o slider
+    Min = 10000,                          -- Valor mínimo do slider
+    Max = 10000,                       -- Valor máximo do slider
+    Default = 16,                      -- Valor padrão inicial do slider
+    Color = Color3.fromRGB(255, 255, 255),  -- Cor do slider
+    Increment = 10,                    -- Incremento do slider
+    ValueName = "Velocidade (fixo)",           -- Nome exibido ao lado do valor
+    Callback = function(Value)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+    end    
+})
+
+
+local FarmTab = Window:MakeTab({
+	Name = "Teleportar",
+	Icon = "rbxassetid://109334924659404",
+	PremiumOnly = false
+})
+
+local Section = FarmTab:AddSection({
+	Name = "Áreas Para Teleportar"
+})
+
+
+FarmTab:AddDropdown({
+	Name = "Selecionar Cidade Para Teleportar",
+	Default = nil,
+	Options = {"Main City", "Snow City", "Magma City", "Legends Highway"},
+	Callback = function(Value)
+		SelectCity(Value)
+	end    
+})
+
+
+local FarmTab = Window:MakeTab({
+	Name = "Farmar",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
 
-AutoFarm:AddToggle({
-	Name = "Orb Collecter *may cause issues*",
-	Default = false,
-	Callback = function(Value)
-		orbCollect = Value
-        orbCollecter()
-	end    
-})
-
-AutoFarm:AddToggle({
-	Name = "Auto Rebirth",
-	Default = false,
-	Callback = function(Value)
-		autoRebirth = Value
-        autoRebirther()
-	end    
-})
-
-AutoFarm:AddToggle({
-	Name = "Hoop Bring",
-	Default = false,
-	Callback = function(Value)
-		hoopTP = Value
-        hoopTPer()
-	end    
-})
-
-AutoFarm:AddToggle({
-	Name = "Auto Best Pet *drains gems*",
-	Default = false,
-	Callback = function(Value)
-		eggOpen = Value
-        eggOpener()
-	end    
+local Section = FarmTab:AddSection({
+	Name = "Farmar Automático"
 })
 
 
-local Teleports = Window:MakeTab({
-	Name = "Teleports",
-	Icon = "rbxassetid://4483345998",
+FarmTab:AddDropdown({
+	Name = "Áreas Para Farmar",
+	Default = nil,
+	Options = {"Main City", "Snow City", "Magma City", "Legends Highway"},
+	Callback = function(Value)
+		AreaToFarm = Value
+    if AreaToFarm == "Main City" then 
+        getgenv().MainCity = true
+        getgenv().Snow = false
+        getgenv().Magma = false
+        getgenv().LegendsHighway = false
+        CityFarm()
+    elseif AreaToFarm == "Snow City" then
+        getgenv().MainCity = false
+        getgenv().Snow = true
+        getgenv().Magma = false
+        getgenv().LegendsHighway = false
+        SnowFarm()
+    elseif AreaToFarm == "Magma City" then
+        getgenv().MainCity = false
+        getgenv().Snow = false
+        getgenv().Magma = true
+        getgenv().LegendsHighway = false
+        MagmaFarm()
+    elseif AreaToFarm == "Legends Highway" then
+        getgenv().MainCity = false
+        getgenv().Snow = false
+        getgenv().Magma = false
+        getgenv().LegendsHighway = true
+        LegendsHighwayFarm()
+    end
+end    
+})
+
+FarmTab:AddDropdown({
+	Name = "Selecione a Orb",
+	Default = nil,
+	Options = {"Yellow Orb", "Orange Orb", "Blue Orb", "Red Orb", "Gemas"},
+	Callback = function(Value)
+		AreaToFarm = Value
+    if AreaToFarm == "Main City" then 
+        getgenv().MainCity = true
+        getgenv().Snow = false
+        getgenv().Magma = false
+        getgenv().LegendsHighway = false
+        CityFarm()
+    elseif AreaToFarm == "Snow City" then
+        getgenv().MainCity = false
+        getgenv().Snow = true
+        getgenv().Magma = false
+        getgenv().LegendsHighway = false
+        SnowFarm()
+    elseif AreaToFarm == "Magma City" then
+        getgenv().MainCity = false
+        getgenv().Snow = false
+        getgenv().Magma = true
+        getgenv().LegendsHighway = false
+        MagmaFarm()
+    elseif AreaToFarm == "Legends Highway" then
+        getgenv().MainCity = false
+        getgenv().Snow = false
+        getgenv().Magma = false
+        getgenv().LegendsHighway = true
+        LegendsHighwayFarm()
+    end
+end    
+})
+
+FarmTab:AddDropdown({
+	Name = "Selecine a Velocidade",
+	Default = nil,
+	Options = {"x50", "x75", "x100", "x125", "x150", "x175", "x200", "x250", "x300"},
+	Callback = function(Value)
+		AreaToFarm = Value
+    if AreaToFarm == "Main City" then 
+        getgenv().MainCity = true
+        getgenv().Snow = false
+        getgenv().Magma = false
+        getgenv().LegendsHighway = false
+        CityFarm()
+    elseif AreaToFarm == "Snow City" then
+        getgenv().MainCity = false
+        getgenv().Snow = true
+        getgenv().Magma = false
+        getgenv().LegendsHighway = false
+        SnowFarm()
+    elseif AreaToFarm == "Magma City" then
+        getgenv().MainCity = false
+        getgenv().Snow = false
+        getgenv().Magma = true
+        getgenv().LegendsHighway = false
+        MagmaFarm()
+    elseif AreaToFarm == "Legends Highway" then
+        getgenv().MainCity = false
+        getgenv().Snow = false
+        getgenv().Magma = false
+        getgenv().LegendsHighway = true
+        LegendsHighwayFarm()
+    end
+end    
+})
+
+FarmTab:AddToggle({
+	Name = "Diminuir o Ping (não faz milagre)",
+	Default = false,
+	Callback = function(Value)
+		getgenv().Hoop = Value
+        while Hoop do
+            HoopFarm()
+            task.wait()
+        end
+	end    
+})
+
+FarmTab:AddToggle({
+	Name = "Farmar Orbs (BETA)",
+	Default = false,
+	Callback = function(Value)
+    Autofarm = Value
+    if Value then
+        if AreaToFarm == "Main City" then
+            CityFarm()
+        elseif AreaToFarm == "Snow City" then
+            SnowFarm()
+        elseif AreaToFarm == "Magma City" then
+            MagmaFarm()
+        elseif AreaToFarm == "Legends Highway" then
+            LegendsHighwayFarm()
+        end
+    end 
+end
+})
+
+local Section = FarmTab:AddSection({
+	Name = "Farmar Aros"
+})
+
+FarmTab:AddToggle({
+	Name = "Aros V1",
+	Default = false,
+	Callback = function(Value)
+		getgenv().Hoop = Value
+        while Hoop do
+            HoopFarm()
+            task.wait()
+        end
+	end    
+})
+
+FarmTab:AddToggle({
+	Name = "Aros V2",
+	Default = false,
+	Callback = function(Value)
+		getgenv().HoopV2 = Value
+        while HoopV2 do
+            HoopFarmV2()
+            task.wait()
+        end
+	end    
+})
+
+
+local FarmTab = Window:MakeTab({
+	Name = "Renascimento",
+	Icon = "rbxassetid://121663556703347",
 	PremiumOnly = false
 })
 
-local Misc = Window:MakeTab({
-	Name = "Misc",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
+local Section = FarmTab:AddSection({
+	Name = "Auto Renascimento"
 })
 
-Misc:AddSlider({
-	Name = "Speed",
-	Min = 150,
-	Max = 10000,
-	Default = 1000,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	ValueName = "ws",
-	Callback = function(Value)
-		setSpeed(Value)
-	end         
-})
 
-Misc:AddSlider({
-	Name = "Jump Height",
-	Min = 50,
-	Max = 1500,
-	Default = 200,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	ValueName = "jp",
+FarmTab:AddToggle({
+	Name = "Auto Renascimento (ative apenas se for renascer AFK)",
+	Default = false,
 	Callback = function(Value)
-		setJump(Value)
+		getgenv().AutoRebirth = Value
+        while AutoRebirth do
+            Rebirth()
+            task.wait()
+        end
 	end    
 })
 
-Misc:AddButton({
-	Name = "Remove Race Start Barriers",
-	Callback = function()
-      	deleteBarrier()
-  	end    
+local FarmTab = Window:MakeTab({
+	Name = "Auto Corridas",
+	Icon = "rbxassetid://72430981170529",
+	PremiumOnly = false
 })
 
-Misc:AddButton({
-	Name = "Re-join",
-	Callback = function()
-        game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
-  	end    
+local Section = FarmTab:AddSection({
+	Name = "Corridas Automáticas"
 })
 
- OrionLib:Init()
+FarmTab:AddToggle({
+    Name = "Auto Corridas",
+    Default = false,
+    Callback = function(Value)
+        ToggleAutoRaces(Value)
+    end    
+})
+
+FarmTab:AddButton({
+    Name = "Bloquear Corridas (permamente)", -- Nome exibido para o botão
+    Default = false,
+    Callback = function(Value)
+        -- Chama a função ToggleAutoRacesSolo com o valor desejado
+        ToggleAutoRacesSolo(Value) -- Aqui você define o valor que deseja passar
+    end    
+})
+
+
+local FarmTab = Window:MakeTab({
+	Name = "Comprar Pets",
+	Icon = "rbxassetid://95145057413711",
+	PremiumOnly = false
+})
+
+local Section = FarmTab:AddSection({
+	Name = "Comprar Pets Automáticamente"
+})
+
+local Crystal1
+
+FarmTab:AddDropdown({
+	Name = "Escolha O Cristal",
+	Default = nil,
+	Options = Crystals,
+	Callback = function(Value)
+        Crystal1 = Value
+	end    
+})
+
+FarmTab:AddToggle({
+	Name = "Comprar Pets Automáticamente (necessita de gemas)",
+	Default = false,
+	Callback = function(Value)
+        getgenv().OpenEgg = Value
+        while getgenv().OpenEgg do
+            if Crystal1 then
+                Egg(Crystal1)  
+            end
+            task.wait()
+        end
+	end    
+})
+
+
+local FarmTab = Window:MakeTab({
+	Name = "Créditos",
+	Icon = "rbxassetid://96062201354965",
+	PremiumOnly = false
+})
+
+HaridadeLib:MakeNotification({
+	Name = "Haridade Community",
+	Content = "discord.gg/uydz6pZWMk",
+	Image = "rbxassetid://101951842185056",
+	Time = 20
+})
+
+HaridadeLib:MakeNotification({
+	Name = "BYPASS ANTI-DETECTAÇÃO",
+	Content = "ByPass Ativo... ✅",
+	Image = "rbxassetid://71506531582407",
+	Time = 20
+})
+
+HaridadeLib:Init()
