@@ -15,13 +15,7 @@ getgenv().AirHubV2Loading = true
 
 --// Cache
 
-local game = game
-local loadstring, typeof, select, next, pcall = loadstring, typeof, select, next, pcall
-local tablefind, tablesort = table.find, table.sort
-local mathfloor = math.floor
-local stringgsub = string.gsub
-local wait, delay, spawn = task.wait, task.delay, task.spawn
-local osdate = os.date
+local loadstring, getgenv, setclipboard, tablefind, UserInputService = loadstring, getgenv, setclipboard, table.find, game:GetService("UserInputService")
 
 --// Launching
 
