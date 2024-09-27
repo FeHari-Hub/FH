@@ -1,920 +1,506 @@
 --[[
+    DuccHub v1.0 by duccveloper
 
-	Haridade - Legends Of Speed ⚡
+    Why DuccHub v1.0? Where DuccHub v0.1?
+    - Because I accidentally deleted the old version of DuccHub, so I had to remake it. PAIN!
 
-	https://github.com/Exunys
+    What is DuccHub?
+    - DuccHub is a hub for all of universal roblox scripts, so you can easily access them all.
 
+    How do I use DuccHub?
+    - Just click execute from your executor, and it will automatically load all of the scripts.
+
+    DuccHub v1.0 changelog:
+    - Recoded all
+    - More neat script
+
+    Credits:
+    - duccveloper - Scripting
+    - deeeity@github - UI Library
+    - Some other dude - Misc scripts
 ]]
+local version = '1.0 (Pre-release)'
 
---// Cache
+-- Load UI Library
+local UI_LIB = loadstring(game:HttpGet('https://pastebin.com/raw/8JXetz8L'))()
 
-local loadstring, getgenv, setclipboard, tablefind, UserInputService = loadstring, getgenv, setclipboard, table.find, game:GetService("UserInputService")
+-- Variables
+local images = {
+    ['home_icon'] = 11632424326,
+    ['star_icon'] = 11647714813,
+    ['run_icon'] = 11632434473,
+    ['teleport_icon'] = 11647702726,
+    ['info_icon'] = 11472832266,
+    ['tick_icon'] = 11624388037,
+    ['cross_icon'] = 11624382926,
+    ['warning_icon'] = 11624382860,
+    ['bell_icon'] = 11624378537
+}
 
---// Loaded check
 
-if AirHub or AirHubV2Loaded then
-    return
+-- Services
+local Players = game:GetService('Players')
+local LocalPlayer = Players.LocalPlayer
+local UIS = game:GetService('UserInputService')
+
+-- Misc variables
+local shifttorun = false
+local walkspeed = LocalPlayer.Character.Humanoid.WalkSpeed
+local runspeed = walkspeed * 2
+local jetpack = false
+local infiniteJump = false
+local target_tp_part = nil
+
+-- Functions
+function date(str)
+    local data = {}
+    local y,m,d,h,i,s,t=str:match"(%d+)-(%d+)-(%d+)T(%d+):(%d+):(%d+).(%d+)Z"
+    data.year=y data.month=m data.day=d data.hour=h data.min=i data.sec=s data.milli=t
+    return data
 end
 
---// Environment
+function checkuserinfo(username)
+    local userid = "idk"
+local success, err = pcall(function()
+    userid = Players:GetUserIdFromNameAsync(username)
+end)
+if userid == "idk" then
+    _UI_T4_S1_error:Set("User not found!")
+    _UI_T4_S1_error:Visible(true)
+    wait(2)
+    _UI_T4_S1_error:Visible(false)
+    _UI_T4_S1_error:Set("")
+else
+        local request = 'https://users.roproxy.com/v1/users/' .. userid
+        local response = game:HttpGet(request)
+        local data = game:GetService('HttpService'):JSONDecode(response)
+        -- Start fetching data
+        local description = data.description
+        local created = data.created
+        local isbanned = data.isBanned
+        local id = data.id
+        local username = data.name
+        local displayname = data.displayName
+        
+        -- Fetch user avatar and headshot url
+        local request =
+            'https://thumbnails.roblox.com/v1/users/avatar?userIds=' .. id .. '&size=48x48&format=Png&isCircular=false'
+        local request2 =
+            'https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=' ..
+            id .. '&size=48x48&format=Png&isCircular=false'
+        local response = game:HttpGet(request)
+        local response2 = game:HttpGet(request2)
+        local data = game:GetService('HttpService'):JSONDecode(response)
+        local data2 = game:GetService('HttpService'):JSONDecode(response2)
+        avatarurl = data.data[1].imageUrl
+        headshoturl = data2.data[1].imageUrl
 
-getgenv().AirHub = {}
-
---// Load Modules
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/AirHub/main/Modules/Wall%20Hack.lua"))()
-
---// Variables
-
-local Library = loadstring(game:GetObjects("rbxassetid://7657867786")[1].Source)() -- Pepsi's UI Library
-local Aimbot, WallHack = getgenv().AirHub.Aimbot, getgenv().AirHub.WallHack
-local Parts, Fonts, TracersType = {"Head", "HumanoidRootPart", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg", "LeftHand", "RightHand", "LeftLowerArm", "RightLowerArm", "LeftUpperArm", "RightUpperArm", "LeftFoot", "LeftLowerLeg", "UpperTorso", "LeftUpperLeg", "RightFoot", "RightLowerLeg", "LowerTorso", "RightUpperLeg"}, {"UI", "System", "Plex", "Monospace"}, {"Bottom", "Center", "Mouse"}
-
---// Frame
-
-Library.UnloadCallback = function()
-	Aimbot.Functions:Exit()
-	WallHack.Functions:Exit()
-	getgenv().AirHub = nil
+        if isbanned == true then
+            _UI_T4_S1_ban:Visible(true)
+        else
+            _UI_T4_S1_ban:Visible(false)
+        end
+        -- Set
+        _UI_T4_S2:Set('About ' .. displayname)
+        _UI_T4_S2_username:Set('Username: ' .. username)
+        _UI_T4_S2_displayname:Set('Display name: ' .. displayname)
+        _UI_T4_S2_userid:Set('User ID: ' .. id)
+        _UI_T4_S2_created:Set('Created: ' .. date(created).day .. '/' .. date(created).month .. '/' .. date(created).year)
+        _UI_T4_S3_avatar:SetImage(Players:GetUserThumbnailAsync(id, Enum.ThumbnailType.AvatarThumbnail, Enum.ThumbnailSize.Size48x48), "Avatar of " .. displayname, false)
+        _UI_T4_S3_headshot:SetImage(Players:GetUserThumbnailAsync(id, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size48x48), "Headshot of " .. displayname, false)
+    end
 end
 
-local MainFrame = Library:CreateWindow({
-	Name = "Haridade - LOS ⚡",
-	Themeable = {
-		Image = "7059346386",
-		Info = "Feito Por HA_FeHari\nParceria CRXM_CRXM",
-		Credit = false
-	},
-	Background = "",
-	Theme = [[{"__Designer.Colors.topGradient":"3F0C64","__Designer.Colors.section":"C259FB","__Designer.Colors.hoveredOptionBottom":"4819B4","__Designer.Background.ImageAssetID":"rbxassetid://4427304036","__Designer.Colors.selectedOption":"4E149C","__Designer.Colors.unselectedOption":"482271","__Designer.Files.WorkspaceFile":"AirHub","__Designer.Colors.unhoveredOptionTop":"310269","__Designer.Colors.outerBorder":"391D57","__Designer.Background.ImageColor":"69009C","__Designer.Colors.tabText":"B9B9B9","__Designer.Colors.elementBorder":"160B24","__Designer.Background.ImageTransparency":100,"__Designer.Colors.background":"1E1237","__Designer.Colors.innerBorder":"531E79","__Designer.Colors.bottomGradient":"361A60","__Designer.Colors.sectionBackground":"21002C","__Designer.Colors.hoveredOptionTop":"6B10F9","__Designer.Colors.otherElementText":"7B44A8","__Designer.Colors.main":"AB26FF","__Designer.Colors.elementText":"9F7DB5","__Designer.Colors.unhoveredOptionBottom":"3E0088","__Designer.Background.UseBackgroundImage":false}]]
+
+UIS.InputBegan:Connect(
+    function(input)
+        if input.KeyCode == Enum.KeyCode.LeftShift then
+            if shifttorun then
+                LocalPlayer.Character.Humanoid.WalkSpeed = runspeed
+            end
+        end
+    end
+)
+
+UIS.InputEnded:Connect(
+    function(input)
+        if input.KeyCode == Enum.KeyCode.LeftShift then
+            if shifttorun then
+                LocalPlayer.Character.Humanoid.WalkSpeed = walkspeed
+            end
+        end
+    end
+)
+
+UIS.InputBegan:Connect(
+    function(input)
+        if input.KeyCode == Enum.KeyCode.Space then
+            if jetpack then
+                LocalPlayer.Character:FindFirstChildOfClass('Humanoid'):ChangeState('Jumping')
+            end
+        end
+    end
+)
+
+UIS.InputBegan:Connect(
+    function(input)
+        if input.KeyCode == Enum.KeyCode.Space and jetpack then
+            while UIS:IsKeyDown(Enum.KeyCode.Space) do
+                wait()
+                LocalPlayer.Character:FindFirstChildOfClass('Humanoid'):ChangeState('Jumping')
+            end
+        end
+    end
+)
+
+UIS.InputBegan:Connect(
+    function(input)
+        if input.KeyCode == Enum.KeyCode.Space and infiniteJump then
+            LocalPlayer.Character:FindFirstChildOfClass('Humanoid'):ChangeState('Jumping')
+        end
+    end
+)
+
+function notify(title, text, icon)
+    UI_LIB:Notify(
+        {
+            Title = title,
+            Content = text,
+            Duration = 1.5,
+            Image = icon
+        }
+    )
+end
+
+function GetInstance(str)
+    local pattern = 'Workspace%..'
+    local pattern2 = '^Workspace'
+    if string.match(str, pattern) and string.match(str, pattern2) then
+        return true
+    else
+        notify('Error', 'Pattern invalid!', images['cross_icon'])
+        return false
+    end
+end
+
+
+
+
+function notGetInstance(String)
+    local Table = string.split(String, ".")
+    local Service = game:GetService(Table[1])
+
+    local ObjectSoFar = Service
+    for Index, Value in pairs(Table) do
+        if Index ~= 1 then
+            local Object = ObjectSoFar:FindFirstChild(Value)
+            if Object then
+                ObjectSoFar = Object
+            else
+                return nil
+            end
+        end
+    end
+
+    return (ObjectSoFar ~= Service and ObjectSoFar) or nil
+end
+
+
+-- UI
+local _UI_Window =
+    UI_LIB:CreateWindow(
+        {
+            Name = 'DuccHub v1.0',
+            LoadingTitle = 'Rayfield Interface Suite',
+            LoadingSubtitle = 'by Sirius',
+            ConfigurationSaving = {
+                Enabled = false,
+                FolderName = nil,
+                FileName = 'Big Hub'
+            },
+            Discord = {
+                Enabled = false,
+                Invite = 'sirius',
+                RememberJoins = true
+            },
+            KeySystem = false,
+            KeySettings = {
+                Title = 'Sirius Hub',
+                Subtitle = 'Key System',
+                Note = 'Join the discord (discord.gg/sirius)',
+                FileName = 'SiriusKey',
+                SaveKey = true,
+                GrabKeyFromSite = false,
+                Key = 'Hello'
+            }
+        }
+    )
+
+-- Tabs
+
+-- Home
+local _UI_T1 = _UI_Window:CreateTab('Home', images['home_icon'])
+local _UI_T1S1 = _UI_T1:CreateSection('Welcome')
+local _UI_T1S1_WelcomeLabel = _UI_T1:CreateImage({
+    ImageType = "Left",
+    Image = Players:GetUserThumbnailAsync(LocalPlayer.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size48x48),
+    Caption = 'Hi, ' .. LocalPlayer.DisplayName .. '!',
 })
+_UI_T1S1_Leaked = _UI_T1:CreateLabel("quacccc... let's not leak my hard work")
+local _UI_T1_S2 = _UI_T1:CreateSection('Danger Zone')
+local _UI_T1_S2_DestroyUI =
+    _UI_T1:CreateButton(
+        {
+            Name = 'Destroy UI',
+            Callback = function()
+                UI_LIB:Destroy()
+            end
+        }
+    )
 
---// Tabs
+-- Movement
+local _UI_T2 = _UI_Window:CreateTab('Movement', images['run_icon'])
+local _UI_T2_S1 = _UI_T2:CreateSection('Main')
+local _UI_T2_S1_WalkSpeed =
+    _UI_T2:CreateInput(
+        {
+            Name = 'WalkSpeed',
+            PlaceholderText = 'Default: 16',
+            RemoveTextAfterFocusLost = true,
+            Callback = function(Text)
+                if Text == '' then
+                    LocalPlayer.Character.Humanoid.WalkSpeed = 16
+                    notify('WalkSpeed', 'WalkSpeed has been reset to 16', images['tick_icon'])
+                else
+                    tonumber(Text)
+                    if type(Text) == 'number' then
+                        LocalPlayer.Character.Humanoid.WalkSpeed = Text
+                        notify('WalkSpeed', 'WalkSpeed has been set to ' .. Text, images['tick_icon'])
+                    else
+                        notify('Error', 'WalkSpeed must be a number!', images['cross_icon'])
+                    end
+                end
+            end
+        }
+    )
+local _UI_T2_S1_JumpPower =
+    _UI_T2:CreateInput(
+        {
+            Name = 'JumpPower',
+            PlaceholderText = 'Default: 50',
+            RemoveTextAfterFocusLost = true,
+            Callback = function(Text)
+                if Text == '' then
+                    LocalPlayer.Character.Humanoid.JumpPower = 50
+                    notify('JumpPower', 'JumpPower has been reset to 50', images['tick_icon'])
+                else
+                    tonumber(Text)
+                    if type(Text) == 'number' then
+                        LocalPlayer.Character.Humanoid.JumpPower = Text
+                        notify('JumpPower', 'JumpPower has been set to ' .. Text, images['tick_icon'])
+                    else
+                        notify('Error', 'JumpPower must be a number!', images['cross_icon'])
+                    end
+                end
+            end
+        }
+    )
 
-local VisualsTab = MainFrame:CreateTab({
-	Name = "Início"
+local _UI_T2_S2 = _UI_T2:CreateSection('Shift to Run')
+local _UI_T2_S2_runSpeed =
+    _UI_T2:CreateInput(
+        {
+            Name = 'RunSpeed',
+            PlaceholderText = 'Default: 32',
+            RemoveTextAfterFocusLost = true,
+            Callback = function(Text)
+                -- check if text = number
+                if Text == '' then
+                    runspeed = 32
+                    notify('RunSpeed', 'RunSpeed has been reset to 32', images['tick_icon'])
+                else
+                    tonumber(Text)
+                    if not Text == nil then
+                        runspeed = Text
+                        notify('RunSpeed', 'RunSpeed has been set to ' .. Text, images['tick_icon'])
+                    else
+                        notify('Error', 'RunSpeed must be a number!', images['cross_icon'])
+                    end
+                end
+            end
+        }
+    )
+local _UI_T2_S2_shiftToRun =
+    _UI_T2:CreateToggle(
+        {
+            Name = 'Shift to Run',
+            Callback = function(Value)
+                shifttorun = Value
+            end
+        }
+    )
+
+local _UI_T2_S3 = _UI_T2:CreateSection('Jump')
+local _UI_T2_S3_infiniteJump =
+    _UI_T2:CreateToggle(
+        {
+            Name = 'Infinite Jump',
+            Callback = function(Value)
+                infiniteJump = Value
+            end
+        }
+    )
+local _UI_T2_S3_jetpack =
+    _UI_T2:CreateToggle(
+        {
+            Name = 'Jetpack',
+            Callback = function(Value)
+                jetpack = Value
+            end
+        }
+    )
+
+-- Teleportation
+local _UI_T3 = _UI_Window:CreateTab('Teleportation', images['teleport_icon'])
+local _UI_T3_S1 = _UI_T3:CreateSection('Selection')
+local _UI_T3_S1_selectPart =
+    _UI_T3:CreateButton(
+        {
+            Name = 'Select Part',
+            Callback = function()
+                local tool = Instance.new('Tool')
+                tool.Name = 'Part Selector'
+                tool.RequiresHandle = false
+                tool.CanBeDropped = false
+                tool.Parent = game.Players.LocalPlayer.Backpack
+                notify("Part Selector", "Select a part to teleport to", images['info_icon'])
+                tool.Equipped:Connect(
+                    function(mouse)
+                        mouse.Button1Down:connect(
+                            function()
+                                if mouse.Target and mouse.Target.Parent then
+                                    local part = mouse.Target:GetFullName()
+                                    target_tp_part = part
+                                    _UI_T3_S1_partLabel:Set("Selected part: " .. part)
+                                    target_tp_part = notGetInstance(target_tp_part)
+                                    tool:Destroy()
+                                end
+                            end
+                        )
+                    end
+                )
+            end
+        }
+    )
+
+local _UI_T3_S1_partPath =
+    _UI_T3:CreateInput(
+        {
+            Name = 'Part Path',
+            PlaceholderText = 'Must starts with "Workspace"!',
+            RemoveTextAfterFocusLost = true,
+            Callback = function(Text)
+                if Text == '' then
+                    target_tp_part = nil
+                    _UI_T3_S1_partLabel:Set("No part selected")
+                else
+                    if GetInstance(Text) then
+                        local valididk = notGetInstance(Text)
+                        if valididk == nil then
+                            notify('Error', 'Part does not exist!', images['cross_icon'])
+                        else
+                            target_tp_part = valididk
+                            notify('Part Path', 'Part Path has been set to ' .. Text, images['tick_icon'])
+                            _UI_T3_S1_partLabel:Set("Selected part: " .. Text)
+                        end
+
+                    end
+                end
+            end,
+        }
+    )
+_UI_T3_S1_partLabel = _UI_T3:CreateLabel('No part selected')
+local _UI_T3_S2 = _UI_T3:CreateSection('Teleportation')
+local _UI_T3_S2_teleport =
+    _UI_T3:CreateButton(
+        {
+            Name = 'Teleport',
+            Callback = function()
+                if target_tp_part == nil then
+                    notify('Error', 'No part selected!', images['cross_icon'])
+                else
+                    LocalPlayer.Character:MoveTo(target_tp_part.CFrame.Position + Vector3.new(0, 5, 0))
+                    notify('Teleport', 'Teleported to ' .. tostring(target_tp_part), images['tick_icon'])
+                end
+            end,
+        }
+    )
+
+-- Player infoo
+local _UI_T4 = _UI_Window:CreateTab('Player Info', images['info_icon'])
+local _UI_T4_S1 = _UI_T4:CreateSection('Username Input')
+local _UI_T4_S1_username =
+    _UI_T4:CreateInput(
+        {
+            Name = 'Username',
+            PlaceholderText = 'Default: ' .. LocalPlayer.Name,
+            RemoveTextAfterFocusLost = true,
+            Callback = function(Text)
+                if Text == '' then
+                    checkuserinfo(LocalPlayer.Name)
+                else
+                    checkuserinfo(Text)
+                end
+            end
+        }
+    )
+
+_UI_T4_S1_error = _UI_T4:CreateLabel('')
+_UI_T4_S1_error:Visible(false)
+_UI_T4_S1_ban = _UI_T4:CreateLabel('User is banned!')
+_UI_T4_S1_ban:Visible(false)
+
+-- Player info
+_UI_T4_S2 = _UI_T4:CreateSection('About ' .. LocalPlayer.DisplayName)
+_UI_T4_S2_username = _UI_T4:CreateLabel('Username: ' .. LocalPlayer.Name)
+_UI_T4_S2_displayname = _UI_T4:CreateLabel('Displayname: ' .. LocalPlayer.DisplayName)
+_UI_T4_S2_userid = _UI_T4:CreateLabel('User ID: ' .. LocalPlayer.UserId)
+_UI_T4_S2_created = _UI_T4:CreateLabel('Created: ' .. LocalPlayer.AccountAge)
+
+_UI_T4_S3 = _UI_T4:CreateSection('Avatar')
+_UI_T4_S3_avatar = _UI_T4:CreateImage({
+    ImageType = 'Left',
+    Image = Players:GetUserThumbnailAsync(LocalPlayer.UserId, Enum.ThumbnailType.AvatarThumbnail, Enum.ThumbnailSize.Size48x48),
+    Caption = 'Avatar preview'
 })
+_UI_T4_S3_copyavatarurl =
+    _UI_T4:CreateButton(
+        {
+            Name = 'Copy Avatar URL',
+            Callback = function()
+                setclipboard(avatarurl)
+                notify('Avatar URL', 'Avatar URL copied to clipboard', images['tick_icon'])
+            end
+        }
+    )
 
-local AimbotTab = MainFrame:CreateTab({
-	Name = "Farmar"
+_UI_T4_S3_headshot = _UI_T4:CreateImage({
+    ImageType = 'Left',
+    Image = Players:GetUserThumbnailAsync(LocalPlayer.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size48x48),
+    Caption = 'Headshot preview'
 })
+_UI_T4_S3_copyheadshoturl =
+    _UI_T4:CreateButton(
+        {
+            Name = 'Copy Headshot URL',
+            Callback = function()
+                setclipboard(headshoturl)
+                notify('Headshot URL', 'Headshot URL copied to clipboard', images['tick_icon'])
+            end
+        }
+    )
 
-local VisualsTab = MainFrame:CreateTab({
-	Name = "Renascimento"
-})
 
-local CrosshairTab = MainFrame:CreateTab({
-	Name = "Corridas"
-})
 
-local FunctionsTab = MainFrame:CreateTab({
-	Name = "Funções"
-})
 
---// Seção Farmar
-
-local Values = AimbotTab:CreateSection({
-	Name = "Farmar Automático"
-})
-
-local Checks = AimbotTab:CreateSection({
-	Name = "Utilitários"
-})
-
-local ThirdPerson = AimbotTab:CreateSection({
-	Name = "Third Person"
-})
-
-local FOV_Values = AimbotTab:CreateSection({
-	Name = "Teleportar",
-	Side = "Right"
-})
-
-local FOV_Appearance = AimbotTab:CreateSection({
-	Name = "FOV Circle Appearance",
-	Side = "Right"
-})
-
---// Visuals Sections
-
-local WallHackChecks = VisualsTab:CreateSection({
-	Name = "Checks"
-})
-
-local ESPSettings = VisualsTab:CreateSection({
-	Name = "ESP Settings"
-})
-
-local BoxesSettings = VisualsTab:CreateSection({
-	Name = "Boxes Settings"
-})
-
-local ChamsSettings = VisualsTab:CreateSection({
-	Name = "Chams Settings"
-})
-
-local TracersSettings = VisualsTab:CreateSection({
-	Name = "Tracers Settings",
-	Side = "Right"
-})
-
-local HeadDotsSettings = VisualsTab:CreateSection({
-	Name = "Head Dots Settings",
-	Side = "Right"
-})
-
-local HealthBarSettings = VisualsTab:CreateSection({
-	Name = "Health Bar Settings",
-	Side = "Right"
-})
-
---// Crosshair Sections
-
-local CrosshairSettings = CrosshairTab:CreateSection({
-	Name = "Settings"
-})
-
-local CrosshairSettings_CenterDot = CrosshairTab:CreateSection({
-	Name = "Center Dot Settings",
-	Side = "Right"
-})
-
---// Functions Sections
-
-local FunctionsSection = FunctionsTab:CreateSection({
-	Name = "Functions"
-})
-
---// Farmar | Farmar Automático
-
-Values:AddToggle({
-	Name = "Enabled",
-	Value = Aimbot.Settings.Enabled,
-	Callback = function(New, Old)
-		Aimbot.Settings.Enabled = New
-	end
-}).Default = Aimbot.Settings.Enabled
-
-Values:AddToggle({
-	Name = "Toggle",
-	Value = Aimbot.Settings.Toggle,
-	Callback = function(New, Old)
-		Aimbot.Settings.Toggle = New
-	end
-}).Default = Aimbot.Settings.Toggle
-
-Aimbot.Settings.LockPart = Parts[1]; Values:AddDropdown({
-	Name = "Lock Part",
-	Value = Parts[1],
-	Callback = function(New, Old)
-		Aimbot.Settings.LockPart = New
-	end,
-	List = Parts,
-	Nothing = "Head"
-}).Default = Parts[1]
-
-Values:AddTextbox({ -- Using a Textbox instead of a Keybind because the UI Library doesn't support Mouse inputs like Left Click / Right Click...
-	Name = "Hotkey",
-	Value = Aimbot.Settings.TriggerKey,
-	Callback = function(New, Old)
-		Aimbot.Settings.TriggerKey = New
-	end
-}).Default = Aimbot.Settings.TriggerKey
-
---[[
-Values:AddKeybind({
-	Name = "Hotkey",
-	Value = Aimbot.Settings.TriggerKey,
-	Callback = function(New, Old)
-		Aimbot.Settings.TriggerKey = stringmatch(tostring(New), "Enum%.[UserInputType]*[KeyCode]*%.(.+)")
-	end,
-}).Default = Aimbot.Settings.TriggerKey
-]]
-
-Values:AddSlider({
-	Name = "Sensitivity",
-	Value = Aimbot.Settings.Sensitivity,
-	Callback = function(New, Old)
-		Aimbot.Settings.Sensitivity = New
-	end,
-	Min = 0,
-	Max = 1,
-	Decimals = 2
-}).Default = Aimbot.Settings.Sensitivity
-
---// Farmar | Utilitários
-
-Checks:AddToggle({
-	Name = "Reduzir Ping Alto (sem milagres)",
-	Value = Aimbot.Settings.TeamCheck,
-	Callback = function(New, Old)
-		Aimbot.Settings.TeamCheck = New
-	end
-}).Default = Aimbot.Settings.TeamCheck
-
-Checks:AddToggle({
-	Name = "Reduzir Gráficos",
-	Value = Aimbot.Settings.WallCheck,
-	Callback = function(New, Old)
-		Aimbot.Settings.WallCheck = New
-	end
-}).Default = Aimbot.Settings.WallCheck
-
-Checks:AddToggle({
-	Name = "Anti Kick",
-	Value = Aimbot.Settings.AliveCheck,
-	Callback = function(New, Old)
-		Aimbot.Settings.AliveCheck = New
-	end
-}).Default = Aimbot.Settings.AliveCheck
-
---// Aimbot ThirdPerson
-
-ThirdPerson:AddToggle({
-	Name = "Enable Third Person",
-	Value = Aimbot.Settings.ThirdPerson,
-	Callback = function(New, Old)
-		Aimbot.Settings.ThirdPerson = New
-	end
-}).Default = Aimbot.Settings.ThirdPerson
-
-ThirdPerson:AddSlider({
-	Name = "Sensitivity",
-	Value = Aimbot.Settings.ThirdPersonSensitivity,
-	Callback = function(New, Old)
-		Aimbot.Settings.ThirdPersonSensitivity = New
-	end,
-	Min = 0.1,
-	Max = 5,
-	Decimals = 1
-}).Default = Aimbot.Settings.ThirdPersonSensitivity
-
---// Farmar | Teleportar
-
-Aimbot.Settings.LockPart = Parts[1]; Values:AddDropdown({
-	Name = "Mapas Para Teleportar",
-	Value = Parts[1],
-	Callback = function(New, Old)
-		Aimbot.Settings.LockPart = New
-	end,
-	List = Parts,
-	Nothing = "Main City"	
-}).Default = Parts[1]
-
-FOV_Values:AddToggle({
-	Name = "Enabled",
-	Value = Aimbot.FOVSettings.Enabled,
-	Callback = function(New, Old)
-		Aimbot.FOVSettings.Enabled = New
-	end
-}).Default = Aimbot.FOVSettings.Enabled
-
-FOV_Values:AddToggle({
-	Name = "Visible",
-	Value = Aimbot.FOVSettings.Visible,
-	Callback = function(New, Old)
-		Aimbot.FOVSettings.Visible = New
-	end
-}).Default = Aimbot.FOVSettings.Visible
-
-FOV_Values:AddSlider({
-	Name = "Amount",
-	Value = Aimbot.FOVSettings.Amount,
-	Callback = function(New, Old)
-		Aimbot.FOVSettings.Amount = New
-	end,
-	Min = 10,
-	Max = 300
-}).Default = Aimbot.FOVSettings.Amount
-
---// FOV Settings Appearance
-
-FOV_Appearance:AddToggle({
-	Name = "Filled",
-	Value = Aimbot.FOVSettings.Filled,
-	Callback = function(New, Old)
-		Aimbot.FOVSettings.Filled = New
-	end
-}).Default = Aimbot.FOVSettings.Filled
-
-FOV_Appearance:AddSlider({
-	Name = "Transparency",
-	Value = Aimbot.FOVSettings.Transparency,
-	Callback = function(New, Old)
-		Aimbot.FOVSettings.Transparency = New
-	end,
-	Min = 0,
-	Max = 1,
-	Decimal = 1
-}).Default = Aimbot.FOVSettings.Transparency
-
-FOV_Appearance:AddSlider({
-	Name = "Sides",
-	Value = Aimbot.FOVSettings.Sides,
-	Callback = function(New, Old)
-		Aimbot.FOVSettings.Sides = New
-	end,
-	Min = 3,
-	Max = 60
-}).Default = Aimbot.FOVSettings.Sides
-
-FOV_Appearance:AddSlider({
-	Name = "Thickness",
-	Value = Aimbot.FOVSettings.Thickness,
-	Callback = function(New, Old)
-		Aimbot.FOVSettings.Thickness = New
-	end,
-	Min = 1,
-	Max = 50
-}).Default = Aimbot.FOVSettings.Thickness
-
-FOV_Appearance:AddColorpicker({
-	Name = "Color",
-	Value = Aimbot.FOVSettings.Color,
-	Callback = function(New, Old)
-		Aimbot.FOVSettings.Color = New
-	end
-}).Default = Aimbot.FOVSettings.Color
-
-FOV_Appearance:AddColorpicker({
-	Name = "Locked Color",
-	Value = Aimbot.FOVSettings.LockedColor,
-	Callback = function(New, Old)
-		Aimbot.FOVSettings.LockedColor = New
-	end
-}).Default = Aimbot.FOVSettings.LockedColor
-
---// Wall Hack Settings
-
-WallHackChecks:AddToggle({
-	Name = "Enabled",
-	Value = WallHack.Settings.Enabled,
-	Callback = function(New, Old)
-		WallHack.Settings.Enabled = New
-	end
-}).Default = WallHack.Settings.Enabled
-
-WallHackChecks:AddToggle({
-	Name = "Team Check",
-	Value = WallHack.Settings.TeamCheck,
-	Callback = function(New, Old)
-		WallHack.Settings.TeamCheck = New
-	end
-}).Default = WallHack.Settings.TeamCheck
-
-WallHackChecks:AddToggle({
-	Name = "Alive Check",
-	Value = WallHack.Settings.AliveCheck,
-	Callback = function(New, Old)
-		WallHack.Settings.AliveCheck = New
-	end
-}).Default = WallHack.Settings.AliveCheck
-
---// Visuals Settings
-
-ESPSettings:AddToggle({
-	Name = "Enabled",
-	Value = WallHack.Visuals.ESPSettings.Enabled,
-	Callback = function(New, Old)
-		WallHack.Visuals.ESPSettings.Enabled = New
-	end
-}).Default = WallHack.Visuals.ESPSettings.Enabled
-
-ESPSettings:AddToggle({
-	Name = "Outline",
-	Value = WallHack.Visuals.ESPSettings.Outline,
-	Callback = function(New, Old)
-		WallHack.Visuals.ESPSettings.Outline = New
-	end
-}).Default = WallHack.Visuals.ESPSettings.Outline
-
-ESPSettings:AddToggle({
-	Name = "Display Distance",
-	Value = WallHack.Visuals.ESPSettings.DisplayDistance,
-	Callback = function(New, Old)
-		WallHack.Visuals.ESPSettings.DisplayDistance = New
-	end
-}).Default = WallHack.Visuals.ESPSettings.DisplayDistance
-
-ESPSettings:AddToggle({
-	Name = "Display Health",
-	Value = WallHack.Visuals.ESPSettings.DisplayHealth,
-	Callback = function(New, Old)
-		WallHack.Visuals.ESPSettings.DisplayHealth = New
-	end
-}).Default = WallHack.Visuals.ESPSettings.DisplayHealth
-
-ESPSettings:AddToggle({
-	Name = "Display Name",
-	Value = WallHack.Visuals.ESPSettings.DisplayName,
-	Callback = function(New, Old)
-		WallHack.Visuals.ESPSettings.DisplayName = New
-	end
-}).Default = WallHack.Visuals.ESPSettings.DisplayName
-
-ESPSettings:AddSlider({
-	Name = "Offset",
-	Value = WallHack.Visuals.ESPSettings.Offset,
-	Callback = function(New, Old)
-		WallHack.Visuals.ESPSettings.Offset = New
-	end,
-	Min = -30,
-	Max = 30
-}).Default = WallHack.Visuals.ESPSettings.Offset
-
-ESPSettings:AddColorpicker({
-	Name = "Text Color",
-	Value = WallHack.Visuals.ESPSettings.TextColor,
-	Callback = function(New, Old)
-		WallHack.Visuals.ESPSettings.TextColor = New
-	end
-}).Default = WallHack.Visuals.ESPSettings.TextColor
-
-ESPSettings:AddColorpicker({
-	Name = "Outline Color",
-	Value = WallHack.Visuals.ESPSettings.OutlineColor,
-	Callback = function(New, Old)
-		WallHack.Visuals.ESPSettings.OutlineColor = New
-	end
-}).Default = WallHack.Visuals.ESPSettings.OutlineColor
-
-ESPSettings:AddSlider({
-	Name = "Text Transparency",
-	Value = WallHack.Visuals.ESPSettings.TextTransparency,
-	Callback = function(New, Old)
-		WallHack.Visuals.ESPSettings.TextTransparency = New
-	end,
-	Min = 0,
-	Max = 1,
-	Decimals = 2
-}).Default = WallHack.Visuals.ESPSettings.TextTransparency
-
-ESPSettings:AddSlider({
-	Name = "Text Size",
-	Value = WallHack.Visuals.ESPSettings.TextSize,
-	Callback = function(New, Old)
-		WallHack.Visuals.ESPSettings.TextSize = New
-	end,
-	Min = 8,
-	Max = 24
-}).Default = WallHack.Visuals.ESPSettings.TextSize
-
-ESPSettings:AddDropdown({
-	Name = "Text Font",
-	Value = Fonts[WallHack.Visuals.ESPSettings.TextFont + 1],
-	Callback = function(New, Old)
-		WallHack.Visuals.ESPSettings.TextFont = Drawing.Fonts[New]
-	end,
-	List = Fonts,
-	Nothing = "UI"
-}).Default = Fonts[WallHack.Visuals.ESPSettings.TextFont + 1]
-
-BoxesSettings:AddToggle({
-	Name = "Enabled",
-	Value = WallHack.Visuals.BoxSettings.Enabled,
-	Callback = function(New, Old)
-		WallHack.Visuals.BoxSettings.Enabled = New
-	end
-}).Default = WallHack.Visuals.BoxSettings.Enabled
-
-BoxesSettings:AddSlider({
-	Name = "Transparency",
-	Value = WallHack.Visuals.BoxSettings.Transparency,
-	Callback = function(New, Old)
-		WallHack.Visuals.BoxSettings.Transparency = New
-	end,
-	Min = 0,
-	Max = 1,
-	Decimals = 2
-}).Default = WallHack.Visuals.BoxSettings.Transparency
-
-BoxesSettings:AddSlider({
-	Name = "Thickness",
-	Value = WallHack.Visuals.BoxSettings.Thickness,
-	Callback = function(New, Old)
-		WallHack.Visuals.BoxSettings.Thickness = New
-	end,
-	Min = 1,
-	Max = 5
-}).Default = WallHack.Visuals.BoxSettings.Thickness
-
-BoxesSettings:AddSlider({
-	Name = "Scale Increase (For 3D)",
-	Value = WallHack.Visuals.BoxSettings.Increase,
-	Callback = function(New, Old)
-		WallHack.Visuals.BoxSettings.Increase = New
-	end,
-	Min = 1,
-	Max = 5
-}).Default = WallHack.Visuals.BoxSettings.Increase
-
-BoxesSettings:AddColorpicker({
-	Name = "Color",
-	Value = WallHack.Visuals.BoxSettings.Color,
-	Callback = function(New, Old)
-		WallHack.Visuals.BoxSettings.Color = New
-	end
-}).Default = WallHack.Visuals.BoxSettings.Color
-
-BoxesSettings:AddDropdown({
-	Name = "Type",
-	Value = WallHack.Visuals.BoxSettings.Type == 1 and "3D" or "2D",
-	Callback = function(New, Old)
-		WallHack.Visuals.BoxSettings.Type = New == "3D" and 1 or 2
-	end,
-	List = {"3D", "2D"},
-	Nothing = "3D"
-}).Default = WallHack.Visuals.BoxSettings.Type == 1 and "3D" or "2D"
-
-BoxesSettings:AddToggle({
-	Name = "Filled (2D Square)",
-	Value = WallHack.Visuals.BoxSettings.Filled,
-	Callback = function(New, Old)
-		WallHack.Visuals.BoxSettings.Filled = New
-	end
-}).Default = WallHack.Visuals.BoxSettings.Filled
-
-ChamsSettings:AddToggle({
-	Name = "Enabled",
-	Value = WallHack.Visuals.ChamsSettings.Enabled,
-	Callback = function(New, Old)
-		WallHack.Visuals.ChamsSettings.Enabled = New
-	end
-}).Default = WallHack.Visuals.ChamsSettings.Enabled
-
-ChamsSettings:AddToggle({
-	Name = "Filled",
-	Value = WallHack.Visuals.ChamsSettings.Filled,
-	Callback = function(New, Old)
-		WallHack.Visuals.ChamsSettings.Filled = New
-	end
-}).Default = WallHack.Visuals.ChamsSettings.Filled
-
-ChamsSettings:AddToggle({
-	Name = "Entire Body (For R15 Rigs)",
-	Value = WallHack.Visuals.ChamsSettings.EntireBody,
-	Callback = function(New, Old)
-		WallHack.Visuals.ChamsSettings.EntireBody = New
-	end
-}).Default = WallHack.Visuals.ChamsSettings.EntireBody
-
-ChamsSettings:AddSlider({
-	Name = "Transparency",
-	Value = WallHack.Visuals.ChamsSettings.Transparency,
-	Callback = function(New, Old)
-		WallHack.Visuals.ChamsSettings.Transparency = New
-	end,
-	Min = 0,
-	Max = 1,
-	Decimals = 2
-}).Default = WallHack.Visuals.ChamsSettings.Transparency
-
-ChamsSettings:AddSlider({
-	Name = "Thickness",
-	Value = WallHack.Visuals.ChamsSettings.Thickness,
-	Callback = function(New, Old)
-		WallHack.Visuals.ChamsSettings.Thickness = New
-	end,
-	Min = 0,
-	Max = 3
-}).Default = WallHack.Visuals.ChamsSettings.Thickness
-
-ChamsSettings:AddColorpicker({
-	Name = "Color",
-	Value = WallHack.Visuals.ChamsSettings.Color,
-	Callback = function(New, Old)
-		WallHack.Visuals.ChamsSettings.Color = New
-	end
-}).Default = WallHack.Visuals.ChamsSettings.Color
-
-TracersSettings:AddToggle({
-	Name = "Enabled",
-	Value = WallHack.Visuals.TracersSettings.Enabled,
-	Callback = function(New, Old)
-		WallHack.Visuals.TracersSettings.Enabled = New
-	end
-}).Default = WallHack.Visuals.TracersSettings.Enabled
-
-TracersSettings:AddSlider({
-	Name = "Transparency",
-	Value = WallHack.Visuals.TracersSettings.Transparency,
-	Callback = function(New, Old)
-		WallHack.Visuals.TracersSettings.Transparency = New
-	end,
-	Min = 0,
-	Max = 1,
-	Decimals = 2
-}).Default = WallHack.Visuals.TracersSettings.Transparency
-
-TracersSettings:AddSlider({
-	Name = "Thickness",
-	Value = WallHack.Visuals.TracersSettings.Thickness,
-	Callback = function(New, Old)
-		WallHack.Visuals.TracersSettings.Thickness = New
-	end,
-	Min = 1,
-	Max = 5
-}).Default = WallHack.Visuals.TracersSettings.Thickness
-
-TracersSettings:AddColorpicker({
-	Name = "Color",
-	Value = WallHack.Visuals.TracersSettings.Color,
-	Callback = function(New, Old)
-		WallHack.Visuals.TracersSettings.Color = New
-	end
-}).Default = WallHack.Visuals.TracersSettings.Color
-
-TracersSettings:AddDropdown({
-	Name = "Start From",
-	Value = TracersType[WallHack.Visuals.TracersSettings.Type],
-	Callback = function(New, Old)
-		WallHack.Visuals.TracersSettings.Type = tablefind(TracersType, New)
-	end,
-	List = TracersType,
-	Nothing = "Bottom"
-}).Default = Fonts[WallHack.Visuals.TracersSettings.Type + 1]
-
-HeadDotsSettings:AddToggle({
-	Name = "Enabled",
-	Value = WallHack.Visuals.HeadDotSettings.Enabled,
-	Callback = function(New, Old)
-		WallHack.Visuals.HeadDotSettings.Enabled = New
-	end
-}).Default = WallHack.Visuals.HeadDotSettings.Enabled
-
-HeadDotsSettings:AddToggle({
-	Name = "Filled",
-	Value = WallHack.Visuals.HeadDotSettings.Filled,
-	Callback = function(New, Old)
-		WallHack.Visuals.HeadDotSettings.Filled = New
-	end
-}).Default = WallHack.Visuals.HeadDotSettings.Filled
-
-HeadDotsSettings:AddSlider({
-	Name = "Transparency",
-	Value = WallHack.Visuals.HeadDotSettings.Transparency,
-	Callback = function(New, Old)
-		WallHack.Visuals.HeadDotSettings.Transparency = New
-	end,
-	Min = 0,
-	Max = 1,
-	Decimals = 2
-}).Default = WallHack.Visuals.HeadDotSettings.Transparency
-
-HeadDotsSettings:AddSlider({
-	Name = "Thickness",
-	Value = WallHack.Visuals.HeadDotSettings.Thickness,
-	Callback = function(New, Old)
-		WallHack.Visuals.HeadDotSettings.Thickness = New
-	end,
-	Min = 1,
-	Max = 5
-}).Default = WallHack.Visuals.HeadDotSettings.Thickness
-
-HeadDotsSettings:AddSlider({
-	Name = "Sides",
-	Value = WallHack.Visuals.HeadDotSettings.Sides,
-	Callback = function(New, Old)
-		WallHack.Visuals.HeadDotSettings.Sides = New
-	end,
-	Min = 3,
-	Max = 60
-}).Default = WallHack.Visuals.HeadDotSettings.Sides
-
-HeadDotsSettings:AddColorpicker({
-	Name = "Color",
-	Value = WallHack.Visuals.HeadDotSettings.Color,
-	Callback = function(New, Old)
-		WallHack.Visuals.HeadDotSettings.Color = New
-	end
-}).Default = WallHack.Visuals.HeadDotSettings.Color
-
-HealthBarSettings:AddToggle({
-	Name = "Enabled",
-	Value = WallHack.Visuals.HealthBarSettings.Enabled,
-	Callback = function(New, Old)
-		WallHack.Visuals.HealthBarSettings.Enabled = New
-	end
-}).Default = WallHack.Visuals.HealthBarSettings.Enabled
-
-HealthBarSettings:AddDropdown({
-	Name = "Position",
-	Value = WallHack.Visuals.HealthBarSettings.Type == 1 and "Top" or WallHack.Visuals.HealthBarSettings.Type == 2 and "Bottom" or WallHack.Visuals.HealthBarSettings.Type == 3 and "Left" or "Right",
-	Callback = function(New, Old)
-		WallHack.Visuals.HealthBarSettings.Type = New == "Top" and 1 or New == "Bottom" and 2 or New == "Left" and 3 or 4
-	end,
-	List = {"Top", "Bottom", "Left", "Right"},
-	Nothing = "Left"
-}).Default = WallHack.Visuals.HealthBarSettings.Type == 1 and "Top" or WallHack.Visuals.HealthBarSettings.Type == 2 and "Bottom" or WallHack.Visuals.HealthBarSettings.Type == 3 and "Left" or "Right"
-
-HealthBarSettings:AddSlider({
-	Name = "Transparency",
-	Value = WallHack.Visuals.HealthBarSettings.Transparency,
-	Callback = function(New, Old)
-		WallHack.Visuals.HealthBarSettings.Transparency = New
-	end,
-	Min = 0,
-	Max = 1,
-	Decimals = 2
-}).Default = WallHack.Visuals.HealthBarSettings.Transparency
-
-HealthBarSettings:AddSlider({
-	Name = "Size",
-	Value = WallHack.Visuals.HealthBarSettings.Size,
-	Callback = function(New, Old)
-		WallHack.Visuals.HealthBarSettings.Size = New
-	end,
-	Min = 2,
-	Max = 10
-}).Default = WallHack.Visuals.HealthBarSettings.Size
-
-HealthBarSettings:AddSlider({
-	Name = "Blue",
-	Value = WallHack.Visuals.HealthBarSettings.Blue,
-	Callback = function(New, Old)
-		WallHack.Visuals.HealthBarSettings.Blue = New
-	end,
-	Min = 0,
-	Max = 255
-}).Default = WallHack.Visuals.HealthBarSettings.Blue
-
-HealthBarSettings:AddSlider({
-	Name = "Offset",
-	Value = WallHack.Visuals.HealthBarSettings.Offset,
-	Callback = function(New, Old)
-		WallHack.Visuals.HealthBarSettings.Offset = New
-	end,
-	Min = -30,
-	Max = 30
-}).Default = WallHack.Visuals.HealthBarSettings.Offset
-
-HealthBarSettings:AddColorpicker({
-	Name = "Outline Color",
-	Value = WallHack.Visuals.HealthBarSettings.OutlineColor,
-	Callback = function(New, Old)
-		WallHack.Visuals.HealthBarSettings.OutlineColor = New
-	end
-}).Default = WallHack.Visuals.HealthBarSettings.OutlineColor
-
---// Crosshair Settings
-
-CrosshairSettings:AddToggle({
-	Name = "Mouse Cursor",
-	Value = UserInputService.MouseIconEnabled,
-	Callback = function(New, Old)
-		UserInputService.MouseIconEnabled = New
-	end
-}).Default = UserInputService.MouseIconEnabled
-
-CrosshairSettings:AddToggle({
-	Name = "Enabled",
-	Value = WallHack.Crosshair.Settings.Enabled,
-	Callback = function(New, Old)
-		WallHack.Crosshair.Settings.Enabled = New
-	end
-}).Default = WallHack.Crosshair.Settings.Enabled
-
-CrosshairSettings:AddColorpicker({
-	Name = "Color",
-	Value = WallHack.Crosshair.Settings.Color,
-	Callback = function(New, Old)
-		WallHack.Crosshair.Settings.Color = New
-	end
-}).Default = WallHack.Crosshair.Settings.Color
-
-CrosshairSettings:AddSlider({
-	Name = "Transparency",
-	Value = WallHack.Crosshair.Settings.Transparency,
-	Callback = function(New, Old)
-		WallHack.Crosshair.Settings.Transparency = New
-	end,
-	Min = 0,
-	Max = 1,
-	Decimals = 2
-}).Default = WallHack.Crosshair.Settings.Transparency
-
-CrosshairSettings:AddSlider({
-	Name = "Size",
-	Value = WallHack.Crosshair.Settings.Size,
-	Callback = function(New, Old)
-		WallHack.Crosshair.Settings.Size = New
-	end,
-	Min = 8,
-	Max = 24
-}).Default = WallHack.Crosshair.Settings.Size
-
-CrosshairSettings:AddSlider({
-	Name = "Thickness",
-	Value = WallHack.Crosshair.Settings.Thickness,
-	Callback = function(New, Old)
-		WallHack.Crosshair.Settings.Thickness = New
-	end,
-	Min = 1,
-	Max = 5
-}).Default = WallHack.Crosshair.Settings.Thickness
-
-CrosshairSettings:AddSlider({
-	Name = "Gap Size",
-	Value = WallHack.Crosshair.Settings.GapSize,
-	Callback = function(New, Old)
-		WallHack.Crosshair.Settings.GapSize = New
-	end,
-	Min = 0,
-	Max = 20
-}).Default = WallHack.Crosshair.Settings.GapSize
-
-CrosshairSettings:AddSlider({
-	Name = "Rotation (Degrees)",
-	Value = WallHack.Crosshair.Settings.Rotation,
-	Callback = function(New, Old)
-		WallHack.Crosshair.Settings.Rotation = New
-	end,
-	Min = -180,
-	Max = 180
-}).Default = WallHack.Crosshair.Settings.Rotation
-
-CrosshairSettings:AddDropdown({
-	Name = "Position",
-	Value = WallHack.Crosshair.Settings.Type == 1 and "Mouse" or "Center",
-	Callback = function(New, Old)
-		WallHack.Crosshair.Settings.Type = New == "Mouse" and 1 or 2
-	end,
-	List = {"Mouse", "Center"},
-	Nothing = "Mouse"
-}).Default = WallHack.Crosshair.Settings.Type == 1 and "Mouse" or "Center"
-
-CrosshairSettings_CenterDot:AddToggle({
-	Name = "Center Dot",
-	Value = WallHack.Crosshair.Settings.CenterDot,
-	Callback = function(New, Old)
-		WallHack.Crosshair.Settings.CenterDot = New
-	end
-}).Default = WallHack.Crosshair.Settings.CenterDot
-
-CrosshairSettings_CenterDot:AddColorpicker({
-	Name = "Center Dot Color",
-	Value = WallHack.Crosshair.Settings.CenterDotColor,
-	Callback = function(New, Old)
-		WallHack.Crosshair.Settings.CenterDotColor = New
-	end
-}).Default = WallHack.Crosshair.Settings.CenterDotColor
-
-CrosshairSettings_CenterDot:AddSlider({
-	Name = "Center Dot Size",
-	Value = WallHack.Crosshair.Settings.CenterDotSize,
-	Callback = function(New, Old)
-		WallHack.Crosshair.Settings.CenterDotSize = New
-	end,
-	Min = 1,
-	Max = 6
-}).Default = WallHack.Crosshair.Settings.CenterDotSize
-
-CrosshairSettings_CenterDot:AddSlider({
-	Name = "Center Dot Transparency",
-	Value = WallHack.Crosshair.Settings.CenterDotTransparency,
-	Callback = function(New, Old)
-		WallHack.Crosshair.Settings.CenterDotTransparency = New
-	end,
-	Min = 0,
-	Max = 1,
-	Decimals = 2
-}).Default = WallHack.Crosshair.Settings.CenterDotTransparency
-
-CrosshairSettings_CenterDot:AddToggle({
-	Name = "Center Dot Filled",
-	Value = WallHack.Crosshair.Settings.CenterDotFilled,
-	Callback = function(New, Old)
-		WallHack.Crosshair.Settings.CenterDotFilled = New
-	end
-}).Default = WallHack.Crosshair.Settings.CenterDotFilled
-
---// Functions / Functions
-
-FunctionsSection:AddButton({
-	Name = "Reset Settings",
-	Callback = function()
-		Aimbot.Functions:ResetSettings()
-		WallHack.Functions:ResetSettings()
-		Library.ResetAll()
-	end
-})
-
-FunctionsSection:AddButton({
-	Name = "Restart",
-	Callback = function()
-		Aimbot.Functions:Restart()
-		WallHack.Functions:Restart()
-	end
-})
-
-FunctionsSection:AddButton({
-	Name = "Exit",
-	Callback = Library.Unload,
-})
-
-FunctionsSection:AddButton({
-	Name = "Copy Script Page",
-	Callback = function()
-		setclipboard("https://github.com/Exunys/AirHub")
-	end
-})
+checkuserinfo(LocalPlayer.Name)
