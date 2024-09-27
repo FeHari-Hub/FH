@@ -773,16 +773,6 @@ CrosshairSettings:AddSlider({
 	Decimals = 2
 }).Default = WallHack.Crosshair.Settings.Transparency
 
-CrosshairSettings:AddSlider({
-	Name = "Size",
-	Value = WallHack.Crosshair.Settings.Size,
-	Callback = function(New, Old)
-		WallHack.Crosshair.Settings.Size = New
-	end,
-	Min = 8,
-	Max = 24
-}).Default = WallHack.Crosshair.Settings.Size
-
 CrosshairSettings:AddDropdown({
 	Name = "Teleportar Para Mapa",
 	Value = WallHack.Crosshair.Settings.Type == 1 and "Deserto" or "Deserto",
