@@ -1,29 +1,29 @@
 --[[
 
-	AirHub V2 by Exunys © CC0 1.0 Universal (2023)
+	AirHub by Exunys © CC0 1.0 Universal (2023)
+
 	https://github.com/Exunys
 
 ]]
-
---// Loaded Check
-
-if AirHubV2Loaded or AirHubV2Loading or AirHub then
-	return
-end
-
-getgenv().AirHubV2Loading = true
 
 --// Cache
 
 local loadstring, getgenv, setclipboard, tablefind, UserInputService = loadstring, getgenv, setclipboard, table.find, game:GetService("UserInputService")
 
---// Launching
+--// Loaded check
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/Roblox-Functions-Library/main/Library.lua"))()
+if AirHub or AirHubV2Loaded then
+    return
+end
 
-local GUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/AirHub-V2/main/src/UI%20Library.lua"))()
-local ESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/Exunys-ESP/main/src/ESP.lua"))()
-local Aimbot = loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/Aimbot-V3/main/src/Aimbot.lua"))()
+--// Environment
+
+getgenv().AirHub = {}
+
+--// Load Modules
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/AirHub/main/Modules/Aimbot.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/AirHub/main/Modules/Wall%20Hack.lua"))()
 
 --// Variables
 
@@ -31,25 +31,24 @@ local Library = loadstring(game:GetObjects("rbxassetid://7657867786")[1].Source)
 local Aimbot, WallHack = getgenv().AirHub.Aimbot, getgenv().AirHub.WallHack
 local Parts, Fonts, TracersType = {"Head", "HumanoidRootPart", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg", "LeftHand", "RightHand", "LeftLowerArm", "RightLowerArm", "LeftUpperArm", "RightUpperArm", "LeftFoot", "LeftLowerLeg", "UpperTorso", "LeftUpperLeg", "RightFoot", "RightLowerLeg", "LowerTorso", "RightUpperLeg"}, {"UI", "System", "Plex", "Monospace"}, {"Bottom", "Center", "Mouse"}
 
+--// Frame
 
-local ESP_DeveloperSettings = ESP.DeveloperSettings
-local ESP_Settings = ESP.Settings
-local ESP_Properties = ESP.Properties
-local Crosshair = ESP_Properties.Crosshair
-local CenterDot = Crosshair.CenterDot
+Library.UnloadCallback = function()
+	Aimbot.Functions:Exit()
+	WallHack.Functions:Exit()
+	getgenv().AirHub = nil
+end
 
-local Aimbot_DeveloperSettings = Aimbot.DeveloperSettings
-local Aimbot_Settings = Aimbot.Settings
-local Aimbot_FOV = Aimbot.FOVSettings
-
-ESP_Settings.LoadConfigOnLaunch = false
-ESP_Settings.Enabled = false
-Crosshair.Enabled = false
-Aimbot_Settings.Enabled = false
-
-local Fonts = {"UI", "System", "Plex", "Monospace"}
-local TracerPositions = {"Bottom", "Center", "Mouse"}
-local HealthBarPositions = {"Top", "Bottom", "Left", "Right"}
+local MainFrame = Library:CreateWindow({
+	Name = "AirHub",
+	Themeable = {
+		Image = "7059346386",
+		Info = "Made by Exunys\nPowered by Pepsi's UI Library",
+		Credit = false
+	},
+	Background = "",
+	Theme = [[{"__Designer.Colors.topGradient":"3F0C64","__Designer.Colors.section":"C259FB","__Designer.Colors.hoveredOptionBottom":"4819B4","__Designer.Background.ImageAssetID":"rbxassetid://4427304036","__Designer.Colors.selectedOption":"4E149C","__Designer.Colors.unselectedOption":"482271","__Designer.Files.WorkspaceFile":"AirHub","__Designer.Colors.unhoveredOptionTop":"310269","__Designer.Colors.outerBorder":"391D57","__Designer.Background.ImageColor":"69009C","__Designer.Colors.tabText":"B9B9B9","__Designer.Colors.elementBorder":"160B24","__Designer.Background.ImageTransparency":100,"__Designer.Colors.background":"1E1237","__Designer.Colors.innerBorder":"531E79","__Designer.Colors.bottomGradient":"361A60","__Designer.Colors.sectionBackground":"21002C","__Designer.Colors.hoveredOptionTop":"6B10F9","__Designer.Colors.otherElementText":"7B44A8","__Designer.Colors.main":"AB26FF","__Designer.Colors.elementText":"9F7DB5","__Designer.Colors.unhoveredOptionBottom":"3E0088","__Designer.Background.UseBackgroundImage":false}]]
+})
 
 --// Tabs
 
