@@ -1,6 +1,6 @@
 --[[
 
-	AirHub by Exunys © CC0 1.0 Universal (2023)
+	Haridade - Legends Of Speed ⚡
 
 	https://github.com/Exunys
 
@@ -22,7 +22,6 @@ getgenv().AirHub = {}
 
 --// Load Modules
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/AirHub/main/Modules/Aimbot.lua"))()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/AirHub/main/Modules/Wall%20Hack.lua"))()
 
 --// Variables
@@ -40,10 +39,10 @@ Library.UnloadCallback = function()
 end
 
 local MainFrame = Library:CreateWindow({
-	Name = "AirHub",
+	Name = "Haridade - LOS ⚡",
 	Themeable = {
 		Image = "7059346386",
-		Info = "Made by Exunys\nPowered by Pepsi's UI Library",
+		Info = "Feito Por HA_FeHari\nParceria CRXM_CRXM",
 		Credit = false
 	},
 	Background = "",
@@ -52,30 +51,34 @@ local MainFrame = Library:CreateWindow({
 
 --// Tabs
 
+local VisualsTab = MainFrame:CreateTab({
+	Name = "Início"
+})
+
 local AimbotTab = MainFrame:CreateTab({
-	Name = "Aimbot"
+	Name = "Farmar"
 })
 
 local VisualsTab = MainFrame:CreateTab({
-	Name = "Visuals"
+	Name = "Renascimento"
 })
 
 local CrosshairTab = MainFrame:CreateTab({
-	Name = "Crosshair"
+	Name = "Corridas"
 })
 
 local FunctionsTab = MainFrame:CreateTab({
-	Name = "Functions"
+	Name = "Funções"
 })
 
---// Aimbot Sections
+--// Seção Farmar
 
 local Values = AimbotTab:CreateSection({
-	Name = "Values"
+	Name = "Farmar Automático"
 })
 
 local Checks = AimbotTab:CreateSection({
-	Name = "Checks"
+	Name = "Utilitários"
 })
 
 local ThirdPerson = AimbotTab:CreateSection({
@@ -83,7 +86,7 @@ local ThirdPerson = AimbotTab:CreateSection({
 })
 
 local FOV_Values = AimbotTab:CreateSection({
-	Name = "Field Of View",
+	Name = "Teleportar",
 	Side = "Right"
 })
 
@@ -142,7 +145,7 @@ local FunctionsSection = FunctionsTab:CreateSection({
 	Name = "Functions"
 })
 
---// Aimbot Values
+--// Farmar | Farmar Automático
 
 Values:AddToggle({
 	Name = "Enabled",
@@ -199,10 +202,10 @@ Values:AddSlider({
 	Decimals = 2
 }).Default = Aimbot.Settings.Sensitivity
 
---// Aimbot Checks
+--// Farmar | Utilitários
 
 Checks:AddToggle({
-	Name = "Team Check",
+	Name = "Reduzir Ping Alto (sem milagres)",
 	Value = Aimbot.Settings.TeamCheck,
 	Callback = function(New, Old)
 		Aimbot.Settings.TeamCheck = New
@@ -210,7 +213,7 @@ Checks:AddToggle({
 }).Default = Aimbot.Settings.TeamCheck
 
 Checks:AddToggle({
-	Name = "Wall Check",
+	Name = "Reduzir Gráficos",
 	Value = Aimbot.Settings.WallCheck,
 	Callback = function(New, Old)
 		Aimbot.Settings.WallCheck = New
@@ -218,7 +221,7 @@ Checks:AddToggle({
 }).Default = Aimbot.Settings.WallCheck
 
 Checks:AddToggle({
-	Name = "Alive Check",
+	Name = "Anti Kick",
 	Value = Aimbot.Settings.AliveCheck,
 	Callback = function(New, Old)
 		Aimbot.Settings.AliveCheck = New
@@ -246,7 +249,18 @@ ThirdPerson:AddSlider({
 	Decimals = 1
 }).Default = Aimbot.Settings.ThirdPersonSensitivity
 
---// FOV Settings Values
+--// Farmar | Teleportar
+
+Aimbot.Settings.LockPart = Parts[1]; Values:AddDropdown({
+	Name = "Mapas Para Teleportar",
+	Value = Parts[1],
+	Callback = function(New, Old)
+		Aimbot.Settings.LockPart = New
+	end,
+	List = Parts,
+	Nothing = "Main City"
+	Nothing = "Snow City"	
+}).Default = Parts[2]
 
 FOV_Values:AddToggle({
 	Name = "Enabled",
