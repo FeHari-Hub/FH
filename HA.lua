@@ -6,7 +6,7 @@ local PlayerService = game:GetService("Players").LocalPlayer
 local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
 local Window = Rayfield:CreateWindow({
 	Name = "Haridade | Legends Of Speed ⚡",
-	LoadingTitle = "Haridade",
+	LoadingTitle = "Haridade Script",
 	LoadingSubtitle = "Feito Por HA_FeHari",
 	ConfigurationSaving = {
 		Enabled = true,
@@ -22,7 +22,7 @@ local Window = Rayfield:CreateWindow({
 
 Rayfield:Notify({
     Title = "Haridade - LOS ⚡",
-    Content = "Sucesso! Script Carregado",
+    Content = "Sucesso! Script Carregado!",
     Duration = 6.5,
     Image = 97581810621748,
     Actions = { -- Notification Buttons
@@ -46,23 +46,38 @@ local Label = Tab:CreateLabel("Codex Executor")
 local Tab = Window:CreateTab("Teleportar", 109334924659404) -- Title, Image
 Section:Set("Executores | Roblox :")
 local Dropdown = Tab:CreateDropdown({
-
-	Name = "Teleportar Para Mapa:",
-
-	Options = {"Main City","Snow City"},
-
-	CurrentOption = "Option 1",
-
-	Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-
-	Callback = function(Option)
-
-	  	  -- The function that takes place when the selected option is changed
-
-    	  -- The variable (Option) is a string for the value that the dropdown was changed to
-
-	end,
-
+    Name = "Teleportar Para:",
+    Options = {"Main City", "Snow City", "Magma City", "Legends Highway"},
+    CurrentOption = "Main City",
+    Flag = "Dropdown1", -- A flag is the identifier for the configuration file
+    Callback = function(Value)
+        AreaToFarm = Value
+        if AreaToFarm == "Main City" then 
+            getgenv().MainCity = true
+            getgenv().Snow = false
+            getgenv().Magma = false
+            getgenv().LegendsHighway = false
+            CityFarm()
+        elseif AreaToFarm == "Snow City" then
+            getgenv().MainCity = false
+            getgenv().Snow = true
+            getgenv().Magma = false
+            getgenv().LegendsHighway = false
+            SnowFarm()
+        elseif AreaToFarm == "Magma City" then
+            getgenv().MainCity = false
+            getgenv().Snow = false
+            getgenv().Magma = true
+            getgenv().LegendsHighway = false
+            MagmaFarm()
+        elseif AreaToFarm == "Legends Highway" then
+            getgenv().MainCity = false
+            getgenv().Snow = false
+            getgenv().Magma = false
+            getgenv().LegendsHighway = true
+            LegendsHighwayFarm()
+        end
+    end,
 })
 local Button = Tab:CreateButton({
 	Name = "💎 Lunar Hub by LunaR_nicK",
