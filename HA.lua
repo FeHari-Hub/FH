@@ -22,9 +22,9 @@ local Window = Rayfield:CreateWindow({
 
 Rayfield:Notify({
     Title = "Haridade - LOS ⚡",
-    Content = "Sucesso! Carregando Script...",
+    Content = "Sucesso! Carregando Script..",
     Duration = 6.5,
-    Image = 4483362755,
+    Image = 97581810621748,
     Actions = { -- Notification Buttons
         Ignore = {
             Name = "Ok!",
@@ -35,16 +35,16 @@ Rayfield:Notify({
 	},
 })
 
-local Tab = Window:CreateTab("Welcome", 4483346161) -- Title, Image
-local Section = Tab:CreateSection("Injector and Executor info")
-local Label = Tab:CreateLabel("It is recommended to use comet,synapse or KRNL")
+local Tab = Window:CreateTab("Início", 112625488111718) -- Title, Image
+local Section = Tab:CreateSection("Importante!")
+local Label = Tab:CreateLabel("Para Melhor Funcionamento, Recomendandos Os Seguintes Executores :")
 local Section = Tab:CreateSection("INFO")
-local Label = Tab:CreateLabel("99% of scripts are not mine!")
-local Label = Tab:CreateLabel("Scripts with 💎 are verified.")
-local Label = Tab:CreateLabel("All scripts are credited.")
+local Label = Tab:CreateLabel("Fluxus Executor (recomendado)")
+local Label = Tab:CreateLabel("Delta Executor")
+local Label = Tab:CreateLabel("Codex Executor")
 
-local Tab = Window:CreateTab("Universal Scripts", 4483363535) -- Title, Image
-Section:Set("All universal scripts")
+local Tab = Window:CreateTab("Universal Scripts", 109334924659404) -- Title, Image
+Section:Set("Executores | Roblox :")
 local Button = Tab:CreateButton({
 	Name = "💎 Lunar Hub by LunaR_nicK",
 	Callback = function()
