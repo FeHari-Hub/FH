@@ -1,111 +1,84 @@
---[[
-______      _                  _ _         
-|  ____|    | |                (_) |        
-| |__  __  _| |_ ___ _ __ _ __  _| |_ _   _ 
-|  __| \ \/ / __/ _ \ '__| '_ \| | __| | | |
-| |____ >  <| ||  __/ |  | | | | | |_| |_| |
-|______/_/\_\\__\___|_|  |_| |_|_|\__|\__, |
- _    _       _                        __/ |
-| |  | |     | |                      |___/ 
-| |__| |_   _| |__  
-|  __  | | | | '_ \ 
-| |  | | |_| | |_) |
-|_|  |_|\__,_|_.__/ 
-v1.0.3
-
-]]--
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/FeHari/HaridadeScript/refs/heads/main/LegendsOfSpeed.lua"))()
-local Window = Library.CreateLib("ExternityHub", "GrapeTheme")
-
--- Scripts
-local Scripts = Window:NewTab("Scripts")
-
--- Admin
-local AdminSection = Scripts:NewSection("Admin")
-
-
-AdminSection:NewButton("CMD X", "Executes the CMD X Script", function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source",true))()
-end)
-
-AdminSection:NewButton("Infinity Yield", "Executes the Infinity Yield Script", function()
-    loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
-end)
-
--- Combat
-local CombatSection = Scripts:NewSection("Combat")
-
-CombatSection:NewButton("ChariotsWare Hood Modded", "Executes the ChariotsWare Script", function()
-    loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Rippeed/DaHoodinary/main/chariotsware"))()
-end)
-
-CombatSection:NewButton("Arsenal Silent Aim", "Executes the Arenals Silent Aim Script", function()
-    loadstring(game:HttpGetAsync("https://pastebin.com/raw/Bqn0bGPw"))()
-end)
-
--- Farming
-local FarmingSection = Scripts:NewSection("Farming")
-
-FarmingSection:NewButton("Royale High Auto farm Script", "Executes the Royale High Auto Farm script", function()
-    loadstring(game:HttpGet(('https://raw.githubusercontent.com/PServerYT/PServerYT/main/rh.lua'),true))()
-end)
-
--- FE
-local FESection = Scripts:NewSection("FE Scripts")
-
-FESection:NewButton("FE Snake", "Turns you into a snake", function()
-    loadstring(game:HttpGet(('https://pastefy.ga/tWBTcE4R/raw'),true))()
-end)
-FESection:NewButton("FE Fling GUI", "Executes the Fling GUI Script", function()
-    loadstring(game:HttpGet(('https://pastebin.com/raw/rPLeYXqj'),true))()
-end)
-FESection:NewButton("FE Headless", "Removes your Head", function()
-    loadstring(game:HttpGet(('https://pastebin.com/raw/uLXkrg76'),true))()
-end)
-FESection:NewButton("FE Gun", "Gives you a Gun", function()
-    loadstring(game:HttpGet(('https://pastebin.com/raw/aWfWtnen'),true))()
-end)
-FESection:NewButton("OPFinality FE GUI", "Executes the OPFinality Script", function()
-    loadstring(game:HttpGet(('https://raw.githubusercontent.com/PhoenixAceVFX/Roblox-Scripts/master/!%20%5BFE%5D%20OPFinality%20Gui%20%5BBEST%5D.lua'),true))()
-end)
-FESection:NewButton("FE Sword", "Gives you a sword", function()
-    loadstring(game:HttpGet(('https://pastebin.com/raw/mhxekj7V'),true))()
-end)
-FESection:NewButton("Universal FE Hub", "Executes the Universal FE Hub Script", function()
-    loadstring(game:HttpGet(('http://raw.githubusercontent.com/Dvrknvss/UniversalFEScriptHub/main/Script'),true))()
-end)
-
-
-
--- Visual
-local VisualSection = Scripts:NewSection("Visual")
-
-VisualSection:NewButton("ESP", "Executes the ESP Script", function()
-    loadstring(game:HttpGet("https://pastebin.com/raw/nqyGkWvx",true))()
-end)
-VisualSection:NewButton("Universal ESP", "Executes the ESP Script", function()
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua',true))()
-end)
-
--- Others
-local Player = Window:NewTab("Others")
-local PlayerSection = Player:NewSection("Others")
-
-PlayerSection:NewSlider("Walkspeed", "Changes the Walkspeed of your Character", 500, 16, function(s) -- 500 (MaxValue) | 0 (MinValue)
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
-end)
-PlayerSection:NewButton("Bypassed Fly", "Executes the Bypassed Fly Script", function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Nicuse/RobloxScripts/main/BypassedFly.lua"))() 
-    Fly(true)
-end)
-PlayerSection:NewButton("AntiAFK", "Executes the Anti AFK Script", function()
-    loadstring(game:HttpGet("https://pastebin.com/raw/KHZ8pYx9"))() 
-    Fly(true)
-end)
-PlayerSection:NewKeybind("ToggleUI", "Toggles the UI", Enum.KeyCode.RightControl, function()
-	Library:ToggleUI()
-end)
-
-local About = Window:NewTab("About")
-local AboutSection = About:NewSection("Created by CorruptedBytes#5643")
-local AboutSection2 = About:NewSection("Version: 1.0.5")
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({Name = "Aplex Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
+local Main = Window:MakeTab({
+	Name = "Menu",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+local MainSection = Main:AddSection({
+	Name = "Main" 
+})
+Main:AddButton({
+	Name = "Admin Commands",
+	Callback = function()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+  	end
+})
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({Name = "Private Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
+local Main = Window:MakeTab({
+	Name = "Menu",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+local MainSection = Main:AddSection({
+	Name = "Main" 
+})
+Main:AddButton({
+	Name = "Vape v4",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/NewMainScript.lua", true))()
+  	end
+})
+Main:AddButton({
+	Name = "Infinite Yield",
+	Callback = function()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+  	end
+})
+Main:AddButton({
+	Name = "Doors Script 1",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaQLeak/neverlose.xyz/main/Doors.lua"))() 
+  	end
+})
+Main:AddButton({
+	Name = "Doors Script 2 (Badges)",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GamingScripter/Darkrai-X/main/Games/Doors"))()
+  	end
+})
+Main:AddButton({
+	Name = "Doors Script 3",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/OminousVibes-Exploit/Scripts/main/doors/main.lua"))()
+	end
+})
+Main:AddButton({
+	Name = "Turtle Spy",
+	Callback = function()
+		loadstring(game:HttpGet("https://pastebin.com/raw/BDhSQqUU", true))()
+	end
+})
+Main:AddButton({
+	Name = "VG Script",
+	Callback = function()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/1201for/V.G-Hub/main/V.Ghub'))()
+	end
+})
+local Info = Window:MakeTab({
+	Name = "Info",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+local InfoSection = Info:AddSection({
+	Name = "Info" 
+})
+Info:AddParagraph("Join Discord","https://discord.gg/BGnqcVF5WN")
+Info:AddButton({
+	Name = "Destroy Gui",
+	Callback = function()
+		OrionLib:Destroy()
+  	end    
+})
+OrionLib:Init()
