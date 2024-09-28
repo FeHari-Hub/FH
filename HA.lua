@@ -1,506 +1,307 @@
---[[
-    DuccHub v1.0 by duccveloper
+warn("Smarthub // Injected")
+print("SmartHub // Executed by "..identifyexecutor())
 
-    Why DuccHub v1.0? Where DuccHub v0.1?
-    - Because I accidentally deleted the old version of DuccHub, so I had to remake it. PAIN!
+local PlayerService = game:GetService("Players").LocalPlayer
 
-    What is DuccHub?
-    - DuccHub is a hub for all of universal roblox scripts, so you can easily access them all.
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+local Window = Rayfield:CreateWindow({
+	Name = "Smart Hub | Universal",
+	LoadingTitle = "Smart Hub",
+	LoadingSubtitle = "Smart Technologies",
+	ConfigurationSaving = {
+		Enabled = true,
+		FolderName = nil, -- Create a custom folder for your hub/game
+		FileName = "Big Hub"
+	},
+        Discord = {
+        	Enabled = false,
+        	Invite = "", -- The Discord invite code, do not include discord.gg/
+        	RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+        },
+	KeySystem = true, -- Set this to true to use our key system
+	KeySettings = {
+		Title = "Authenticate",
+		Subtitle = "Authenticate with scriptblox.com ",
+		Note = "Key in scriptblox description",
+		FileName = "SiriusKey",
+		SaveKey = true,
+		GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+		Key = "NET-o3529829AusdAwhQ9837sJkaYx478AsXd67Gr97AnkrauthQaO9flw=0"
+	}
+})
 
-    How do I use DuccHub?
-    - Just click execute from your executor, and it will automatically load all of the scripts.
+Rayfield:Notify({
+    Title = "Smart Hub",
+    Content = "Success! Loading content",
+    Duration = 6.5,
+    Image = 4483362755,
+    Actions = { -- Notification Buttons
+        Ignore = {
+            Name = "Okay",
+            Callback = function()
+                print("The user tapped Okay!")
+            end
+		},
+	},
+})
 
-    DuccHub v1.0 changelog:
-    - Recoded all
-    - More neat script
+local Tab = Window:CreateTab("Welcome", 4483346161) -- Title, Image
+local Section = Tab:CreateSection("Injector and Executor info")
+local Label = Tab:CreateLabel("It is recommended to use comet,synapse or KRNL")
+local Section = Tab:CreateSection("INFO")
+local Label = Tab:CreateLabel("99% of scripts are not mine!")
+local Label = Tab:CreateLabel("Scripts with 💎 are verified.")
+local Label = Tab:CreateLabel("All scripts are credited.")
 
-    Credits:
-    - duccveloper - Scripting
-    - deeeity@github - UI Library
-    - Some other dude - Misc scripts
-]]
-local version = '1.0 (Pre-release)'
+local Tab = Window:CreateTab("Universal Scripts", 4483363535) -- Title, Image
+Section:Set("All universal scripts")
+local Button = Tab:CreateButton({
+	Name = "💎 Lunar Hub by LunaR_nicK",
+	Callback = function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/probablYnicKxD/ProjectLunar/main/LunarHub/Source.lua"))()
+	-- The function that takes place when the button is pressed
+	end,
+})
 
--- Load UI Library
-local UI_LIB = loadstring(game:HttpGet('https://pastebin.com/raw/8JXetz8L'))()
+local Button = Tab:CreateButton({
+	Name = "💎 Quadra by xkid (limited games)",
+	Callback = function()
+		-- TYPE OR DIE : xkid#1299
+-- If you liked the script please like it on scriptblox :)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/notxkid/typeordiescript/main/main.lua"))()-- The function that takes place when the button is pressed
+	end,
+})
 
--- Variables
-local images = {
-    ['home_icon'] = 11632424326,
-    ['star_icon'] = 11647714813,
-    ['run_icon'] = 11632434473,
-    ['teleport_icon'] = 11647702726,
-    ['info_icon'] = 11472832266,
-    ['tick_icon'] = 11624388037,
-    ['cross_icon'] = 11624382926,
-    ['warning_icon'] = 11624382860,
-    ['bell_icon'] = 11624378537
-}
+local Button = Tab:CreateButton({
+	Name = "Ez hub by Cottient (limited games)",
+	Callback = function()
+		loadstring(game:HttpGet(('https://raw.githubusercontent.com/debug420/Ez-Industries-Launcher-Data/master/Launcher.lua'),true))()-- The function that takes place when the button is pressed
+	end,
+})
 
+local Label = Tab:CreateLabel("❌ Script may not work")
 
--- Services
-local Players = game:GetService('Players')
-local LocalPlayer = Players.LocalPlayer
-local UIS = game:GetService('UserInputService')
+local Label = Tab:CreateLabel("This section is still developing!")
 
--- Misc variables
-local shifttorun = false
-local walkspeed = LocalPlayer.Character.Humanoid.WalkSpeed
-local runspeed = walkspeed * 2
-local jetpack = false
-local infiniteJump = false
-local target_tp_part = nil
+local Tab = Window:CreateTab("Script for games", 4483362458) -- Title, Image
 
--- Functions
-function date(str)
-    local data = {}
-    local y,m,d,h,i,s,t=str:match"(%d+)-(%d+)-(%d+)T(%d+):(%d+):(%d+).(%d+)Z"
-    data.year=y data.month=m data.day=d data.hour=h data.min=i data.sec=s data.milli=t
-    return data
-end
+local Button = Tab:CreateButton({
+	Name = "DOORS: Custom guiding light,jumpscares etc. by StupidProArsenal",
+	Callback = function()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/StupidProAArsenal/main/main/deer%20customs',true))()-- The function that takes place when the button is pressed
+	end,
+})
 
-function checkuserinfo(username)
-    local userid = "idk"
-local success, err = pcall(function()
-    userid = Players:GetUserIdFromNameAsync(username)
-end)
-if userid == "idk" then
-    _UI_T4_S1_error:Set("User not found!")
-    _UI_T4_S1_error:Visible(true)
-    wait(2)
-    _UI_T4_S1_error:Visible(false)
-    _UI_T4_S1_error:Set("")
-else
-        local request = 'https://users.roproxy.com/v1/users/' .. userid
-        local response = game:HttpGet(request)
-        local data = game:GetService('HttpService'):JSONDecode(response)
-        -- Start fetching data
-        local description = data.description
-        local created = data.created
-        local isbanned = data.isBanned
-        local id = data.id
-        local username = data.name
-        local displayname = data.displayName
-        
-        -- Fetch user avatar and headshot url
-        local request =
-            'https://thumbnails.roblox.com/v1/users/avatar?userIds=' .. id .. '&size=48x48&format=Png&isCircular=false'
-        local request2 =
-            'https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=' ..
-            id .. '&size=48x48&format=Png&isCircular=false'
-        local response = game:HttpGet(request)
-        local response2 = game:HttpGet(request2)
-        local data = game:GetService('HttpService'):JSONDecode(response)
-        local data2 = game:GetService('HttpService'):JSONDecode(response2)
-        avatarurl = data.data[1].imageUrl
-        headshoturl = data2.data[1].imageUrl
+local Button = Tab:CreateButton({
+	Name = "FLY RACE: Versus Airline by ROBLOXYGENESIS",
+	Callback = function()
+		loadstring(game:HttpGet("https://versus-airlines.cf/V3/Loader.lua"))()-- The function that takes place when the button is pressed
+	end,
+})
 
-        if isbanned == true then
-            _UI_T4_S1_ban:Visible(true)
+local Button = Tab:CreateButton({
+	Name = "PSX: Project WB by ROBLOXGENESIS",
+	Callback = function()
+		getgenv().key = "projectWBIsAwesomemrcrapcrappypattt"
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Muhammad6196/Project-WD/main/Main.lua"))()
+---key from https://discord.gg/u7JNWQcgsU-- The function that takes place when the button is pressed
+	end,
+})
+
+local Button = Tab:CreateButton({
+	Name = "DIG TO CHINA: script by TangleMangle (Poster,not owner)",
+	Callback = function()
+		local player = game.Players.LocalPlayer.Character
+while wait(2) do
+ player.HumanoidRootPart.CFrame = game.Workspace.ChinaDetector.CFrame
+   local teleportservice = game:GetService("TeleportService")
+teleportservice:Teleport(game.PlaceId)
+ end-- The function that takes place when the button is pressed
+	end,
+})
+
+local Label = Tab:CreateLabel("All scripts are from scriptblox.com")
+local Label = Tab:CreateLabel("Some might are patched or don't work.")
+local Label = Tab:CreateLabel("We work to add more!")
+local Tab = Window:CreateTab("Player", 6961018899) -- Title, Image
+local Label = Tab:CreateLabel("Executor: "..identifyexecutor())
+local Button = Tab:CreateButton({
+	Name = "Request full player data to console",
+	Callback = function()
+		print("SmartHub // Printing all info")-- The function that takes place when the button is pressed
+		-- Username : 
+
+print("UserName : "..game.Players.LocalPlayer.Name)
+
+-- Display Name : 
+
+print("Display Name : "..game.Players.LocalPlayer.DisplayName)
+
+-- UserId : 
+
+print("UserId : "..game.Players.LocalPlayer.UserId)
+
+-- Profil Link : 
+
+print("Profil Link : ".."roblox.com/users/"..game.Players.LocalPlayer.UserId.."/profile")
+
+-- Country : 
+
+print("Country : "..game:GetService("LocalizationService"):GetCountryRegionForPlayerAsync(game.Players.LocalPlayer))
+
+-- Language : 
+
+print("Language : "..game.Players.LocalPlayer.LocaleId)
+
+-- Account Age In Days : 
+
+print("Days Old : "..game.Players.LocalPlayer.AccountAge)
+
+-- Account Age Years : 
+
+print("Years Old : "..math.floor(game.Players.LocalPlayer.AccountAge/365*100)/(100))
+
+-- Executor : 
+
+print("Executor : "..identifyexecutor())
+
+-- IsPremium : 
+
+player = game.Players.LocalPlayer
+if player.MembershipType == Enum.MembershipType.Premium then
+    print("Premium : true")
         else
-            _UI_T4_S1_ban:Visible(false)
-        end
-        -- Set
-        _UI_T4_S2:Set('About ' .. displayname)
-        _UI_T4_S2_username:Set('Username: ' .. username)
-        _UI_T4_S2_displayname:Set('Display name: ' .. displayname)
-        _UI_T4_S2_userid:Set('User ID: ' .. id)
-        _UI_T4_S2_created:Set('Created: ' .. date(created).day .. '/' .. date(created).month .. '/' .. date(created).year)
-        _UI_T4_S3_avatar:SetImage(Players:GetUserThumbnailAsync(id, Enum.ThumbnailType.AvatarThumbnail, Enum.ThumbnailSize.Size48x48), "Avatar of " .. displayname, false)
-        _UI_T4_S3_headshot:SetImage(Players:GetUserThumbnailAsync(id, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size48x48), "Headshot of " .. displayname, false)
-    end
+    print("Premium : False")
 end
 
+-- Friends Count :
 
-UIS.InputBegan:Connect(
-    function(input)
-        if input.KeyCode == Enum.KeyCode.LeftShift then
-            if shifttorun then
-                LocalPlayer.Character.Humanoid.WalkSpeed = runspeed
-            end
-        end
-    end
-)
-
-UIS.InputEnded:Connect(
-    function(input)
-        if input.KeyCode == Enum.KeyCode.LeftShift then
-            if shifttorun then
-                LocalPlayer.Character.Humanoid.WalkSpeed = walkspeed
-            end
-        end
-    end
-)
-
-UIS.InputBegan:Connect(
-    function(input)
-        if input.KeyCode == Enum.KeyCode.Space then
-            if jetpack then
-                LocalPlayer.Character:FindFirstChildOfClass('Humanoid'):ChangeState('Jumping')
-            end
-        end
-    end
-)
-
-UIS.InputBegan:Connect(
-    function(input)
-        if input.KeyCode == Enum.KeyCode.Space and jetpack then
-            while UIS:IsKeyDown(Enum.KeyCode.Space) do
-                wait()
-                LocalPlayer.Character:FindFirstChildOfClass('Humanoid'):ChangeState('Jumping')
-            end
-        end
-    end
-)
-
-UIS.InputBegan:Connect(
-    function(input)
-        if input.KeyCode == Enum.KeyCode.Space and infiniteJump then
-            LocalPlayer.Character:FindFirstChildOfClass('Humanoid'):ChangeState('Jumping')
-        end
-    end
-)
-
-function notify(title, text, icon)
-    UI_LIB:Notify(
-        {
-            Title = title,
-            Content = text,
-            Duration = 1.5,
-            Image = icon
-        }
-    )
-end
-
-function GetInstance(str)
-    local pattern = 'Workspace%..'
-    local pattern2 = '^Workspace'
-    if string.match(str, pattern) and string.match(str, pattern2) then
-        return true
-    else
-        notify('Error', 'Pattern invalid!', images['cross_icon'])
-        return false
-    end
-end
-
-
-
-
-function notGetInstance(String)
-    local Table = string.split(String, ".")
-    local Service = game:GetService(Table[1])
-
-    local ObjectSoFar = Service
-    for Index, Value in pairs(Table) do
-        if Index ~= 1 then
-            local Object = ObjectSoFar:FindFirstChild(Value)
-            if Object then
-                ObjectSoFar = Object
-            else
-                return nil
-            end
-        end
-    end
-
-    return (ObjectSoFar ~= Service and ObjectSoFar) or nil
-end
-
-
--- UI
-local _UI_Window =
-    UI_LIB:CreateWindow(
-        {
-            Name = 'DuccHub v1.0',
-            LoadingTitle = 'Rayfield Interface Suite',
-            LoadingSubtitle = 'by Sirius',
-            ConfigurationSaving = {
-                Enabled = false,
-                FolderName = nil,
-                FileName = 'Big Hub'
-            },
-            Discord = {
-                Enabled = false,
-                Invite = 'sirius',
-                RememberJoins = true
-            },
-            KeySystem = false,
-            KeySettings = {
-                Title = 'Sirius Hub',
-                Subtitle = 'Key System',
-                Note = 'Join the discord (discord.gg/sirius)',
-                FileName = 'SiriusKey',
-                SaveKey = true,
-                GrabKeyFromSite = false,
-                Key = 'Hello'
-            }
-        }
-    )
-
--- Tabs
-
--- Home
-local _UI_T1 = _UI_Window:CreateTab('Home', images['home_icon'])
-local _UI_T1S1 = _UI_T1:CreateSection('Welcome')
-local _UI_T1S1_WelcomeLabel = _UI_T1:CreateImage({
-    ImageType = "Left",
-    Image = Players:GetUserThumbnailAsync(LocalPlayer.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size48x48),
-    Caption = 'Hi, ' .. LocalPlayer.DisplayName .. '!',
+local req = http_request or request or (syn and syn.request)
+local HS = game:GetService("HttpService")
+local response = HS:JSONDecode(
+    req({
+    Url = "https://friends.roblox.com/v1/users/"..game.Players.LocalPlayer.UserId.."/friends/count"
 })
-_UI_T1S1_Leaked = _UI_T1:CreateLabel("quacccc... let's not leak my hard work")
-local _UI_T1_S2 = _UI_T1:CreateSection('Danger Zone')
-local _UI_T1_S2_DestroyUI =
-    _UI_T1:CreateButton(
-        {
-            Name = 'Destroy UI',
-            Callback = function()
-                UI_LIB:Destroy()
-            end
-        }
-    )
+.Body)
+print("Friends Count : "..response.count)
 
--- Movement
-local _UI_T2 = _UI_Window:CreateTab('Movement', images['run_icon'])
-local _UI_T2_S1 = _UI_T2:CreateSection('Main')
-local _UI_T2_S1_WalkSpeed =
-    _UI_T2:CreateInput(
-        {
-            Name = 'WalkSpeed',
-            PlaceholderText = 'Default: 16',
-            RemoveTextAfterFocusLost = true,
-            Callback = function(Text)
-                if Text == '' then
-                    LocalPlayer.Character.Humanoid.WalkSpeed = 16
-                    notify('WalkSpeed', 'WalkSpeed has been reset to 16', images['tick_icon'])
-                else
-                    tonumber(Text)
-                    if type(Text) == 'number' then
-                        LocalPlayer.Character.Humanoid.WalkSpeed = Text
-                        notify('WalkSpeed', 'WalkSpeed has been set to ' .. Text, images['tick_icon'])
-                    else
-                        notify('Error', 'WalkSpeed must be a number!', images['cross_icon'])
-                    end
-                end
-            end
-        }
-    )
-local _UI_T2_S1_JumpPower =
-    _UI_T2:CreateInput(
-        {
-            Name = 'JumpPower',
-            PlaceholderText = 'Default: 50',
-            RemoveTextAfterFocusLost = true,
-            Callback = function(Text)
-                if Text == '' then
-                    LocalPlayer.Character.Humanoid.JumpPower = 50
-                    notify('JumpPower', 'JumpPower has been reset to 50', images['tick_icon'])
-                else
-                    tonumber(Text)
-                    if type(Text) == 'number' then
-                        LocalPlayer.Character.Humanoid.JumpPower = Text
-                        notify('JumpPower', 'JumpPower has been set to ' .. Text, images['tick_icon'])
-                    else
-                        notify('Error', 'JumpPower must be a number!', images['cross_icon'])
-                    end
-                end
-            end
-        }
-    )
+-- Get Description :
 
-local _UI_T2_S2 = _UI_T2:CreateSection('Shift to Run')
-local _UI_T2_S2_runSpeed =
-    _UI_T2:CreateInput(
-        {
-            Name = 'RunSpeed',
-            PlaceholderText = 'Default: 32',
-            RemoveTextAfterFocusLost = true,
-            Callback = function(Text)
-                -- check if text = number
-                if Text == '' then
-                    runspeed = 32
-                    notify('RunSpeed', 'RunSpeed has been reset to 32', images['tick_icon'])
-                else
-                    tonumber(Text)
-                    if not Text == nil then
-                        runspeed = Text
-                        notify('RunSpeed', 'RunSpeed has been set to ' .. Text, images['tick_icon'])
-                    else
-                        notify('Error', 'RunSpeed must be a number!', images['cross_icon'])
-                    end
-                end
-            end
-        }
-    )
-local _UI_T2_S2_shiftToRun =
-    _UI_T2:CreateToggle(
-        {
-            Name = 'Shift to Run',
-            Callback = function(Value)
-                shifttorun = Value
-            end
-        }
-    )
-
-local _UI_T2_S3 = _UI_T2:CreateSection('Jump')
-local _UI_T2_S3_infiniteJump =
-    _UI_T2:CreateToggle(
-        {
-            Name = 'Infinite Jump',
-            Callback = function(Value)
-                infiniteJump = Value
-            end
-        }
-    )
-local _UI_T2_S3_jetpack =
-    _UI_T2:CreateToggle(
-        {
-            Name = 'Jetpack',
-            Callback = function(Value)
-                jetpack = Value
-            end
-        }
-    )
-
--- Teleportation
-local _UI_T3 = _UI_Window:CreateTab('Teleportation', images['teleport_icon'])
-local _UI_T3_S1 = _UI_T3:CreateSection('Selection')
-local _UI_T3_S1_selectPart =
-    _UI_T3:CreateButton(
-        {
-            Name = 'Select Part',
-            Callback = function()
-                local tool = Instance.new('Tool')
-                tool.Name = 'Part Selector'
-                tool.RequiresHandle = false
-                tool.CanBeDropped = false
-                tool.Parent = game.Players.LocalPlayer.Backpack
-                notify("Part Selector", "Select a part to teleport to", images['info_icon'])
-                tool.Equipped:Connect(
-                    function(mouse)
-                        mouse.Button1Down:connect(
-                            function()
-                                if mouse.Target and mouse.Target.Parent then
-                                    local part = mouse.Target:GetFullName()
-                                    target_tp_part = part
-                                    _UI_T3_S1_partLabel:Set("Selected part: " .. part)
-                                    target_tp_part = notGetInstance(target_tp_part)
-                                    tool:Destroy()
-                                end
-                            end
-                        )
-                    end
-                )
-            end
-        }
-    )
-
-local _UI_T3_S1_partPath =
-    _UI_T3:CreateInput(
-        {
-            Name = 'Part Path',
-            PlaceholderText = 'Must starts with "Workspace"!',
-            RemoveTextAfterFocusLost = true,
-            Callback = function(Text)
-                if Text == '' then
-                    target_tp_part = nil
-                    _UI_T3_S1_partLabel:Set("No part selected")
-                else
-                    if GetInstance(Text) then
-                        local valididk = notGetInstance(Text)
-                        if valididk == nil then
-                            notify('Error', 'Part does not exist!', images['cross_icon'])
-                        else
-                            target_tp_part = valididk
-                            notify('Part Path', 'Part Path has been set to ' .. Text, images['tick_icon'])
-                            _UI_T3_S1_partLabel:Set("Selected part: " .. Text)
-                        end
-
-                    end
-                end
-            end,
-        }
-    )
-_UI_T3_S1_partLabel = _UI_T3:CreateLabel('No part selected')
-local _UI_T3_S2 = _UI_T3:CreateSection('Teleportation')
-local _UI_T3_S2_teleport =
-    _UI_T3:CreateButton(
-        {
-            Name = 'Teleport',
-            Callback = function()
-                if target_tp_part == nil then
-                    notify('Error', 'No part selected!', images['cross_icon'])
-                else
-                    LocalPlayer.Character:MoveTo(target_tp_part.CFrame.Position + Vector3.new(0, 5, 0))
-                    notify('Teleport', 'Teleported to ' .. tostring(target_tp_part), images['tick_icon'])
-                end
-            end,
-        }
-    )
-
--- Player infoo
-local _UI_T4 = _UI_Window:CreateTab('Player Info', images['info_icon'])
-local _UI_T4_S1 = _UI_T4:CreateSection('Username Input')
-local _UI_T4_S1_username =
-    _UI_T4:CreateInput(
-        {
-            Name = 'Username',
-            PlaceholderText = 'Default: ' .. LocalPlayer.Name,
-            RemoveTextAfterFocusLost = true,
-            Callback = function(Text)
-                if Text == '' then
-                    checkuserinfo(LocalPlayer.Name)
-                else
-                    checkuserinfo(Text)
-                end
-            end
-        }
-    )
-
-_UI_T4_S1_error = _UI_T4:CreateLabel('')
-_UI_T4_S1_error:Visible(false)
-_UI_T4_S1_ban = _UI_T4:CreateLabel('User is banned!')
-_UI_T4_S1_ban:Visible(false)
-
--- Player info
-_UI_T4_S2 = _UI_T4:CreateSection('About ' .. LocalPlayer.DisplayName)
-_UI_T4_S2_username = _UI_T4:CreateLabel('Username: ' .. LocalPlayer.Name)
-_UI_T4_S2_displayname = _UI_T4:CreateLabel('Displayname: ' .. LocalPlayer.DisplayName)
-_UI_T4_S2_userid = _UI_T4:CreateLabel('User ID: ' .. LocalPlayer.UserId)
-_UI_T4_S2_created = _UI_T4:CreateLabel('Created: ' .. LocalPlayer.AccountAge)
-
-_UI_T4_S3 = _UI_T4:CreateSection('Avatar')
-_UI_T4_S3_avatar = _UI_T4:CreateImage({
-    ImageType = 'Left',
-    Image = Players:GetUserThumbnailAsync(LocalPlayer.UserId, Enum.ThumbnailType.AvatarThumbnail, Enum.ThumbnailSize.Size48x48),
-    Caption = 'Avatar preview'
+local req = http_request or request or (syn and syn.request)
+local HS = game:GetService("HttpService")
+local response = HS:JSONDecode(
+    req({
+    Url = "https://users.roblox.com/v1/users/"..game.Players.LocalPlayer.UserId
 })
-_UI_T4_S3_copyavatarurl =
-    _UI_T4:CreateButton(
-        {
-            Name = 'Copy Avatar URL',
-            Callback = function()
-                setclipboard(avatarurl)
-                notify('Avatar URL', 'Avatar URL copied to clipboard', images['tick_icon'])
-            end
-        }
-    )
+.Body)
+print("Description : ".."'"..response.description.."'")
 
-_UI_T4_S3_headshot = _UI_T4:CreateImage({
-    ImageType = 'Left',
-    Image = Players:GetUserThumbnailAsync(LocalPlayer.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size48x48),
-    Caption = 'Headshot preview'
+-- Following count :
+
+local req = http_request or request or (syn and syn.request)
+local HS = game:GetService("HttpService")
+local response = HS:JSONDecode(
+    req({
+    Url = "https://friends.roblox.com/v1/users/"..game.Players.LocalPlayer.UserId.."/followings/count"
 })
-_UI_T4_S3_copyheadshoturl =
-    _UI_T4:CreateButton(
-        {
-            Name = 'Copy Headshot URL',
-            Callback = function()
-                setclipboard(headshoturl)
-                notify('Headshot URL', 'Headshot URL copied to clipboard', images['tick_icon'])
-            end
-        }
-    )
+.Body)
+print("Followings Count  : "..response.count)
+
+-- Followers Count :
+
+local req = http_request or request or (syn and syn.request)
+local HS = game:GetService("HttpService")
+local response = HS:JSONDecode(
+    req({
+    Url = "https://friends.roblox.com/v1/users/"..game.Players.LocalPlayer.UserId.."/followers/count"
+})
+.Body)
+print("Followers : "..response.count)
+
+-- Account Creation Date :
+
+local req = http_request or request or (syn and syn.request)
+local HS = game:GetService("HttpService")
+local response = HS:JSONDecode(
+    req({
+    Url = "https://users.roblox.com/v1/users/"..game.Players.LocalPlayer.UserId
+})
+.Body)
+print("Account Creation Date : "..response.created)
+
+-- Has Verified Badge :
+
+local req = http_request or request or (syn and syn.request)
+local HS = game:GetService("HttpService")
+local response = HS:JSONDecode(
+    req({
+    Url = "https://users.roblox.com/v1/users/"..game.Players.LocalPlayer.UserId
+})
+.Body)
+print("Verified Badge : "..tostring(response.hasVerifiedBadge))
+
+-- Device :
+
+local UserInputService = game:GetService("UserInputService")
+local dev = 'Device'
+
+if UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled then
+	print(dev.." : Mobile")
+elseif not UserInputService.TouchEnabled and UserInputService.KeyboardEnabled and UserInputService.MouseEnabled then
+	print(dev.." : Computer")
+elseif UserInputService.TouchEnabled and UserInputService.KeyboardEnabled and UserInputService.MouseEnabled then
+	print(dev.." : Computer With TouchScreen")
+end
+
+-- Ping : 
+
+print("Ping : "..game.Players.LocalPlayer:GetNetworkPing() * (1000).." ms")
+
+-- Ip :
+
+local req = http_request or request or (syn and syn.request) 
+print("Ip : "..req({ Url = "https://api.ipify.org/", Method = "Get" }).Body)
+
+-- Total Games Visits
+
+local req = http_request or request or (syn and syn.request)
+local HS = game:GetService("HttpService")
+local response = HS:JSONDecode(
+    req({
+    Url = "https://www.roblox.com/users/profile/playergames-json?userId="..game.Players.LocalPlayer.UserId..""
+}).Body)
+
+local count = 0
+
+for _, v in ipairs(response.Games) do
+  count = count + v.Plays
+end
+
+print("Total Visits : "..count)
+	end,
+})
+
+local Input = Tab:CreateInput({
+	Name = "Test Connection (prints text to console)",
+	PlaceholderText = "Hello world!",
+	RemoveTextAfterFocusLost = false,
+	Callback = function(Text)
+		print("SmartHub // Executor Test text: "..Text)-- The function that takes place when the input is changed
+    		-- The variable (Text) is a string for the value in the text box
+	end,
+})
+
+local Section = Tab:CreateSection("Player Modifications")
+Label:Set("Releasing soon, for now use LunarHub")
+
+local Button = Tab:CreateButton({
+	Name = "Destory Interface",
+	Callback = function()
+		Rayfield:Destroy() -- The function that takes place when the button is pressed
+	end,
+})
 
 
 
 
-checkuserinfo(LocalPlayer.Name)
+
