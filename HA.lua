@@ -10,7 +10,7 @@ local Window = Rayfield:CreateWindow({
 	LoadingSubtitle = "Feito Por HA_FeHari",
 	ConfigurationSaving = {
 		Enabled = true,
-		FolderName = nil, -- Ceate a custom folder for your hub/game
+		FolderName = nil, -- Create a custom folder for your hub/game
 		FileName = "Haridade - LOS ⚡"
 	},
         Discord = {
@@ -43,8 +43,27 @@ local Label = Tab:CreateLabel("Fluxus Executor (recomendado)")
 local Label = Tab:CreateLabel("Delta Executor")
 local Label = Tab:CreateLabel("Codex Executor")
 
-local Tab = Window:CreateTab("Farmar", 109334924659404) -- Title, Image
+local Tab = Window:CreateTab("Teleportar", 109334924659404) -- Title, Image
 Section:Set("Executores | Roblox :")
+local Dropdown = Tab:CreateDropdown({
+
+	Name = "Teleportar Para Mapa:",
+
+	Options = {"Main City","Snow City"},
+
+	CurrentOption = "Option 1",
+
+	Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+
+	Callback = function(Option)
+
+	  	  -- The function that takes place when the selected option is changed
+
+    	  -- The variable (Option) is a string for the value that the dropdown was changed to
+
+	end,
+
+})
 local Button = Tab:CreateButton({
 	Name = "💎 Lunar Hub by LunaR_nicK",
 	Callback = function()
