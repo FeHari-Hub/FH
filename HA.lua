@@ -301,31 +301,7 @@ local Button = Tab:CreateButton({
 	end,
 })
 
---// Variables \\--
-getgenv().Autofarm = false
-getgenv().OpenEgg = false
-getgenv().AutoRebirth = false
-getgenv().HoopFarm = false
-
-getgenv().MainCity = false
-getgenv().Snow = false
-getgenv().Magma = false
-getgenv().LegendsHighway = false
-
-local RunService = game:GetService("RunService")
-local Players = game:GetService("Players")
-local Player = Players.LocalPlayer
-local Chr = Player.Character
-
-Player.CharacterAdded:Connect(function()
-    Chr = Player.Character
-end)
-
-local ChrHead = Chr.Head
-local Humanoid = Chr.Humanoid
-local Root = Chr.HumanoidRootPart
-
--- Função de Telporte --
+-- Função de Telporte 
 local function SelectCity(City)
     if City == "Main City" then
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9682.98828, 74.8522873, 3099.03394, 0.087131381, 0, 0.996196866, 0, 1, 0, -0.996196866, 0, 0.087131381)
