@@ -22,7 +22,7 @@ local Window = Rayfield:CreateWindow({
 
 Rayfield:Notify({
     Title = "Haridade - LOS ⚡",
-    Content = "Sucesso! Carregando Script..",
+    Content = "Sucesso! Script Carregado",
     Duration = 6.5,
     Image = 97581810621748,
     Actions = { -- Notification Buttons
@@ -37,14 +37,32 @@ Rayfield:Notify({
 
 local Tab = Window:CreateTab("Início", 112625488111718) -- Title, Image
 local Section = Tab:CreateSection("Importante!")
-local Label = Tab:CreateLabel("Para Melhor Funcionamento, Recomendandos Os Seguintes Executores :")
+local Label = Tab:CreateLabel("Para Melhor Funcionamento, Recomendamos Os Seguintes Executores:")
 local Section = Tab:CreateSection("INFO")
 local Label = Tab:CreateLabel("Fluxus Executor (recomendado)")
 local Label = Tab:CreateLabel("Delta Executor")
 local Label = Tab:CreateLabel("Codex Executor")
 
-local Tab = Window:CreateTab("Universal Scripts", 109334924659404) -- Title, Image
+local Tab = Window:CreateTab("Farmar", 109334924659404) -- Title, Image
 Section:Set("Executores | Roblox :")
+ local Toggle = GamePlayTab:CreateToggle({
+    Name = "Toggle AutoSpeed/XP",
+    CurrentValue = false,
+    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        while wait() do
+            local args = {
+                [1] = "collectOrb",
+                [2] = "Red Orb",
+                [3] = "Magma City"
+            }
+            
+            game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer(unpack(args))
+            
+            
+    end,
+ })
+
 local Button = Tab:CreateButton({
 	Name = "💎 Lunar Hub by LunaR_nicK",
 	Callback = function()
