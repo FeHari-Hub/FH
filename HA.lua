@@ -46,12 +46,24 @@ local Label = Tab:CreateLabel("Codex Executor")
 local Tab = Window:CreateTab("Teleportar", 109334924659404) -- Title, Image
 Section:Set("Executores | Roblox :")
 local Dropdown = Tab:CreateDropdown({
-    Name = "Selecionar Cidade Para Teleportar:",
-	Default = nil,
-	Options = {"Main City", "Snow City", "Magma City", "Legends Highway"},
+
+	Name = "Selecione O Mapa:",
+
+	Options = {"Main City","Snow City"},
+
+	CurrentOption = "Option 1",
+
+	Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+
 	Callback = function(Value)
-		SelectCity(Value)
-	end    
+	        SelectCity(Value)
+
+	  	  -- The function that takes place when the selected option is changed
+
+    	  -- The variable (Option) is a string for the value that the dropdown was changed to
+
+	end,
+
 })
 local Button = Tab:CreateButton({
 	Name = "💎 Lunar Hub by LunaR_nicK",
