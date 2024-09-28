@@ -1,3 +1,40 @@
+--// Variables \\--
+getgenv().Autofarm = false
+getgenv().OpenEgg = false
+getgenv().AutoRebirth = false
+getgenv().HoopFarm = false
+
+getgenv().MainCity = false
+getgenv().Snow = false
+getgenv().Magma = false
+getgenv().LegendsHighway = false
+
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+local Chr = Player.Character
+
+Player.CharacterAdded:Connect(function()
+    Chr = Player.Character
+end)
+
+local ChrHead = Chr.Head
+local Humanoid = Chr.Humanoid
+local Root = Chr.HumanoidRootPart
+
+-- Função de Telporte --
+local function SelectCity(City)
+    if City == "Main City" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9682.98828, 74.8522873, 3099.03394, 0.087131381, 0, 0.996196866, 0, 1, 0, -0.996196866, 0, 0.087131381)
+    elseif City == "Snow City" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9676.13867, 74.8522873, 3782.69385, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+    elseif City == "Magma City" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-11054.9688, 232.791656, 4898.62842, -0.0872479677, 0.000158954252, -0.996186614, -0.00054083002, 0.999999821, 0.00020692969, 0.996186495, 0.000556821818, -0.0872478485)
+    elseif City == "Legends Highway" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-13098.8711, 232.791656, 5907.62793, -0.0872479677, 0.000158954252, -0.996186614, -0.00054083002, 0.999999821, 0.00020692969, 0.996186495, 0.000556821818, -0.0872478485)
+    end
+end
+
 warn("Haridade - LOS ⚡ // Injected")
 print("Haridade - LOS ⚡ // Executed by "..identifyexecutor())
 
@@ -46,37 +83,13 @@ local Label = Tab:CreateLabel("Codex Executor")
 local Tab = Window:CreateTab("Teleportar", 109334924659404) -- Title, Image
 Section:Set("Executores | Roblox :")
 local Dropdown = Tab:CreateDropdown({
-    Name = "Teleportar Para:",
+    local Dropdown = Tab:CreateDropdown({
+    Name = "Selecionar Cidade Para Teleportar",
     Options = {"Main City", "Snow City", "Magma City", "Legends Highway"},
     CurrentOption = "Main City",
     Flag = "Dropdown1", -- A flag is the identifier for the configuration file
     Callback = function(Value)
-        AreaToFarm = Value
-        if AreaToFarm == "Main City" then 
-            getgenv().MainCity = true
-            getgenv().Snow = false
-            getgenv().Magma = false
-            getgenv().LegendsHighway = false
-            CityFarm()
-        elseif AreaToFarm == "Snow City" then
-            getgenv().MainCity = false
-            getgenv().Snow = true
-            getgenv().Magma = false
-            getgenv().LegendsHighway = false
-            SnowFarm()
-        elseif AreaToFarm == "Magma City" then
-            getgenv().MainCity = false
-            getgenv().Snow = false
-            getgenv().Magma = true
-            getgenv().LegendsHighway = false
-            MagmaFarm()
-        elseif AreaToFarm == "Legends Highway" then
-            getgenv().MainCity = false
-            getgenv().Snow = false
-            getgenv().Magma = false
-            getgenv().LegendsHighway = true
-            LegendsHighwayFarm()
-        end
+        SelectCity(Value)
     end,
 })
 local Button = Tab:CreateButton({
