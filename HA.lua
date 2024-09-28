@@ -10,7 +10,7 @@ local Window = Rayfield:CreateWindow({
 	LoadingSubtitle = "Feito Por HA_FeHari",
 	ConfigurationSaving = {
 		Enabled = true,
-		FolderName = nil, -- Create a custom folder for your hub/game
+		FolderName = nil, -- Ceate a custom folder for your hub/game
 		FileName = "Haridade - LOS ⚡"
 	},
         Discord = {
