@@ -1,7 +1,9 @@
+warn("Smarthub // Injected")
+print("SmartHub // Executed by "..identifyexecutor())
+
+local PlayerService = game:GetService("Players").LocalPlayer
+
 local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
-
---WINDOW
-
 local Window = Rayfield:CreateWindow({
     Name = "Rayfield Example Window",
     LoadingTitle = "Rayfield Interface Suite",
