@@ -1,45 +1,35 @@
-warn("Smarthub // Injected")
-print("SmartHub // Executed by "..identifyexecutor())
+warn("Haridade - LOS ⚡ // Injected")
+print("Haridade - LOS ⚡ // Executed by "..identifyexecutor())
 
 local PlayerService = game:GetService("Players").LocalPlayer
 
 local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
 local Window = Rayfield:CreateWindow({
-	Name = "Smart Hub | Universal",
-	LoadingTitle = "Smart Hub",
-	LoadingSubtitle = "Smart Technologies",
+	Name = "Haridade | Legends Of Speed ⚡",
+	LoadingTitle = "Haridade",
+	LoadingSubtitle = "Feito Por HA_FeHari",
 	ConfigurationSaving = {
 		Enabled = true,
 		FolderName = nil, -- Create a custom folder for your hub/game
-		FileName = "Big Hub"
+		FileName = "Haridade - LOS ⚡"
 	},
         Discord = {
         	Enabled = false,
         	Invite = "", -- The Discord invite code, do not include discord.gg/
         	RememberJoins = true -- Set this to false to make them join the discord every time they load it up
         },
-	KeySystem = true, -- Set this to true to use our key system
-	KeySettings = {
-		Title = "Authenticate",
-		Subtitle = "Authenticate with scriptblox.com ",
-		Note = "Key in scriptblox description",
-		FileName = "SiriusKey",
-		SaveKey = true,
-		GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
-		Key = "NET-o3529829AusdAwhQ9837sJkaYx478AsXd67Gr97AnkrauthQaO9flw=0"
-	}
 })
 
 Rayfield:Notify({
-    Title = "Smart Hub",
-    Content = "Success! Loading content",
+    Title = "Haridade - LOS ⚡",
+    Content = "Sucesso! Carregando Script...",
     Duration = 6.5,
     Image = 4483362755,
     Actions = { -- Notification Buttons
         Ignore = {
-            Name = "Okay",
+            Name = "Ok!",
             Callback = function()
-                print("The user tapped Okay!")
+                print("O usuários tocou em Ok!")
             end
 		},
 	},
