@@ -46,13 +46,12 @@ local Label = Tab:CreateLabel("Codex Executor")
 local Tab = Window:CreateTab("Teleportar", 109334924659404) -- Title, Image
 Section:Set("Executores | Roblox :")
 local Dropdown = Tab:CreateDropdown({
-    Name = "Selecionar Cidade Para Teleportar",
-    Options = {"Main City", "Snow City", "Magma City", "Legends Highway"},
-    CurrentOption = "Main City",
-    Flag = "Dropdown1", -- A flag is the identifier for the configuration file
-    Callback = function(Value)
-        SelectCity(Value)
-    end,
+    Name = "Selecionar Cidade Para Teleportar:",
+	Default = nil,
+	Options = {"Main City", "Snow City", "Magma City", "Legends Highway"},
+	Callback = function(Value)
+		SelectCity(Value)
+	end    
 })
 local Button = Tab:CreateButton({
 	Name = "💎 Lunar Hub by LunaR_nicK",
