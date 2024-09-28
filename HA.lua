@@ -45,24 +45,6 @@ local Label = Tab:CreateLabel("Codex Executor")
 
 local Tab = Window:CreateTab("Farmar", 109334924659404) -- Title, Image
 Section:Set("Executores | Roblox :")
- local Toggle = GamePlayTab:CreateToggle({
-    Name = "Toggle AutoSpeed/XP",
-    CurrentValue = false,
-    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-    Callback = function(Value)
-        while wait() do
-            local args = {
-                [1] = "collectOrb",
-                [2] = "Red Orb",
-                [3] = "Magma City"
-            }
-            
-            game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer(unpack(args))
-            
-            
-    end,
- })
-
 local Button = Tab:CreateButton({
 	Name = "💎 Lunar Hub by LunaR_nicK",
 	Callback = function()
