@@ -252,7 +252,7 @@ local FarmTab = Window:MakeTab({
 
 
 local FarmTab = FarmTab:AddSection({
-	Name = "Utilitários"
+	Name = "Utilitário"
 })
 
 Tab:AddSlider({
@@ -427,10 +427,6 @@ local FarmTab = Window:MakeTab({
 	Name = "Créditos",
 	Icon = "rbxassetid://96062201354965",
 	PremiumOnly = false
-})
-
-local Section = FarmTab:AddSection({
-	Name = "Logo Mais!"
 })
 
 HaridadeLib:MakeNotification({
