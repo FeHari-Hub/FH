@@ -391,14 +391,14 @@ local Section = FarmTab:AddSection({
 })
 
 HaridadeLib:MakeNotification({
-	Name = "FEHARI HUB TRIAL",
+	Name = "Atenção!",
 	Content = "Esta É Uma Versão Teste Do FeHari Hub!",
 	Image = "rbxassetid://114376238948933",
 	Time = 22
 })
 
 HaridadeLib:MakeNotification({
-	Name = "FeHari Hub",
+	Name = "FEHARI HUB",
 	Content = "discord.gg/uydz6pZWMk",
 	Image = "rbxassetid://101951842185056",
 	Time = 20
