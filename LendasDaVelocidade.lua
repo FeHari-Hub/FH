@@ -236,8 +236,8 @@ local function SelectCity(City)
 end
 
 --// FeHari Hub \\--
-local FeHariHubLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/FeHariHub/FH/main/InterfaceUI.lua')))()
-local Window = FeHariHubLib:MakeWindow({Name = "FeHari Hub Trial | Lendas Da Velocidade ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "FeHariHubTest"})
+local HaridadeLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/Haridade/FH/main/InterfaceUI.lua')))()
+local Window = HaridadeLib:MakeWindow({Name = "FeHari Hub Trial | Lendas Da Velocidade ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "HaridadeTest"})
 
 local FarmTab = Window:MakeTab({
 	Name = "Início",
@@ -390,25 +390,25 @@ local Section = FarmTab:AddSection({
 	Name = "V-BETA | FeHari Hub Trial Apenas Para Corridas!"
 })
 
-FeHariHubLib:MakeNotification({
+HaridadeLib:MakeNotification({
 	Name = "FEHARI HUB TRIAL",
 	Content = "Esta É Uma Versão Teste Do FeHari Hub!",
 	Image = "rbxassetid://114376238948933",
 	Time = 22
 })
 
-FeHariHubLib:MakeNotification({
+HaridadeLib:MakeNotification({
 	Name = "FeHari Hub",
 	Content = "discord.gg/uydz6pZWMk",
 	Image = "rbxassetid://101951842185056",
 	Time = 20
 })
 
-FeHariHubLib:MakeNotification({
+HaridadeLib:MakeNotification({
 	Name = "BYPASS ANTI-DETECTAÇÃO",
 	Content = "Bypass Ativo! ✅",
 	Image = "rbxassetid://71506531582407",
 	Time = 18
 })
 
-FeHariHubLib:Init()
+HaridadeLib:Init()
