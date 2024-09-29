@@ -1,4 +1,4 @@
-local OrionLib = loadstring(game:HttpGet("https://pastebin.com/raw/NMEHkVTb"))()
+local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/FeHari/HaridadeScript/main/LegendsOfSpeed.lua"))()
 local itemNumber = math.huge
 
 local jk = {}
