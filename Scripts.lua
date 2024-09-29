@@ -12,7 +12,7 @@ local Supported_Games = {
 if GameID == Supported_Games.LegendsOfSpeed_City
 or GameID == Supported_Games.LegendsOfSpeed_Space 
 or GameID == Supported_Games.LegendsOfSpeed_Desert then
-    loadstring(game:HttpGet(('https://raw.githubusercontent.com/FeHari/HaridadeScript/main/HATrial.lua'),true))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/FeHariHub/FH/main/LendasDaVelocidade.lua"))()
 elseif GameID == Supported_Games.MuscleLegends then
 else
     warn("Oops! Este jogo ainda não é suportado. Estamos trabalhando para adicionar mais!")
