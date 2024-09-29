@@ -255,6 +255,68 @@ local FarmTab = FarmTab:AddSection({
 	Name = "Utilitários"
 })
 
+
+Tab:AddSlider({
+    Name = "Velocidade Do Personagem",
+    Min = 0,
+    Max = 200, -- Ajuste o máximo conforme necessário
+    Default = 100, -- Valor padrão para a velocidade de caminhada
+    Color = Color3.fromRGB(255, 0, 0),
+    Increment = 1,
+    ValueName = "Alterar Velocidade",
+    Callback = function(input)
+        setWalkSpeed(input)
+        print("A velocidade de caminhada foi ajustada para: " .. input)
+    end    
+})
+
+Tab:AddTextbox({
+    Name = "Pulo Do Personagem",
+    Default = "157", -- Um valor padrão para o salto
+    TextDisappear = true,
+    Callback = function(Value)
+        local jumpPowerValue = tonumber(Value) -- Converte o valor para número
+        if jumpPowerValue then
+            setJumpPower(jumpPowerValue)
+            print("O Pulo foi ajustado para: " .. jumpPowerValue)
+        else
+            print("Por favor, insira um número válido.")
+        end
+    end	  
+})
+
+Tab:AddTextbox({
+    Name = "Insira O Nome Do Jogador (real)",
+    Default = "Insira",
+    TextDisappear = true,
+    Callback = function(Value)
+        teleportToPlayer(Value)
+    end	  
+})
+
+Tab:AddButton({
+    Name = "Anti-Kick",
+    Callback = function()
+        AntiKick()
+        print("O script AntiKick foi ativado.")
+    end    
+})
+
+FarmTab:AddButton({
+    Name = "Reduzir Os Gráficos Do Jogo",
+    Default = false,
+    Callback = function(value)
+	    print("button pressed")	  
+        isReducingGraphics = value
+        if isReducingGraphics then
+            while isReducingGraphics do
+                optimizeFpsPing()
+                task.wait()
+            end
+        end
+    end    
+})
+
 local FarmTab = Window:MakeTab({
 	Name = "Teleportar",
 	Icon = "rbxassetid://109334924659404",
@@ -352,15 +414,13 @@ FarmTab:AddToggle({
     end    
 })
 
-FarmTab:AddButton({
-    Name = "Bloquear Corridas (permamente)", -- Nome exibido para o botão
+FarmTab:AddToggle({
+    Name = "Bloquear Corridas (apenas você entra)",
     Default = false,
     Callback = function(Value)
-        -- Chama a função ToggleAutoRacesSolo com o valor desejado
-        ToggleAutoRacesSolo(Value) -- Aqui você define o valor que deseja passar
+        ToggleAutoRacesSolo(Value)
     end    
 })
-
 
 local FarmTab = Window:MakeTab({
 	Name = "Créditos",
