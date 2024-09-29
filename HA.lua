@@ -252,17 +252,9 @@ local FarmTab = Window:MakeTab({
 
 
 local FarmTab = FarmTab:AddSection({
-	Name = "Utilitários"
+	Name = "Utilitário"
 })
 
-
-Tab:AddButton({
-    Name = "Anti-Kick",
-    Callback = function()
-        AntiKick()
-        print("O script AntiKick foi ativado.")
-    end    
-})
 
 FarmTab:AddButton({
     Name = "Reduzir Os Gráficos Do Jogo",
