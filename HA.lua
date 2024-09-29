@@ -237,7 +237,7 @@ end
 
 --// Haridade Script \\--
 local HaridadeLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/FeHari/HaridadeScript/main/LegendsOfSpeed.lua')))()
-local Window = HaridadeLib:MakeWindow({Name = "Haridade Trial | LOS ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "HaridadeTest"})
+local Window = HaridadeLib:MakeWindow({Name = "Haridade Trial | Legends Of Speed ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "HaridadeTest"})
 
 local FarmTab = Window:MakeTab({
 	Name = "Início",
@@ -298,7 +298,7 @@ FarmTab:AddDropdown({
 
 local FarmTab = Window:MakeTab({
 	Name = "Farmar",
-	Icon = "rbxassetid://4483345998",
+	Icon = "rbxassetid://78744214847458",
 	PremiumOnly = false
 })
 
@@ -333,17 +333,17 @@ FarmTab:AddToggle({
 
 local FarmTab = Window:MakeTab({
 	Name = "Renascimento",
-	Icon = "rbxassetid://121663556703347",
+	Icon = "rbxassetid://124658295933505",
 	PremiumOnly = false
 })
 
 local Section = FarmTab:AddSection({
-	Name = "Auto Renascimento"
+	Name = "Renascimentos Automáticos"
 })
 
 
 FarmTab:AddToggle({
-	Name = "Auto Renascimento (ative apenas se for renascer AFK)",
+	Name = "Renascimentos Automáticos (ative apenas se for renascer AFK)",
 	Default = false,
 	Callback = function(Value)
 		getgenv().AutoRebirth = Value
@@ -356,7 +356,7 @@ FarmTab:AddToggle({
 
 local FarmTab = Window:MakeTab({
 	Name = "Corridas",
-	Icon = "rbxassetid://72430981170529",
+	Icon = "rbxassetid://97860628277392",
 	PremiumOnly = false
 })
 
@@ -387,11 +387,18 @@ local FarmTab = Window:MakeTab({
 })
 
 local Section = FarmTab:AddSection({
-	Name = "V-BETA Haridade Trial, Apenas Para Corridas!"
+	Name = "V-BETA | Haridade Trial Apenas Para Corridas!"
 })
 
 HaridadeLib:MakeNotification({
-	Name = "Haridade Community",
+	Name = "HARIDADE TRIAL",
+	Content = "Esta É Uma Versão Teste Do HaridadeScript!",
+	Image = "rbxassetid://101951842185056",
+	Time = 20
+})
+
+HaridadeLib:MakeNotification({
+	Name = "HARIDADE COMMUNITY",
 	Content = "discord.gg/uydz6pZWMk",
 	Image = "rbxassetid://101951842185056",
 	Time = 20
@@ -399,7 +406,7 @@ HaridadeLib:MakeNotification({
 
 HaridadeLib:MakeNotification({
 	Name = "BYPASS ANTI-DETECTAÇÃO",
-	Content = "ByPass Ativo... ✅",
+	Content = "Bypass Ativo! ✅",
 	Image = "rbxassetid://71506531582407",
 	Time = 18
 })
