@@ -252,9 +252,29 @@ local FarmTab = Window:MakeTab({
 
 
 local FarmTab = FarmTab:AddSection({
-	Name = "Utilitários"
+	Name = "Utilitário"
 })
 
+
+local FarmTab = Window:MakeTab({
+	Name = "Teleportar",
+	Icon = "rbxassetid://109334924659404",
+	PremiumOnly = false
+})
+
+local Section = FarmTab:AddSection({
+	Name = "Áreas Para Teleportar"
+})
+
+
+FarmTab:AddDropdown({
+	Name = "Selecionar Cidade Para Teleportar",
+	Default = nil,
+	Options = {"Main City", "Snow City", "Magma City", "Legends Highway"},
+	Callback = function(Value)
+		SelectCity(Value)
+	end    
+})
 
 Tab:AddSlider({
     Name = "Velocidade Do Personagem",
@@ -317,25 +337,6 @@ FarmTab:AddButton({
     end    
 })
 
-local FarmTab = Window:MakeTab({
-	Name = "Teleportar",
-	Icon = "rbxassetid://109334924659404",
-	PremiumOnly = false
-})
-
-local Section = FarmTab:AddSection({
-	Name = "Áreas Para Teleportar"
-})
-
-
-FarmTab:AddDropdown({
-	Name = "Selecionar Cidade Para Teleportar",
-	Default = nil,
-	Options = {"Main City", "Snow City", "Magma City", "Legends Highway"},
-	Callback = function(Value)
-		SelectCity(Value)
-	end    
-})
 
 
 local FarmTab = Window:MakeTab({
