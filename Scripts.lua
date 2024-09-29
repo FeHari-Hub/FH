@@ -1,7 +1,7 @@
-  -- Jogos
+  -- Executar
 local GameID = game.PlaceId
 
--- Table
+-- Jogos
 local Supported_Games = {
     LegendsOfSpeed_City = 3101667897,
     LegendsOfSpeed_Space = 3232996272,
