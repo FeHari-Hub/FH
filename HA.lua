@@ -247,7 +247,7 @@ local FarmTab = Window:MakeTab({
 
 
 local FarmTab = FarmTab:AddSection({
-	Name = "Utilitários!"
+	Name = "Utilitários"
 })
 
 
