@@ -255,19 +255,6 @@ local FarmTab = FarmTab:AddSection({
 	Name = "Utilitários"
 })
 
-FarmTab:AddSlider({
-    Name = "Velocidade Do Personagem",
-    Min = 0,
-    Max = 200, -- Ajuste o máximo conforme necessário
-    Default = 100, -- Valor padrão para a velocidade de caminhada
-    Color = Color3.fromRGB(255, 0, 0),
-    Increment = 1,
-    ValueName = "Alterar Velocidade",
-    Callback = function(input)
-        setWalkSpeed(input)
-        print("A velocidade de caminhada foi ajustada para: " .. input)
-    end    
-})
 
 FarmTab:AddTextbox({
     Name = "Pulo Do Personagem",
