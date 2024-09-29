@@ -235,7 +235,7 @@ local function SelectCity(City)
     end
 end
 
---// Haridade Script \\--
+--// FeHari Hub \\--
 local HaridadeLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/FeHariHub/FH/refs/heads/main/InterfaceUI.lua')))()
 local Window = HaridadeLib:MakeWindow({Name = "FeHari Hub Trial | Lendas Da Velocidade ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "HaridadeTest"})
 
@@ -332,7 +332,7 @@ FarmTab:AddToggle({
 
 
 local FarmTab = Window:MakeTab({
-	Name = "Renascimento",
+	Name = "Renascimentos",
 	Icon = "rbxassetid://124658295933505",
 	PremiumOnly = false
 })
