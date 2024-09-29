@@ -196,27 +196,6 @@ local function optimizeFpsPing()
     end
 end
 
-local function setWalkSpeed(input)
-    LocalPlayer.Character:WaitForChild("Humanoid").WalkSpeed = input
-end
-
-local function setJumpPower(input)
-    local Humanoid = LocalPlayer.Character:WaitForChild("Humanoid")
-    Humanoid.UseJumpPower = true
-    Humanoid.JumpPower = input
-end
-
-local function teleportToPlayer(input)
-    for _, player in pairs(Players:GetPlayers()) do
-        if input == string.sub(player.Name, 1, #input) then
-            LocalPlayer.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame + Vector3.new(0, 0, -1)
-            print("Teleportado para: " .. player.Name)
-            return -- Para sair após o teletransporte
-        end
-    end
-    print("Jogador não encontrado: " .. input)
-end
-
 local function AntiKick()
     local vu = game:GetService("VirtualUser")
     game:GetService("Players").LocalPlayer.Idled:Connect(function()
@@ -252,7 +231,7 @@ local FarmTab = Window:MakeTab({
 
 
 local FarmTab = FarmTab:AddSection({
-	Name = "Utilitários"
+	Name = "Utilitário"
 })
 
 Tab:AddButton({
