@@ -236,7 +236,7 @@ local function SelectCity(City)
 end
 
 --// Haridade Script \\--
-local HaridadeLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/Haridade/FH/main/InterfaceUI.lua')))()
+local HaridadeLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/FeHariHub/FH/refs/heads/main/InterfaceUI.lua')))()
 local Window = HaridadeLib:MakeWindow({Name = "FeHari Hub Trial | Lendas Da Velocidade ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "HaridadeTest"})
 
 local FarmTab = Window:MakeTab({
