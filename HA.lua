@@ -252,7 +252,7 @@ local FarmTab = Window:MakeTab({
 
 
 local FarmTab = FarmTab:AddSection({
-	Name = "Utilitário"
+	Name = "Utilitários"
 })
 
 
@@ -268,6 +268,14 @@ FarmTab:AddButton({
                 task.wait()
             end
         end
+    end    
+})
+
+FarmTab:AddButton({
+    Name = "Anti-Kick",
+    Callback = function()
+        AntiKick()
+        print("O script AntiKick foi ativado.")
     end    
 })
 
@@ -369,7 +377,7 @@ FarmTab:AddToggle({
 })
 
 FarmTab:AddToggle({
-    Name = "Bloquear Corridas (permanente)",
+    Name = "Bloquear Corridas (BETA)",
     Default = false,
     Callback = function(Value)
         ToggleAutoRacesSolo(Value)
