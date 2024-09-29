@@ -196,25 +196,20 @@ local function optimizeFpsPing()
     end
 end
 
-local function setWalkSpeed(input)
-    LocalPlayer.Character:WaitForChild("Humanoid").WalkSpeed = input
-end
-
-local function setJumpPower(input)
-    local Humanoid = LocalPlayer.Character:WaitForChild("Humanoid")
-    Humanoid.UseJumpPower = true
-    Humanoid.JumpPower = input
-end
-
-local function teleportToPlayer(input)
-    for _, player in pairs(Players:GetPlayers()) do
-        if input == string.sub(player.Name, 1, #input) then
-            LocalPlayer.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame + Vector3.new(0, 0, -1)
-            print("Teleportado para: " .. player.Name)
-            return -- Para sair após o teletransporte
+local function deleteBarrier()
+    spawn(function()
+        local boundaries = {
+            game:GetService("Workspace").raceMaps.Grassland.boundaryParts,
+            game:GetService("Workspace").raceMaps.Desert.boundaryParts,
+            game:GetService("Workspace").raceMaps.Magma.boundaryParts
+        }
+        
+        for _, boundary in ipairs(boundaries) do
+            for _, part in pairs(boundary:GetChildren()) do
+                part:Destroy()
+            end
         end
-    end
-    print("Jogador não encontrado: " .. input)
+    end)
 end
 
 local function AntiKick()
@@ -242,11 +237,11 @@ end
 
 --// Haridade Script \\--
 local HaridadeLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/FeHari/HaridadeScript/main/LegendsOfSpeed.lua')))()
-local Window = HaridadeLib:MakeWindow({Name = "Haridade | Legends Of Speed ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "HaridadeTest"})
+local Window = HaridadeLib:MakeWindow({Name = "Haridade Trial | LOS ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "HaridadeTest"})
 
 local FarmTab = Window:MakeTab({
 	Name = "Início",
-	Icon = "rbxassetid://112625488111718",
+	Icon = "rbxassetid://84177443381946",
 	PremiumOnly = false
 })
 
@@ -255,30 +250,6 @@ local FarmTab = FarmTab:AddSection({
 	Name = "Utilitários"
 })
 
-
-FarmTab:AddTextbox({
-    Name = "Pulo Do Personagem",
-    Default = "200", -- Um valor padrão para o salto
-    TextDisappear = true,
-    Callback = function(Value)
-        local jumpPowerValue = tonumber(Value) -- Converte o valor para número
-        if jumpPowerValue then
-            setJumpPower(jumpPowerValue)
-            print("O Pulo foi ajustado para: " .. jumpPowerValue)
-        else
-            print("Por favor, insira um número válido.")
-        end
-    end	  
-})
-
-FarmTab:AddTextbox({
-    Name = "Insira O Nome Do Jogador (real)",
-    Default = "Insira",
-    TextDisappear = true,
-    Callback = function(Value)
-        teleportToPlayer(Value)
-    end	  
-})
 
 FarmTab:AddButton({
     Name = "Anti-Kick",
@@ -303,9 +274,40 @@ FarmTab:AddButton({
     end    
 })
 
+
+local FarmTab = FarmTab:AddSection({
+	Name = "Extras"
+})
+
+
+FarmTab:AddButton({
+    Name = "Deletar Barreiras Das Corridas",
+    Default = false,
+    Callback = function()
+        spawn(function()
+            for _, boundary in ipairs({
+                game:GetService("Workspace").raceMaps.Grassland.boundaryParts,
+                game:GetService("Workspace").raceMaps.Desert.boundaryParts,
+                game:GetService("Workspace").raceMaps.Magma.boundaryParts
+            }) do
+                for _, part in pairs(boundary:GetChildren()) do
+                    part:Destroy()
+                end
+            end
+        end)
+    end    
+})
+
+FarmTab:AddButton({
+	Name = "Remover O Tempo De 5 Segundos (EM BREVE)",
+	Callback = function()
+      		print("button pressed")
+  	end    
+})
+
 local FarmTab = Window:MakeTab({
 	Name = "Teleportar",
-	Icon = "rbxassetid://109334924659404",
+	Icon = "rbxassetid://108473522572536",
 	PremiumOnly = false
 })
 
@@ -415,7 +417,7 @@ local FarmTab = Window:MakeTab({
 })
 
 local Section = FarmTab:AddSection({
-	Name = "Logo Mais!"
+	Name = "V-BETA Haridade Trial, Apenas Para Corridas!"
 })
 
 HaridadeLib:MakeNotification({
@@ -429,7 +431,7 @@ HaridadeLib:MakeNotification({
 	Name = "BYPASS ANTI-DETECTAÇÃO",
 	Content = "ByPass Ativo... ✅",
 	Image = "rbxassetid://71506531582407",
-	Time = 20
+	Time = 18
 })
 
 HaridadeLib:Init()
