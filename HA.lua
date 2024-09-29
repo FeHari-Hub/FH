@@ -241,7 +241,7 @@ local Window = HaridadeLib:MakeWindow({Name = "Haridade Trial | LOS ⚡", HidePr
 
 local FarmTab = Window:MakeTab({
 	Name = "Início",
-	Icon = "rbxassetid://84177443381946",
+	Icon = "rbxassetid://72008639911017",
 	PremiumOnly = false
 })
 
