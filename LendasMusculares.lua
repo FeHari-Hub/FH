@@ -1,4 +1,4 @@
-local FeHariHubLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/FeHari-Hub/FH/main/InterfaceUI.lua"))()
+local FeHariHubLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/FeHariHub/FH/refs/heads/main/InterfaceUI.lua"))()
 local itemNumber = math.huge
 
 local jk = {}
