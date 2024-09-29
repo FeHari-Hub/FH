@@ -7,7 +7,7 @@ local LocalPlayer = game:GetService("Players").LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local HttpService = game:GetService("HttpService")
 
-local FeHari HubLib = {
+local HaridadeLib = {
 	Elements = {},
 	ThemeObjects = {},
 	Connections = {},
@@ -35,7 +35,7 @@ local Success, Response = pcall(function()
 end)
 
 if not Success then
-	warn("\nFeHari Hub - Failed to load Feather Icons. Error code: " .. Response .. "\n")
+	warn("\nHaridade Script - Failed to load Feather Icons. Error code: " .. Response .. "\n")
 end	
 
 local function GetIcon(IconName)
@@ -46,53 +46,53 @@ local function GetIcon(IconName)
 	end
 end   
 
-local FeHari Hub = Instance.new("ScreenGui")
-FeHari Hub.Name = "FeHari Hub"
+local Haridade = Instance.new("ScreenGui")
+Haridade.Name = "Haridade"
 if syn then
-	syn.protect_gui(FeHari Hub)
-	FeHari Hub.Parent = game.CoreGui
+	syn.protect_gui(Haridade)
+	Haridade.Parent = game.CoreGui
 else
-	FeHari Hub.Parent = gethui() or game.CoreGui
+	Haridade.Parent = gethui() or game.CoreGui
 end
 
 if gethui then
 	for _, Interface in ipairs(gethui():GetChildren()) do
-		if Interface.Name == FeHari Hub.Name and Interface ~= FeHari Hub then
+		if Interface.Name == Haridade.Name and Interface ~= Haridade then
 			Interface:Destroy()
 		end
 	end
 else
 	for _, Interface in ipairs(game.CoreGui:GetChildren()) do
-		if Interface.Name == FeHari Hub.Name and Interface ~= FeHari Hub then
+		if Interface.Name == Haridade.Name and Interface ~= Haridade then
 			Interface:Destroy()
 		end
 	end
 end
 
-function FeHari HubLib:IsRunning()
+function HaridadeLib:IsRunning()
 	if gethui then
-		return FeHari Hub.Parent == gethui()
+		return Haridade.Parent == gethui()
 	else
-		return FeHari Hub.Parent == game:GetService("CoreGui")
+		return Haridade.Parent == game:GetService("CoreGui")
 	end
 
 end
 
 local function AddConnection(Signal, Function)
-	if (not FeHari HubLib:IsRunning()) then
+	if (not HaridadeLib:IsRunning()) then
 		return
 	end
 	local SignalConnect = Signal:Connect(Function)
-	table.insert(FeHari HubLib.Connections, SignalConnect)
+	table.insert(HaridadeLib.Connections, SignalConnect)
 	return SignalConnect
 end
 
 task.spawn(function()
-	while (FeHari HubLib:IsRunning()) do
+	while (HaridadeLib:IsRunning()) do
 		wait()
 	end
 
-	for _, Connection in next, FeHari HubLib.Connections do
+	for _, Connection in next, HaridadeLib.Connections do
 		Connection:Disconnect()
 	end
 end)
@@ -140,13 +140,13 @@ local function Create(Name, Properties, Children)
 end
 
 local function CreateElement(ElementName, ElementFunction)
-	FeHari HubLib.Elements[ElementName] = function(...)
+	HaridadeLib.Elements[ElementName] = function(...)
 		return ElementFunction(...)
 	end
 end
 
 local function MakeElement(ElementName, ...)
-	local NewElement = FeHari HubLib.Elements[ElementName](...)
+	local NewElement = HaridadeLib.Elements[ElementName](...)
 	return NewElement
 end
 
@@ -189,18 +189,18 @@ local function ReturnProperty(Object)
 end
 
 local function AddThemeObject(Object, Type)
-	if not FeHari HubLib.ThemeObjects[Type] then
-		FeHari HubLib.ThemeObjects[Type] = {}
+	if not HaridadeLib.ThemeObjects[Type] then
+		HaridadeLib.ThemeObjects[Type] = {}
 	end    
-	table.insert(FeHari HubLib.ThemeObjects[Type], Object)
-	Object[ReturnProperty(Object)] = FeHari HubLib.Themes[FeHari HubLib.SelectedTheme][Type]
+	table.insert(HaridadeLib.ThemeObjects[Type], Object)
+	Object[ReturnProperty(Object)] = HaridadeLib.Themes[HaridadeLib.SelectedTheme][Type]
 	return Object
 end    
 
 local function SetTheme()
-	for Name, Type in pairs(FeHari HubLib.ThemeObjects) do
+	for Name, Type in pairs(HaridadeLib.ThemeObjects) do
 		for _, Object in pairs(Type) do
-			Object[ReturnProperty(Object)] = FeHari HubLib.Themes[FeHari HubLib.SelectedTheme][Name]
+			Object[ReturnProperty(Object)] = HaridadeLib.Themes[HaridadeLib.SelectedTheme][Name]
 		end    
 	end    
 end
@@ -216,23 +216,23 @@ end
 local function LoadCfg(Config)
 	local Data = HttpService:JSONDecode(Config)
 	table.foreach(Data, function(a,b)
-		if FeHari HubLib.Flags[a] then
+		if HaridadeLib.Flags[a] then
 			spawn(function() 
-				if FeHari HubLib.Flags[a].Type == "Colorpicker" then
-					FeHari HubLib.Flags[a]:Set(UnpackColor(b))
+				if HaridadeLib.Flags[a].Type == "Colorpicker" then
+					HaridadeLib.Flags[a]:Set(UnpackColor(b))
 				else
-					FeHari HubLib.Flags[a]:Set(b)
+					HaridadeLib.Flags[a]:Set(b)
 				end    
 			end)
 		else
-			warn("FeHari Hub Config Loader - Could not find ", a ,b)
+			warn("Haridade Script Config Loader - Could not find ", a ,b)
 		end
 	end)
 end
 
 local function SaveCfg(Name)
 	local Data = {}
-	for i,v in pairs(FeHari HubLib.Flags) do
+	for i,v in pairs(HaridadeLib.Flags) do
 		if v.Save then
 			if v.Type == "Colorpicker" then
 				Data[i] = PackColor(v.Value)
@@ -241,7 +241,7 @@ local function SaveCfg(Name)
 			end
 		end	
 	end
-	writefile(FeHari HubLib.Folder .. "/" .. Name .. ".txt", tostring(HttpService:JSONEncode(Data)))
+	writefile(HaridadeLib.Folder .. "/" .. Name .. ".txt", tostring(HttpService:JSONEncode(Data)))
 end
 
 local WhitelistedMouse = {Enum.UserInputType.MouseButton1, Enum.UserInputType.MouseButton2,Enum.UserInputType.MouseButton3}
@@ -385,10 +385,10 @@ local NotificationHolder = SetProps(SetChildren(MakeElement("TFrame"), {
 	Position = UDim2.new(1, -25, 1, -25),
 	Size = UDim2.new(0, 300, 1, -25),
 	AnchorPoint = Vector2.new(1, 1),
-	Parent = FeHari Hub
+	Parent = Haridade
 })
 
-function FeHari HubLib:MakeNotification(NotificationConfig)
+function HaridadeLib:MakeNotification(NotificationConfig)
 	spawn(function()
 		NotificationConfig.Name = NotificationConfig.Name or "Notification"
 		NotificationConfig.Content = NotificationConfig.Content or "Test"
@@ -449,12 +449,12 @@ function FeHari HubLib:MakeNotification(NotificationConfig)
 	end)
 end    
 
-function FeHari HubLib:Init()
-	if FeHari HubLib.SaveCfg then	
+function HaridadeLib:Init()
+	if HaridadeLib.SaveCfg then	
 		pcall(function()
-			if isfile(FeHari HubLib.Folder .. "/" .. game.GameId .. ".txt") then
-				LoadCfg(readfile(FeHari HubLib.Folder .. "/" .. game.GameId .. ".txt"))
-				FeHari HubLib:MakeNotification({
+			if isfile(HaridadeLib.Folder .. "/" .. game.GameId .. ".txt") then
+				LoadCfg(readfile(HaridadeLib.Folder .. "/" .. game.GameId .. ".txt"))
+				HaridadeLib:MakeNotification({
 					Name = "Configuration",
 					Content = "Auto-loaded configuration for the game " .. game.GameId .. ".",
 					Time = 5
@@ -464,27 +464,27 @@ function FeHari HubLib:Init()
 	end	
 end	
 
-function FeHari HubLib:MakeWindow(WindowConfig)
+function HaridadeLib:MakeWindow(WindowConfig)
 	local FirstTab = true
 	local Minimized = false
 	local Loaded = false
 	local UIHidden = false
 
 	WindowConfig = WindowConfig or {}
-	WindowConfig.Name = WindowConfig.Name or "FeHari Hub"
+	WindowConfig.Name = WindowConfig.Name or "Haridade Script"
 	WindowConfig.ConfigFolder = WindowConfig.ConfigFolder or WindowConfig.Name
 	WindowConfig.SaveConfig = WindowConfig.SaveConfig or false
 	WindowConfig.HidePremium = WindowConfig.HidePremium or false
 	if WindowConfig.IntroEnabled == nil then
 		WindowConfig.IntroEnabled = true
 	end
-	WindowConfig.IntroText = WindowConfig.IntroText or "FeHari Hub"
+	WindowConfig.IntroText = WindowConfig.IntroText or "Haridade Script"
 	WindowConfig.CloseCallback = WindowConfig.CloseCallback or function() end
 	WindowConfig.ShowIcon = WindowConfig.ShowIcon or false
 	WindowConfig.Icon = WindowConfig.Icon or "rbxassetid://8834748103"
 	WindowConfig.IntroIcon = WindowConfig.IntroIcon or "rbxassetid://8834748103"
-	FeHari HubLib.Folder = WindowConfig.ConfigFolder
-	FeHari HubLib.SaveCfg = WindowConfig.SaveConfig
+	HaridadeLib.Folder = WindowConfig.ConfigFolder
+	HaridadeLib.SaveCfg = WindowConfig.SaveConfig
 
 	if WindowConfig.SaveConfig then
 		if not isfolder(WindowConfig.ConfigFolder) then
@@ -601,7 +601,7 @@ function FeHari HubLib:MakeWindow(WindowConfig)
 	}), "Stroke")
 
 	local MainWindow = AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.fromRGB(255, 255, 255), 0, 10), {
-		Parent = FeHari Hub,
+		Parent = Haridade,
 		Position = UDim2.new(0.5, -307, 0.5, -172),
 		Size = UDim2.new(0, 615, 0, 344),
 		ClipsDescendants = true
@@ -650,7 +650,7 @@ function FeHari HubLib:MakeWindow(WindowConfig)
 	AddConnection(CloseBtn.MouseButton1Up, function()
 		MainWindow.Visible = false
 		UIHidden = true
-		FeHari HubLib:MakeNotification({
+		HaridadeLib:MakeNotification({
 			Name = "Interface Hidden",
 			Content = "Tap RightShift to reopen the interface",
 			Time = 5
@@ -687,7 +687,7 @@ function FeHari HubLib:MakeWindow(WindowConfig)
 	local function LoadSequence()
 		MainWindow.Visible = false
 		local LoadSequenceLogo = SetProps(MakeElement("Image", WindowConfig.IntroIcon), {
-			Parent = FeHari Hub,
+			Parent = Haridade,
 			AnchorPoint = Vector2.new(0.5, 0.5),
 			Position = UDim2.new(0.5, 0, 0.4, 0),
 			Size = UDim2.new(0, 28, 0, 28),
@@ -696,7 +696,7 @@ function FeHari HubLib:MakeWindow(WindowConfig)
 		})
 
 		local LoadSequenceText = SetProps(MakeElement("Label", WindowConfig.IntroText, 14), {
-			Parent = FeHari Hub,
+			Parent = Haridade,
 			Size = UDim2.new(1, 0, 1, 0),
 			AnchorPoint = Vector2.new(0.5, 0.5),
 			Position = UDim2.new(0.5, 19, 0.5, 0),
@@ -886,22 +886,22 @@ function FeHari HubLib:MakeWindow(WindowConfig)
 				}), "Second")
 
 				AddConnection(Click.MouseEnter, function()
-					TweenService:Create(ButtonFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.R * 255 + 3, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.G * 255 + 3, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.B * 255 + 3)}):Play()
+					TweenService:Create(ButtonFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.R * 255 + 3, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.G * 255 + 3, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.B * 255 + 3)}):Play()
 				end)
 
 				AddConnection(Click.MouseLeave, function()
-					TweenService:Create(ButtonFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second}):Play()
+					TweenService:Create(ButtonFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second}):Play()
 				end)
 
 				AddConnection(Click.MouseButton1Up, function()
-					TweenService:Create(ButtonFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.R * 255 + 3, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.G * 255 + 3, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.B * 255 + 3)}):Play()
+					TweenService:Create(ButtonFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.R * 255 + 3, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.G * 255 + 3, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.B * 255 + 3)}):Play()
 					spawn(function()
 						ButtonConfig.Callback()
 					end)
 				end)
 
 				AddConnection(Click.MouseButton1Down, function()
-					TweenService:Create(ButtonFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.R * 255 + 6, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.G * 255 + 6, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.B * 255 + 6)}):Play()
+					TweenService:Create(ButtonFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.R * 255 + 6, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.G * 255 + 6, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.B * 255 + 6)}):Play()
 				end)
 
 				function Button:Set(ButtonText)
@@ -961,8 +961,8 @@ function FeHari HubLib:MakeWindow(WindowConfig)
 
 				function Toggle:Set(Value)
 					Toggle.Value = Value
-					TweenService:Create(ToggleBox, TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Toggle.Value and ToggleConfig.Color or FeHari HubLib.Themes.Default.Divider}):Play()
-					TweenService:Create(ToggleBox.Stroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Color = Toggle.Value and ToggleConfig.Color or FeHari HubLib.Themes.Default.Stroke}):Play()
+					TweenService:Create(ToggleBox, TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Toggle.Value and ToggleConfig.Color or HaridadeLib.Themes.Default.Divider}):Play()
+					TweenService:Create(ToggleBox.Stroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Color = Toggle.Value and ToggleConfig.Color or HaridadeLib.Themes.Default.Stroke}):Play()
 					TweenService:Create(ToggleBox.Ico, TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {ImageTransparency = Toggle.Value and 0 or 1, Size = Toggle.Value and UDim2.new(0, 20, 0, 20) or UDim2.new(0, 8, 0, 8)}):Play()
 					ToggleConfig.Callback(Toggle.Value)
 				end    
@@ -970,25 +970,25 @@ function FeHari HubLib:MakeWindow(WindowConfig)
 				Toggle:Set(Toggle.Value)
 
 				AddConnection(Click.MouseEnter, function()
-					TweenService:Create(ToggleFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.R * 255 + 3, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.G * 255 + 3, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.B * 255 + 3)}):Play()
+					TweenService:Create(ToggleFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.R * 255 + 3, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.G * 255 + 3, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.B * 255 + 3)}):Play()
 				end)
 
 				AddConnection(Click.MouseLeave, function()
-					TweenService:Create(ToggleFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second}):Play()
+					TweenService:Create(ToggleFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second}):Play()
 				end)
 
 				AddConnection(Click.MouseButton1Up, function()
-					TweenService:Create(ToggleFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.R * 255 + 3, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.G * 255 + 3, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.B * 255 + 3)}):Play()
+					TweenService:Create(ToggleFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.R * 255 + 3, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.G * 255 + 3, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.B * 255 + 3)}):Play()
 					SaveCfg(game.GameId)
 					Toggle:Set(not Toggle.Value)
 				end)
 
 				AddConnection(Click.MouseButton1Down, function()
-					TweenService:Create(ToggleFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.R * 255 + 6, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.G * 255 + 6, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.B * 255 + 6)}):Play()
+					TweenService:Create(ToggleFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.R * 255 + 6, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.G * 255 + 6, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.B * 255 + 6)}):Play()
 				end)
 
 				if ToggleConfig.Flag then
-					FeHari HubLib.Flags[ToggleConfig.Flag] = Toggle
+					HaridadeLib.Flags[ToggleConfig.Flag] = Toggle
 				end	
 				return Toggle
 			end  
@@ -1083,7 +1083,7 @@ function FeHari HubLib:MakeWindow(WindowConfig)
 
 				Slider:Set(Slider.Value)
 				if SliderConfig.Flag then				
-					FeHari HubLib.Flags[SliderConfig.Flag] = Slider
+					HaridadeLib.Flags[SliderConfig.Flag] = Slider
 				end
 				return Slider
 			end  
@@ -1238,7 +1238,7 @@ function FeHari HubLib:MakeWindow(WindowConfig)
 				Dropdown:Refresh(Dropdown.Options, false)
 				Dropdown:Set(Dropdown.Value)
 				if DropdownConfig.Flag then				
-					FeHari HubLib.Flags[DropdownConfig.Flag] = Dropdown
+					HaridadeLib.Flags[DropdownConfig.Flag] = Dropdown
 				end
 				return Dropdown
 			end
@@ -1336,19 +1336,19 @@ function FeHari HubLib:MakeWindow(WindowConfig)
 				end)
 
 				AddConnection(Click.MouseEnter, function()
-					TweenService:Create(BindFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.R * 255 + 3, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.G * 255 + 3, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.B * 255 + 3)}):Play()
+					TweenService:Create(BindFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.R * 255 + 3, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.G * 255 + 3, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.B * 255 + 3)}):Play()
 				end)
 
 				AddConnection(Click.MouseLeave, function()
-					TweenService:Create(BindFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second}):Play()
+					TweenService:Create(BindFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second}):Play()
 				end)
 
 				AddConnection(Click.MouseButton1Up, function()
-					TweenService:Create(BindFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.R * 255 + 3, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.G * 255 + 3, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.B * 255 + 3)}):Play()
+					TweenService:Create(BindFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.R * 255 + 3, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.G * 255 + 3, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.B * 255 + 3)}):Play()
 				end)
 
 				AddConnection(Click.MouseButton1Down, function()
-					TweenService:Create(BindFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.R * 255 + 6, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.G * 255 + 6, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.B * 255 + 6)}):Play()
+					TweenService:Create(BindFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.R * 255 + 6, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.G * 255 + 6, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.B * 255 + 6)}):Play()
 				end)
 
 				function Bind:Set(Key)
@@ -1360,7 +1360,7 @@ function FeHari HubLib:MakeWindow(WindowConfig)
 
 				Bind:Set(BindConfig.Default)
 				if BindConfig.Flag then				
-					FeHari HubLib.Flags[BindConfig.Flag] = Bind
+					HaridadeLib.Flags[BindConfig.Flag] = Bind
 				end
 				return Bind
 			end  
@@ -1427,20 +1427,20 @@ function FeHari HubLib:MakeWindow(WindowConfig)
 				TextboxActual.Text = TextboxConfig.Default
 
 				AddConnection(Click.MouseEnter, function()
-					TweenService:Create(TextboxFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.R * 255 + 3, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.G * 255 + 3, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.B * 255 + 3)}):Play()
+					TweenService:Create(TextboxFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.R * 255 + 3, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.G * 255 + 3, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.B * 255 + 3)}):Play()
 				end)
 
 				AddConnection(Click.MouseLeave, function()
-					TweenService:Create(TextboxFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second}):Play()
+					TweenService:Create(TextboxFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second}):Play()
 				end)
 
 				AddConnection(Click.MouseButton1Up, function()
-					TweenService:Create(TextboxFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.R * 255 + 3, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.G * 255 + 3, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.B * 255 + 3)}):Play()
+					TweenService:Create(TextboxFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.R * 255 + 3, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.G * 255 + 3, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.B * 255 + 3)}):Play()
 					TextboxActual:CaptureFocus()
 				end)
 
 				AddConnection(Click.MouseButton1Down, function()
-					TweenService:Create(TextboxFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.R * 255 + 6, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.G * 255 + 6, FeHari HubLib.Themes[FeHari HubLib.SelectedTheme].Second.B * 255 + 6)}):Play()
+					TweenService:Create(TextboxFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.R * 255 + 6, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.G * 255 + 6, HaridadeLib.Themes[HaridadeLib.SelectedTheme].Second.B * 255 + 6)}):Play()
 				end)
 			end 
 			function ElementFunction:AddColorpicker(ColorpickerConfig)
@@ -1624,7 +1624,7 @@ function FeHari HubLib:MakeWindow(WindowConfig)
 
 				Colorpicker:Set(Colorpicker.Value)
 				if ColorpickerConfig.Flag then				
-					FeHari HubLib.Flags[ColorpickerConfig.Flag] = Colorpicker
+					HaridadeLib.Flags[ColorpickerConfig.Flag] = Colorpicker
 				end
 				return Colorpicker
 			end  
@@ -1729,7 +1729,7 @@ function FeHari HubLib:MakeWindow(WindowConfig)
 	--				})
 	--			})
 	--		end
-	--		FeHari HubLib:MakeNotification({
+	--		HaridadeLib:MakeNotification({
 	--			Name = "UI Library Available",
 	--			Content = "New UI Library Available - Joining Discord (#announcements)",
 	--			Time = 8
@@ -1759,8 +1759,8 @@ function FeHari HubLib:MakeWindow(WindowConfig)
 	return TabFunction
 end   
 
-function FeHari HubLib:Destroy()
-	FeHari Hub:Destroy()
+function HaridadeLib:Destroy()
+	Haridade:Destroy()
 end
 
-return FeHari HubLib
+return HaridadeLib
