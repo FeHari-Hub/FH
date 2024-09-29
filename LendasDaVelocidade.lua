@@ -236,7 +236,7 @@ local function SelectCity(City)
 end
 
 --// FeHari Hub \\--
-local FeHariHubLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/FeHari-Hub/FH/main/InterfaceUI.lua')))()
+local FeHariHubLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/FeHariHub/FH/main/InterfaceUI.lua')))()
 local Window = FeHariHubLib:MakeWindow({Name = "FeHari Hub Trial | Lendas Da Velocidade ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "FeHariHubTest"})
 
 local FarmTab = Window:MakeTab({
