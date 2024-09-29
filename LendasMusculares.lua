@@ -1,4 +1,4 @@
-local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/FeHari-Hub/FH/main/InterfaceUI.lua"))()
+local FeHariHubLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/FeHari-Hub/FH/main/InterfaceUI.lua"))()
 local itemNumber = math.huge
 
 local jk = {}
@@ -37,7 +37,7 @@ function c()
     end
 end
 
-local Window = OrionLib:MakeWindow({Name = "FeHari Hub | Lendas Musculares 💪", HidePremium = false, SaveConfig = false, ConfigFolder = "TurtleFi"})
+local Window = FeHariHubLib:MakeWindow({Name = "FeHari Hub | Lendas Musculares 💪", HidePremium = false, SaveConfig = false, ConfigFolder = "TurtleFi"})
 
 local function children(s,get)
 for _,v in pairs(s:GetChildren()) do
