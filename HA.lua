@@ -275,11 +275,6 @@ FarmTab:AddButton({
 })
 
 
-local FarmTab = FarmTab:AddSection({
-	Name = "Extras"
-})
-
-
 local FarmTab = Window:MakeTab({
 	Name = "Teleportar",
 	Icon = "rbxassetid://108473522572536",
