@@ -196,6 +196,27 @@ local function optimizeFpsPing()
     end
 end
 
+local function setWalkSpeed(input)
+    LocalPlayer.Character:WaitForChild("Humanoid").WalkSpeed = input
+end
+
+local function setJumpPower(input)
+    local Humanoid = LocalPlayer.Character:WaitForChild("Humanoid")
+    Humanoid.UseJumpPower = true
+    Humanoid.JumpPower = input
+end
+
+local function teleportToPlayer(input)
+    for _, player in pairs(Players:GetPlayers()) do
+        if input == string.sub(player.Name, 1, #input) then
+            LocalPlayer.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame + Vector3.new(0, 0, -1)
+            print("Teleportado para: " .. player.Name)
+            return -- Para sair após o teletransporte
+        end
+    end
+    print("Jogador não encontrado: " .. input)
+end
+
 local function AntiKick()
     local vu = game:GetService("VirtualUser")
     game:GetService("Players").LocalPlayer.Idled:Connect(function()
@@ -229,9 +250,42 @@ local FarmTab = Window:MakeTab({
 	PremiumOnly = false
 })
 
+Tab:AddSlider({
+    Name = "Velocidade Do Personagem",
+    Min = 0,
+    Max = 200, -- Ajuste o máximo conforme necessário
+    Default = 100, -- Valor padrão para a velocidade de caminhada
+    Color = Color3.fromRGB(255, 0, 0),
+    Increment = 1,
+    ValueName = "Alterar Velocidade",
+    Callback = function(input)
+        setWalkSpeed(input)
+        print("A velocidade de caminhada foi ajustada para: " .. input)
+    end    
+})
 
-local FarmTab = FarmTab:AddSection({
-	Name = "Utilitário"
+Tab:AddTextbox({
+    Name = "Pulo Do Personagem",
+    Default = "157", -- Um valor padrão para o salto
+    TextDisappear = true,
+    Callback = function(Value)
+        local jumpPowerValue = tonumber(Value) -- Converte o valor para número
+        if jumpPowerValue then
+            setJumpPower(jumpPowerValue)
+            print("O Pulo foi ajustado para: " .. jumpPowerValue)
+        else
+            print("Por favor, insira um número válido.")
+        end
+    end	  
+})
+
+Tab:AddTextbox({
+    Name = "Insira O Nome Do Jogador (real)",
+    Default = "Insira",
+    TextDisappear = true,
+    Callback = function(Value)
+        teleportToPlayer(Value)
+    end	  
 })
 
 Tab:AddButton({
@@ -368,6 +422,10 @@ local FarmTab = Window:MakeTab({
 	Name = "Créditos",
 	Icon = "rbxassetid://96062201354965",
 	PremiumOnly = false
+})
+
+local Section = FarmTab:AddSection({
+	Name = "Logo Mais!"
 })
 
 HaridadeLib:MakeNotification({
