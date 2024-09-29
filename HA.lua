@@ -258,7 +258,7 @@ local FarmTab = FarmTab:AddSection({
 
 FarmTab:AddTextbox({
     Name = "Pulo Do Personagem",
-    Default = "157", -- Um valor padrão para o salto
+    Default = "200", -- Um valor padrão para o salto
     TextDisappear = true,
     Callback = function(Value)
         local jumpPowerValue = tonumber(Value) -- Converte o valor para número
@@ -400,15 +400,13 @@ FarmTab:AddToggle({
     end    
 })
 
-FarmTab:AddButton({
-    Name = "Bloquear Corridas (V-BETA)", -- Nome exibido para o botão
+FarmTab:AddToggle({
+    Name = "Bloquear Corridas (V-BETA)",
     Default = false,
     Callback = function(Value)
-        -- Chama a função ToggleAutoRacesSolo com o valor desejado
-        ToggleAutoRacesSolo(Value) -- Aqui você define o valor que deseja passar
+        ToggleAutoRacesSolo(Value)
     end    
 })
-
 
 local FarmTab = Window:MakeTab({
 	Name = "Créditos",
