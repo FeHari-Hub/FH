@@ -247,7 +247,7 @@ local FarmTab = Window:MakeTab({
 
 
 local FarmTab = FarmTab:AddSection({
-	Name = "Utilitários"
+	Name = "Utilitários!"
 })
 
 
@@ -279,31 +279,6 @@ local FarmTab = FarmTab:AddSection({
 	Name = "Extras"
 })
 
-
-FarmTab:AddButton({
-    Name = "Deletar Barreiras Das Corridas",
-    Default = false,
-    Callback = function()
-        spawn(function()
-            for _, boundary in ipairs({
-                game:GetService("Workspace").raceMaps.Grassland.boundaryParts,
-                game:GetService("Workspace").raceMaps.Desert.boundaryParts,
-                game:GetService("Workspace").raceMaps.Magma.boundaryParts
-            }) do
-                for _, part in pairs(boundary:GetChildren()) do
-                    part:Destroy()
-                end
-            end
-        end)
-    end    
-})
-
-FarmTab:AddButton({
-	Name = "Remover O Tempo De 5 Segundos (EM BREVE)",
-	Callback = function()
-      		print("button pressed")
-  	end    
-})
 
 local FarmTab = Window:MakeTab({
 	Name = "Teleportar",
