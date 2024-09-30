@@ -49,14 +49,12 @@ local function setValue(item,index)
 	item.Value = index
 end
 
-local T1 = Window:MakeTab({Name = "Main",Icon = "rbxassetid://",PremiumOnly = false})
-local T2 = Window:MakeTab({Name = "Crystal",Icon = "rbxassetid://",PremiumOnly = false})
-local T5 = Window:MakeTab({Name = "Rocks",Icon = "rbxassetid://",PremiumOnly = false})
-local T6 = Window:MakeTab({Name = "Brawl",Icon = "rbxassetid://",PremiumOnly = false})
-local T7 = Window:MakeTab({Name = "Chest",Icon = "rbxassetid://",PremiumOnly = false})
---local T8 = Window:MakeTab({Name = "Tool",Icon = "rbxassetid://",PremiumOnly = false})
-local T3 = Window:MakeTab({Name = "ESP",Icon = "rbxassetid://",PremiumOnly = false})
-local T4 = Window:MakeTab({Name = "Misc",Icon = "rbxassetid://",PremiumOnly = false})
+local T1 = Window:MakeTab({Name = "Início",Icon = "rbxassetid://",PremiumOnly = false})
+local T2 = Window:MakeTab({Name = "Cristais",Icon = "rbxassetid://",PremiumOnly = false})
+local T5 = Window:MakeTab({Name = "Pedras",Icon = "rbxassetid://",PremiumOnly = false})
+local T6 = Window:MakeTab({Name = "Lutas",Icon = "rbxassetid://",PremiumOnly = false})
+local T7 = Window:MakeTab({Name = "Baús",Icon = "rbxassetid://",PremiumOnly = false})
+local T4 = Window:MakeTab({Name = "Extras",Icon = "rbxassetid://",PremiumOnly = false})
 
 local Settings = {
 	WorkOut = false,
@@ -80,7 +78,7 @@ local Settings = {
 }
 
 T1:AddToggle({
-Name = "Auto Farm",
+Name = "Farmar Automáticamente",
 Default = false,
 Callback = function(State)
 Settings.WorkOut = State
@@ -96,7 +94,7 @@ end
 end})
 
 T1:AddToggle({
-Name = "Punch Farm ?",
+Name = "Socar Automáticamente",
 Default = false,
 Callback = function(State)
 Settings.AutoMob = State
@@ -140,7 +138,7 @@ end)
 end})
 
 T5:AddDropdown({
-Name = "Select Rocks",
+Name = "Selecionar Pedras",
 Default = tbl_Rocks[1],
 Options = tbl_Rocks,
 Callback = function(object)
@@ -148,7 +146,7 @@ Callback = function(object)
 end})
 
 T5:AddToggle({
-Name = "Auto Durability",
+Name = "Socar Pedras Automáticamente",
 Default = false,
 Callback = function(State)
 Settings.WorkOut1 = State
@@ -168,7 +166,7 @@ end)
 end})
 
 T1:AddToggle({
-Name = "Personal Feature",
+Name = "Socar 2x Mais Rápido",
 Default = false,
 Callback = function(State)
 Settings.personal = State
@@ -188,14 +186,14 @@ end})
 
 
 T4:AddButton({
-Name = "No Tool Cooldown",
+Name = "Acelerar O Farm em 2x",
 Callback = function()
 c()
 game:GetService("Players").LocalPlayer.Backpack.Punch:FindFirstChildOfClass("NumberValue").Value = 0
 end})
 
 T1:AddToggle({
-Name = "Auto Rebirth",
+Name = "Renascimentos Automáticos",
 Default = false,
 Callback = function(State)
 Settings.Rebirth = State
@@ -208,19 +206,19 @@ end)
 end})
 
 T6:AddSlider({
-Name = "Timer",
+Name = "Tempo De Entrada",
 Min = 0,
 Max = 20,
 Default = 2,
 Color = Color3.fromRGB(255,255,255),
 Increment = 1,
-ValueName = "Seconds",
+ValueName = "Segundos",
 Callback = function(Value)
 _G.BrawlTimer = Value
 end})
 
 T6:AddToggle({
-Name = "Auto Join Brawl",
+Name = "Entrar Automaticamente Na Arena De Luta",
 Default = false,
 Callback = function(State)
 Settings.Hot = State
@@ -233,19 +231,19 @@ end)
 end})
 
 T7:AddSlider({
-Name = "Timer",
+Name = "Tempo De Abertura",
 Min = 0,
 Max = 20,
 Default = 2,
 Color = Color3.fromRGB(255,255,255),
 Increment = 1,
-ValueName = "Seconds",
+ValueName = "Segundos",
 Callback = function(Value)
 _G.cTimer = Value
 end})
 
 T7:AddButton({
-Name = "Get All Chest",
+Name = "Coletar Todos Os Baús
 Callback = function()
 for i = 1, #jk do
     wait(_G.cTimer)
@@ -254,7 +252,7 @@ end
 end})
 
 T2:AddDropdown({
-Name = "Select Crystal",
+Name = "Selecione O Cristal",
 Default = jk1[1],
 Options = jk1,
 Callback = function(object)
@@ -262,7 +260,7 @@ Callback = function(object)
 end})
 
 T2:AddToggle({
-Name = "Auto Crystal",
+Name = "Abrir Cristais Automáticamente",
 Default = false,
 Callback = function(State)
 Settings.AutoPets = State
@@ -287,14 +285,14 @@ OldNameCall = hookmetamethod(game, "__namecall", function(self, ...)
 end)
 
 T4:AddToggle({
-Name = "Anti-Delete Pets",
+Name = "Anti-Deletar Animais De Estimação",
 Default = false,
 Callback = function(State)
 Settings.Stop = State
 end})
 
 T4:AddToggle({
-Name = "Anti-Rebirth",
+Name = "Anti-Renascimentos",
 Default = false,
 Callback = function(State)
 Settings.Stop1 = State
@@ -307,7 +305,7 @@ end
 end)
 
 T4:AddToggle({
-Name = "Infinite Jump",
+Name = "Pulo Infinito",
 Default = false,
 Callback = function(State)
 Settings.InfiniteJump = State
